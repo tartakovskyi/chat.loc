@@ -15,7 +15,7 @@ class ChatController extends Controller
      */
     public function index()
     {
-        return response()->json(Chat::all(), 200);
+        return response()->json(Chat::withCount('messages')->get(), 200);
     }
 
     /**
