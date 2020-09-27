@@ -10899,3 +10899,16 @@ a.text-dark:focus {
   }
 }
 
+main {
+  padding: 70px 0;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+.btn svg {
+  width: 15px;
+  height: 15px;
+}
+

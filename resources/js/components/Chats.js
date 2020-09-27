@@ -1,0 +1,78 @@
+import React, { Component }  from 'react';
+import Axios  from 'axios';
+import EditBtn from './EditBtn';
+
+
+class Chats extends Component {
+
+	constructor() {
+
+		super();
+
+		this.state = {
+			chats: []
+		}
+	}
+	componentDidMount() {
+		
+		axios.get('/api/chats')
+		.then((response) => {
+			this.setState({ chats : response.data })
+		})
+		.catch( (error) => {
+			console.log(error);
+		})
+
+	}
+
+	unread (count, id) {
+		if (count) {
+			return (
+				<a href="/chat/{id}">{count}</a>
+				);
+		} else {
+			return('0');
+		}
+
+	}
+
+	renderChats() {
+		return this.state.chats.map((chat, index) => {
+			return (
+				<tr key={index}>
+					<td>
+						<a href={'/chat/' + chat.id}>{chat.title}</a>
+					</td>
+					<td className="text-center">
+						{this.unread(chat.unread, chat.id)}
+					</td>
+					<td>
+						< EditBtn />
+					</td>
+				</tr>   
+				);
+		});
+	}
+
+	render() {
+		return (
+			<div className="container">
+				<h1>All Chats</h1>
+				<table className="table table-striped table-borderless">
+					<thead>
+						<tr>
+							<th>Chat</th>
+							<th className="text-center">New Messages</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{ this.renderChats() }
+					</tbody>
+				</table>
+			</div>
+			);
+	}
+}
+
+export default Chats;

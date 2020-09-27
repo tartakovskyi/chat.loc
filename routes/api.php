@@ -17,3 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::resources([
+	'chats' => API\ChatController::class,
+    'messages' => API\MessageController::class,
+    'users' => API\UserController::class,
+]);
+
+/*Route::apiResources([
+    'chats' => API\MessageController::class,
+    'messages' => MessageController::class,
+    'users' => UserController::class,
+]);*/
