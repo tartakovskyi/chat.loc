@@ -28,7 +28,7 @@ class Chats extends Component {
 	unread (count, id) {
 		if (count) {
 			return (
-				<a href="/chat/{id}">{count}</a>
+				<a href={'/chat/' + id}>{count}</a>
 				);
 		} else {
 			return('0');
@@ -47,7 +47,7 @@ class Chats extends Component {
 						{this.unread(chat.unread, chat.id)}
 					</td>
 					<td>
-						< EditBtn />
+						< EditBtn url={'/chat/' + chat.id + '/edit'} />
 					</td>
 				</tr>   
 				);

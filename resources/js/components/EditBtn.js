@@ -1,15 +1,13 @@
 import React, { Component }  from 'react';
 
 
-const EditBtn = () => {
-
+const EditBtn = (props) => {
 
   return(
-    <button class="btn btn-primary">
-        <svg><use xlinkHref="/storage/img/icons.svg#edit"></use></svg>
-    </button>    
-    
-    )
+    <a href={props.url} className="btn btn-primary">
+        <svg><use xlinkHref="/storage/img/icons.svg#pen"></use></svg>
+    </a>       
+    );
 }
 
-export default EditBtn ;
+export default EditBtn;

@@ -10912,3 +10912,7 @@ h1 {
   height: 15px;
 }
 
+.btn.btn--icon {
+  padding: 6px;
+}
+

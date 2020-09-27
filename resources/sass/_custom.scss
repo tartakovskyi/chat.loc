@@ -7,8 +7,13 @@ h1 {
 }
 
 .btn {
-	svg {
+	& svg {
 		width: 15px;
 		height: 15px;
 	}
+
+	&.btn--icon {
+		padding: 6px;
+	}
 }
+
