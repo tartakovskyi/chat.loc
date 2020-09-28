@@ -15,14 +15,13 @@ class Chats extends Component {
 	}
 	componentDidMount() {
 		
-		axios.get('/api/chats')
+		axios.get('/api/chat')
 		.then((response) => {
 			this.setState({ chats : response.data })
 		})
 		.catch( (error) => {
 			console.log(error);
 		})
-
 	}
 
 	unread (count, id) {
@@ -44,7 +43,7 @@ class Chats extends Component {
 						<a href={'/chat/' + chat.id}>{chat.title}</a>
 					</td>
 					<td className="text-center">
-						{this.unread(chat.unread, chat.id)}
+						{this.unread(chat.messages_count, chat.id)}
 					</td>
 					<td>
 						< EditBtn url={'/chat/' + chat.id + '/edit'} />

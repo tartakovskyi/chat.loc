@@ -37,7 +37,9 @@ class ChatController extends Controller
      */
     public function show(Chat $chat)
     {
-        //
+        //return $chat;
+
+        return response()->json(Chat::with('messages')->whereIn('id', $chat)->get()[0], 200);
     }
 
     /**

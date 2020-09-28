@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::view('/', 'home');
 
 Route::pattern('path', '[a-zA-Z0-9-/]+');
 Route::get( '/{path?}', function( $page ){   

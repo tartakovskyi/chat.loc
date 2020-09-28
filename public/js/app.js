@@ -69916,19 +69916,33 @@ var Chat = /*#__PURE__*/function (_Component) {
 
   var _super = _createSuper(Chat);
 
-  function Chat(id) {
+  function Chat(props) {
     var _this;
 
     _classCallCheck(this, Chat);
 
     _this = _super.call(this);
-    _this.state = {};
+    _this.state = {
+      id: props.match.params.id
+    };
     return _this;
   }
 
   _createClass(Chat, [{
     key: "componentDidMount",
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      axios.get('/api/chat/' + this.state.id).then(function (response) {
+        _this2.setState({
+          chat: response.data
+        });
+
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
   }, {
     key: "render",
     value: function render() {
@@ -70007,7 +70021,7 @@ var Chats = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      axios.get('/api/chats').then(function (response) {
+      axios.get('/api/chat').then(function (response) {
         _this2.setState({
           chats: response.data
         });
@@ -70038,7 +70052,7 @@ var Chats = /*#__PURE__*/function (_Component) {
           href: '/chat/' + chat.id
         }, chat.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           className: "text-center"
-        }, _this3.unread(chat.unread, chat.id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EditBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        }, _this3.unread(chat.messages_count, chat.id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EditBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
           url: '/chat/' + chat.id + '/edit'
         })));
       });

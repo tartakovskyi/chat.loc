@@ -19,9 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resources([
-	'chats' => API\ChatController::class,
-    'messages' => API\MessageController::class,
-    'users' => API\UserController::class,
+	'chat' => API\ChatController::class,
+    'message' => API\MessageController::class,
+    'user' => API\UserController::class,
 ]);
 
 /*Route::apiResources([
