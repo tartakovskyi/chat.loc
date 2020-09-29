@@ -69923,7 +69923,9 @@ var Chat = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this);
     _this.state = {
-      id: props.match.params.id
+      id: props.match.params.id,
+      chat: {},
+      messages: []
     };
     return _this;
   }
@@ -69935,12 +69937,43 @@ var Chat = /*#__PURE__*/function (_Component) {
 
       axios.get('/api/chat/' + this.state.id).then(function (response) {
         _this2.setState({
-          chat: response.data
+          chat: response.data.chat
         });
 
-        console.log(response);
+        _this2.setState({
+          messages: response.data.messages
+        });
+
+        console.log(_this2.state);
       })["catch"](function (error) {
         console.log(error);
+      });
+    }
+  }, {
+    key: "convertDate",
+    value: function convertDate(date) {
+      var newDate = Date.parse(date);
+      return new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "numeric",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      }).format(newDate);
+    }
+  }, {
+    key: "renderMessages",
+    value: function renderMessages() {
+      var _this3 = this;
+
+      return this.state.messages.map(function (message) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: message.id,
+          className: "message rounded mb-4 p-4"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "d-flex justify-content-between mb-3"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, message.user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, _this3.convertDate(message.created_at))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, message.text));
       });
     }
   }, {
@@ -69948,7 +69981,7 @@ var Chat = /*#__PURE__*/function (_Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Test"));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.state.chat.title), this.renderMessages());
     }
   }]);
 

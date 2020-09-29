@@ -10,25 +10,49 @@ class Chat extends Component {
 		super();
 
 		this.state = {
-			id: props.match.params.id
+			id: props.match.params.id,
+			chat: {},
+			messages: []
 		}
 	}
 
 	componentDidMount() {
 		axios.get('/api/chat/' + this.state.id)
 		.then((response) => {
-			this.setState({ chat : response.data });
-			console.log(response);
+			this.setState({ chat : response.data.chat });
+			this.setState({ messages : response.data.messages });
+			console.log(this.state);
 		})
-		.catch( (error) => {
+		.catch((error) => {
 			console.log(error);
 		})
 	}
 
-		render() {
+	convertDate(date) {
+		const newDate = Date.parse(date);
+
+		return new Intl.DateTimeFormat("en-GB", { year: "numeric", month: "numeric", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit"}).format(newDate);
+	}
+
+	renderMessages() {
+		return this.state.messages.map((message) => {
+			return (
+				<div key={message.id} className="message rounded mb-4 p-4">
+					<div className="d-flex justify-content-between mb-3">
+						<b>{message.user.name}</b>
+						<b>{this.convertDate(message.created_at)}</b>
+					</div>
+					<p>{message.text}</p>
+				</div>   
+				);
+		});
+	}
+
+	render() {
 		return (
 			<div className="container">
-				<h1>Test</h1>
+				<h1>{this.state.chat.title}</h1>
+				{this.renderMessages()}	
 			</div>
 			);
 	}
