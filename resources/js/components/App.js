@@ -3,14 +3,34 @@ import Main from './Main';
 import Navigation from './Navigation';
 
 
-const App = () => {
+class App extends Component {
 
-  return ( 
-    <div> 
-    <Navigation /> 
-    <Main /> 
-    </div> 
-    );
+	constructor(props) {
+
+		super();
+
+		this.state = {
+		}
+	}
+
+	componentDidMount() {
+		axios.get('/api/auth')
+		.then((response) => {
+			console.log(response.data);
+		})
+		.catch((error) => {
+			console.log(error);
+		})
+	}
+
+	render() {
+		return ( 
+			<div> 
+				<Navigation /> 
+				<Main /> 
+			</div> 
+			);
+	}
 }
 
 export default App ;

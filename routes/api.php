@@ -18,14 +18,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/auth', function (Request $request) {
+    return dd($request->user());
+});
+
 Route::resources([
 	'chat' => API\ChatController::class,
     'message' => API\MessageController::class,
     'user' => API\UserController::class,
 ]);
 
-/*Route::apiResources([
-    'chats' => API\MessageController::class,
-    'messages' => MessageController::class,
-    'users' => UserController::class,
-]);*/
