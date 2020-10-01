@@ -15,16 +15,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+	return $request->user();
 });
 
-Route::get('/auth', function (Request $request) {
-    return dd($request->user());
+Route::group(['namespace' => 'Api'], function () {
+	
+	Route::group(['namespace' => 'Auth'], function () {
+		Route::post('register', 'RegisterController');
+		Route::post('login', 'LoginController');
+		Route::post('logout', 'LogoutController')->middleware('auth:api');
+	});
+
+	Route::resources([
+		'chat' => ChatController::class,
+		'message' => MessageController::class,
+		'user' => UserController::class,
+	]);
 });
 
-Route::resources([
-	'chat' => API\ChatController::class,
-    'message' => API\MessageController::class,
-    'user' => API\UserController::class,
-]);
 
