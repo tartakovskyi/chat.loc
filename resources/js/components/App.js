@@ -14,7 +14,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('/api/auth')
+		axios.get('/api/user')
 		.then((response) => {
 			console.log(response.data);
 		})
