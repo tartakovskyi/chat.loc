@@ -2,6 +2,7 @@ import React, { Component }  from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Chat from './Chat';
 import Chats from './Chats';
+import Login from './Login';
 
 
 class Main extends Component {
@@ -22,16 +23,16 @@ class Main extends Component {
 		if (sessionStorage.getItem('token')) {
 			return (
 				<main>
-				<Switch>
-				<Route path='/chat/:id' component={Chat}/>
-				<Route path='/' component={Chats}/>
-				</Switch>
+					<Switch>
+						<Route path='/chat/:id' component={Chat}/>
+						<Route path='/' component={Chats}/>
+					</Switch>
 				</main>
 			);
 		} else {
 			return (
 				<main>
-				<Login />
+					<Login />
 				</main>
 			);
 		}

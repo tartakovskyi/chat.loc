@@ -14,7 +14,9 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('/api/auth')
+		axios.get('/api/current',{
+			headers: {'Authorization' : 'Bearer ' + sessionStorage.getItem('token')}
+		})
 		.then((response) => {
 			console.log(response.data);
 		})
@@ -26,11 +28,11 @@ class App extends Component {
 	render() {
 		return ( 
 			<div> 
-				<Navigation /> 
-				<Main /> 
+			<Navigation /> 
+			<Main /> 
 			</div> 
 			);
+		}
 	}
-}
 
-export default App ;
+	export default App ;

@@ -8,7 +8,9 @@ class Login extends Component {
 		super();
 
 		this.state = {
-			
+			email: null,
+			password: null,
+			remember_me: null			
 		}
 	}
 
@@ -19,11 +21,13 @@ class Login extends Component {
 		event.preventDefault();
 
 		axios.post('/api/login', {
-			firstName: 'Fred',
-			lastName: 'Flintstone'
+			email: event.target.email.value,
+			password: event.target.password.value,
+			remember_me: 0
 		})
 		.then(function (response) {
-			console.log(response);
+			sessionStorage.setItem('token', response.data.token);
+			sessionStorage.setItem('token_expires', response.data.expires_at);
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -34,21 +38,22 @@ class Login extends Component {
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<label>
-					<span>Login:</span>
-					<input type="text" value={this.state.value} name="login" />
+					<span>E-mail:</span>
+					<input type="text" name="email" />
 				</label>
 				<label>
 					<span>Password:</span>
-					<input type="text" value="" name="password" />
+					<input type="text" name="password" />
 				</label>
 				<label>
 					<span>Remember me:</span>
-					<input type="text" value={this.state.value} name="remember_me" />
+					<input type="checkbox" name="remember_me" />
 				</label>
+				<button type="submit">Submit</button>	
 			</form>
 			
 			);
 	}
 }
 
-export default Chat;
+export default Login;
