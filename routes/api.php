@@ -16,16 +16,25 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+	return $request->user();
 });
 
-Route::get('/auth', function (Request $request) {
-    return dd($request->user('api'));
+Route::group(['namespace' => 'Api'], function () {
+	
+	Route::group(['namespace' => 'Auth'], function () {
+		Route::post('register', 'RegisterController');
+		Route::post('login', 'LoginController');
+		Route::post('logout', 'LogoutController')->middleware('auth:api');
+		Route::middleware('auth:api')->get('current', function (Request $request) {
+			return $request->user();
+		});
+	});
+
+	Route::resources([
+		'chat' => ChatController::class,
+		'message' => MessageController::class,
+		'user' => UserController::class,
+	]);
 });
 
-Route::resources([
-	'chat' => API\ChatController::class,
-    'message' => API\MessageController::class,
-    'user' => API\UserController::class,
-]);
 

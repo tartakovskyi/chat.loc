@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+/*Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::view('/', 'home');
@@ -22,5 +22,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get( '/{path?}', function( $page ){
 		return view('home');
 	})->name('home');
-});
+});*/
+
+
+Route::view('/', 'home');
+
+Route::pattern('path', '[a-zA-Z0-9-/]+');
+Route::get( '/{path?}', function( $page ){
+	return view('home');
+})->name('home');
 
