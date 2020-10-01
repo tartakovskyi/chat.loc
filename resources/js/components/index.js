@@ -1,6 +1,9 @@
 import React, { Component }  from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import todoApp from './reducers'
 import App from './App';
 
 class index extends Component {
@@ -13,10 +16,11 @@ class index extends Component {
 		}
 	}
 
-	componentDidMount() {
-	}
+	componentDidMount() {}
 
 }
+
+const store = createStore(todoApp);
 
 export default index;
 
@@ -26,7 +30,9 @@ export default index;
 if (document.getElementById('app')) {
 	ReactDOM.render (( 
 		<BrowserRouter> 
-		<App /> 
+		<Provider store={store}>
+			<App />
+		</Provider> 
 		</BrowserRouter> 
 		), document.getElementById ('app'));
 }
