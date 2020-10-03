@@ -2,8 +2,7 @@ import React, { Component }  from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import todoApp from './reducers'
+import store from './store/store';
 import App from './App';
 
 class index extends Component {
@@ -14,25 +13,22 @@ class index extends Component {
 
 		this.state = {
 		}
+
 	}
 
 	componentDidMount() {}
 
 }
 
-const store = createStore(todoApp);
-
 export default index;
 
-/* The if statement is required so as to Render the component on pages that have a div with an ID of "root";  
-*/
 
 if (document.getElementById('app')) {
 	ReactDOM.render (( 
 		<BrowserRouter> 
-		<Provider store={store}>
-			<App />
-		</Provider> 
+			<Provider store={store}>
+				<App />
+			</Provider> 
 		</BrowserRouter> 
-		), document.getElementById ('app'));
+	), document.getElementById ('app'));
 }

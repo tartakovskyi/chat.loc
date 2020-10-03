@@ -1,4 +1,5 @@
 import React, { Component }  from 'react';
+import { connect } from 'react-redux';
 import Axios  from 'axios';
 import EditBtn from './EditBtn';
 
@@ -26,6 +27,8 @@ class Chat extends Component {
 		.catch((error) => {
 			console.log(error);
 		})
+
+		console.log('chat: ' + Date.now())
 	}
 
 	convertDate(date) {
@@ -58,4 +61,11 @@ class Chat extends Component {
 	}
 }
 
-export default Chat;
+
+export default connect(
+	state => ({
+		auth: state.auth
+	}),
+	dispatch => ({ 
+	})
+	)(Chat);
