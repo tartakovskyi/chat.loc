@@ -32,8 +32,6 @@ class App extends Component {
 				console.log(error);
 			})
 		}
-		console.log('test');
-		console.log(this.props.is_auth);
 
 	}
 
@@ -56,34 +54,16 @@ class App extends Component {
 	}
 }
 
-const mergeProps = (stateProps, dispatchProps) => {
-    const { play } = stateProps;
-    const { dispatch } = dispatchProps;
+const mapStateToProps = state => {
+  return state
+}
 
-    const toggle = () => {
-        dispatch(togglePlay());
-        if (play != true) {
-            this.playAction();
-        } else {
-            this.stopAction();
-        }
-    };
-
-    return {
-        play: play,
-        togglePlay: () => {
-            toggle();
-        }
-    };
-};
-
-export default connect(
-	state => ({
-		is_auth: state.is_auth
-	}),
-	dispatch => ({ 
-		onGetAuth : (auth) => {
+const mapDispatchToProps = dispatch => {
+  return {
+    onGetAuth : (auth) => {
 			dispatch({ type: 'GET_AUTH', payload: auth })
 		}
-	})
-)(App);
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
