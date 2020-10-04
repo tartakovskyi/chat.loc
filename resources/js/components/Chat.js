@@ -22,13 +22,12 @@ class Chat extends Component {
 		.then((response) => {
 			this.setState({ chat : response.data.chat });
 			this.setState({ messages : response.data.messages });
-			console.log(this.state);
 		})
 		.catch((error) => {
 			console.log(error);
 		})
 
-		console.log('chat: ' + Date.now())
+		
 	}
 
 	convertDate(date) {
@@ -52,7 +51,9 @@ class Chat extends Component {
 	}
 
 	render() {
+		console.log(this.props);
 		return (
+
 			<div className="container">
 				<h1>{this.state.chat.title}</h1>
 				{this.renderMessages()}	
@@ -64,7 +65,8 @@ class Chat extends Component {
 
 export default connect(
 	state => ({
-		auth: state.auth
+		auth: state.auth,
+		is_auth: state.is_auth
 	}),
 	dispatch => ({ 
 	})

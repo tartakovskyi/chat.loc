@@ -25,13 +25,15 @@ class App extends Component {
 				headers: {'Authorization' : 'Bearer ' + sessionStorage.getItem('token')}
 			})
 			.then((response) => {
-				this.props.onGetAuth({auth: response.data});
+				this.props.onGetAuth(response.data);
 				
 			})
 			.catch((error) => {
 				console.log(error);
 			})
 		}
+		console.log('test');
+		console.log(this.props.is_auth);
 
 	}
 
@@ -42,15 +44,38 @@ class App extends Component {
 
 
 	render() {
+
 		if (this.props.is_auth == false) this.authRequest();
+
 		return ( 
 			<div>
 			<Navigation /> 
 			<Main /> 
 			</div> 
-			);
+		);
 	}
 }
+
+const mergeProps = (stateProps, dispatchProps) => {
+    const { play } = stateProps;
+    const { dispatch } = dispatchProps;
+
+    const toggle = () => {
+        dispatch(togglePlay());
+        if (play != true) {
+            this.playAction();
+        } else {
+            this.stopAction();
+        }
+    };
+
+    return {
+        play: play,
+        togglePlay: () => {
+            toggle();
+        }
+    };
+};
 
 export default connect(
 	state => ({
@@ -61,4 +86,4 @@ export default connect(
 			dispatch({ type: 'GET_AUTH', payload: auth })
 		}
 	})
-	)(App);
+)(App);
