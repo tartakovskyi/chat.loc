@@ -77,13 +77,18 @@ const mergeProps = (stateProps, dispatchProps) => {
     };
 };
 
-export default connect(
-	state => ({
+
+const mapStateToProps = function(state) {
+	return {
 		is_auth: state.is_auth
-	}),
-	dispatch => ({ 
-		onGetAuth : (auth) => {
-			dispatch({ type: 'GET_AUTH', payload: auth })
-		}
-	})
-)(App);
+	}
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+	return {
+		onGetAuth: (auth) => dispatch({ type: 'GET_AUTH', payload: auth }),
+		dispatch
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

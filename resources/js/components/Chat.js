@@ -63,11 +63,11 @@ class Chat extends Component {
 }
 
 
-export default connect(
-	state => ({
+const mapStateToProps = function(state) {
+	return {
 		auth: state.auth,
 		is_auth: state.is_auth
-	}),
-	dispatch => ({ 
-	})
-	)(Chat);
+	}
+}
+
+export default connect(mapStateToProps)(Chat);
