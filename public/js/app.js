@@ -72329,13 +72329,9 @@ var App = /*#__PURE__*/function (_Component) {
   var _super = _createSuper(App);
 
   function App(props) {
-    var _this;
-
     _classCallCheck(this, App);
 
-    _this = _super.call(this, props);
-    _this.state = {};
-    return _this;
+    return _super.call(this, props);
   }
 
   _createClass(App, [{
@@ -72344,9 +72340,7 @@ var App = /*#__PURE__*/function (_Component) {
   }, {
     key: "authRequest",
     value: function authRequest() {
-      var _this2 = this;
-
-      console.log('auth: ' + Date.now());
+      var _this = this;
 
       if (this.checkToken()) {
         axios.get('/api/current', {
@@ -72354,9 +72348,7 @@ var App = /*#__PURE__*/function (_Component) {
             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
           }
         }).then(function (response) {
-          _this2.props.onGetAuth({
-            auth: response.data
-          });
+          _this.props.onGetAuth(response.data);
         })["catch"](function (error) {
           console.log(error);
         });
@@ -72378,20 +72370,24 @@ var App = /*#__PURE__*/function (_Component) {
   return App;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(function (state) {
+var mapStateToProps = function mapStateToProps(state) {
   return {
     is_auth: state.is_auth
   };
-}, function (dispatch) {
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
   return {
     onGetAuth: function onGetAuth(auth) {
-      dispatch({
+      return dispatch({
         type: 'GET_AUTH',
         payload: auth
       });
     }
   };
-})(App));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(App));
 
 /***/ }),
 
@@ -72469,12 +72465,9 @@ var Chat = /*#__PURE__*/function (_Component) {
         _this2.setState({
           messages: response.data.messages
         });
-
-        console.log(_this2.state);
       })["catch"](function (error) {
         console.log(error);
       });
-      console.log('chat: ' + Date.now());
     }
   }, {
     key: "convertDate",
@@ -72506,6 +72499,8 @@ var Chat = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      console.log('chatRender');
+      console.log(this.props.auth);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.state.chat.title), this.renderMessages());
@@ -72515,13 +72510,14 @@ var Chat = /*#__PURE__*/function (_Component) {
   return Chat;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(function (state) {
+var mapStateToProps = function mapStateToProps(state) {
   return {
-    auth: state.auth
+    auth: state.auth,
+    is_auth: state.is_auth
   };
-}, function (dispatch) {
-  return {};
-})(Chat));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(Chat));
 
 /***/ }),
 
@@ -72536,9 +72532,10 @@ var Chat = /*#__PURE__*/function (_Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _EditBtn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EditBtn */ "./resources/js/components/EditBtn.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _EditBtn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EditBtn */ "./resources/js/components/EditBtn.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -72560,6 +72557,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -72607,10 +72605,21 @@ var Chats = /*#__PURE__*/function (_Component) {
       }
     }
   }, {
+    key: "editBtn",
+    value: function editBtn(chat) {
+      if (chat.user.id == this.props.auth.id) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EditBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          url: '/chat/' + chat.id + '/edit'
+        });
+      }
+    }
+  }, {
     key: "renderChats",
     value: function renderChats() {
       var _this3 = this;
 
+      console.log('chatRender');
+      console.log(this.props);
       return this.state.chats.map(function (chat, index) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: index
@@ -72618,9 +72627,7 @@ var Chats = /*#__PURE__*/function (_Component) {
           href: '/chat/' + chat.id
         }, chat.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           className: "text-center"
-        }, _this3.unread(chat.messages_count, chat.id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EditBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          url: '/chat/' + chat.id + '/edit'
-        })));
+        }, _this3.unread(chat.messages_count, chat.id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, _this3.editBtn(chat)));
       });
     }
   }, {
@@ -72639,7 +72646,14 @@ var Chats = /*#__PURE__*/function (_Component) {
   return Chats;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Chats);
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+    is_auth: state.is_auth
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(Chats));
 
 /***/ }),
 
@@ -72999,17 +73013,20 @@ if (document.getElementById('app')) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 
-var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(reducer);
+var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(reducer); //let initialState = {is_auth : false};
 
 function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    is_auth: false
+    is_auth: false,
+    auth: null
   };
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   if (action.type === 'GET_AUTH') {
-    state.auth = action.payload;
-    state.is_auth = true;
+    return {
+      auth: action.payload,
+      is_auth: true
+    };
   }
 
   return state;

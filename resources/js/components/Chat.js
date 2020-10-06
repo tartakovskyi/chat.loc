@@ -26,8 +26,6 @@ class Chat extends Component {
 		.catch((error) => {
 			console.log(error);
 		})
-
-		
 	}
 
 	convertDate(date) {
@@ -46,14 +44,15 @@ class Chat extends Component {
 					</div>
 					<p>{message.text}</p>
 				</div>   
-				);
+			);
 		});
 	}
 
 	render() {
-		console.log(this.props);
-		return (
 
+		console.log('chatRender');
+		console.log(this.props.auth);
+		return (
 			<div className="container">
 				<h1>{this.state.chat.title}</h1>
 				{this.renderMessages()}	
@@ -62,8 +61,12 @@ class Chat extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-  return state
+
+const mapStateToProps = (state) => {
+	return {
+		auth: state.auth,
+		is_auth: state.is_auth
+	}
 }
 
 export default connect(mapStateToProps)(Chat);

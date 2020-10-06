@@ -2,14 +2,17 @@ import { createStore } from 'redux';
 
 const store = createStore(reducer);
 
-function reducer(state = {is_auth : false}, action) {
+//let initialState = {is_auth : false};
+
+function reducer(state = {is_auth : false, auth: null}, action) {
   if (action.type === 'GET_AUTH') {
-    state.auth = action.payload;
-    state.is_auth = true;
+    return {
+       auth: action.payload,
+       is_auth: true
+    }
   }
   return state;
 }
-
 
 
 export default store;
