@@ -2,7 +2,8 @@ import React, { Component }  from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './store/store';
+import configureStore from './store/configureStore';
+//import store from './store/store';
 import App from './App';
 
 class index extends Component {
@@ -19,6 +20,8 @@ class index extends Component {
 	componentDidMount() {}
 
 }
+
+const store = configureStore();
 
 export default index;
 
