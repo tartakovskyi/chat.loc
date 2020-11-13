@@ -73069,7 +73069,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function configureStore() {
-  var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["compose"])(Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]), Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_logger__WEBPACK_IMPORTED_MODULE_2___default()()))(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_3__["rootReducer"]);
+  var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["compose"])(Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]), Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(Object(redux_logger__WEBPACK_IMPORTED_MODULE_2__["createLogger"])()))(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_3__["rootReducer"]);
 
   if (false) {}
 
@@ -73153,7 +73153,7 @@ function user() {
     case _constants__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_SUCCESS"]:
       return {};
 
-    case GET_AUTH:
+    case _constants__WEBPACK_IMPORTED_MODULE_0__["GET_AUTH"]:
       return {
         auth: action.payload,
         is_auth: true

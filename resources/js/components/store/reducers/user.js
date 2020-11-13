@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../constants'
+import { LOGIN_REQUEST, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, GET_AUTH } from '../constants'
 
 const initialState = {is_auth : false, auth: null};
 

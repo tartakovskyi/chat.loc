@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../constants/User'
+import { LOGIN_REQUEST, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, GET_AUTH }  from './constants';
 
 export function login(payload) {
   // TODO
