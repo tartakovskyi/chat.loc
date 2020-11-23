@@ -1,17 +1,16 @@
-import React, { Component }  from 'react';
+import React, { Component, createContext }  from 'react';
 import Main from './Main';
 import Navigation from './Navigation';
 
+export const AppContext = createContext();
 
 class App extends Component {
 
 	constructor(props) {
 
 		super();
-
-		this.state = {
-		}
 	}
+
 
 	componentDidMount() {
 		axios.get('/api/current',{
@@ -25,12 +24,15 @@ class App extends Component {
 		})
 	}
 
+
 	render() {
 		return ( 
+			<AppContext.Provider value={this.state}>
 			<div> 
 			<Navigation /> 
 			<Main /> 
-			</div> 
+			</div>
+			</AppContext.Provider>
 			);
 		}
 	}
