@@ -9,19 +9,21 @@ class App extends Component {
 	constructor(props) {
 
 		super(props);
+		if (this.props.is_auth == false) this.authRequest();
 	}
 
 	componentDidMount() {
 		
 	}
 
-	authRequest() {
+	async authRequest() {
 		if (this.checkToken()) {
-			axios.get('/api/current',{
+			await axios.get('/api/current',{
 				headers: {'Authorization' : 'Bearer ' + sessionStorage.getItem('token')}
 			})
 			.then((response) => {
-				this.props.onGetAuth(response.data);				
+				this.props.onGetAuth(response.data);	
+				console.log(response.data)			
 			})
 			.catch((error) => {
 				console.log(error);
@@ -35,8 +37,6 @@ class App extends Component {
 
 	render() {
 
-		if (this.props.is_auth == false) this.authRequest();
-
 		return ( 
 			<div>
 			<Navigation /> 
@@ -47,9 +47,11 @@ class App extends Component {
 }
 
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function(state) {/*
+	console.log('App.mapStateToProps')
+	console.log(state)*/
 	return {
-		is_auth: state.is_auth
+		is_auth: state.user.is_auth
 	}
 }
 

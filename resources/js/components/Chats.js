@@ -6,9 +6,9 @@ import EditBtn from './EditBtn';
 
 class Chats extends Component {
 
-	constructor() {
+	constructor(props) {
 
-		super();
+		super(props);
 
 		this.state = {
 			chats: []
@@ -46,8 +46,6 @@ class Chats extends Component {
 	}
 
 	renderChats() {
-		console.log('chatRender');
-		console.log(this.props);
 		return this.state.chats.map((chat, index) => {
 			return (
 				<tr key={index}>
@@ -87,9 +85,12 @@ class Chats extends Component {
 }
 
 const mapStateToProps = function(state) {
+	console.log('mapStateToProps')
+	console.log(state)
+
 	return {
-		auth: state.auth,
-		is_auth: state.is_auth
+		auth: state.user.auth,
+		is_auth: state.user.is_auth
 	}
 }
 
