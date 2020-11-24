@@ -8,15 +8,20 @@ class App extends Component {
 
 	constructor(props) {
 
-		super();
+		super(props);
+
+		this.state = {
+			loggedUser: null
+		}
 	}
 
-
-	componentDidMount() {
+	getCurrentUser() {
 		axios.get('/api/current',{
 			headers: {'Authorization' : 'Bearer ' + sessionStorage.getItem('token')}
 		})
 		.then((response) => {
+			this.setState({loggedUser: response.data})
+			console.log('Запрос')
 			console.log(response.data);
 		})
 		.catch((error) => {
@@ -25,16 +30,24 @@ class App extends Component {
 	}
 
 
-	render() {
-		return ( 
-			<AppContext.Provider value={this.state}>
-			<div> 
-			<Navigation /> 
-			<Main /> 
-			</div>
-			</AppContext.Provider>
-			);
-		}
+	componentDidMount() {
+		
 	}
 
-	export default App ;
+
+	render() {
+		if (!this.state.loggedUser) {
+			this.getCurrentUser();
+		}
+		return ( 
+			<AppContext.Provider value={this.state}>
+				<div> 
+					<Navigation /> 
+					<Main /> 
+				</div>
+			</AppContext.Provider>
+		);
+	}
+}
+
+export default App ;

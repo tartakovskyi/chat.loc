@@ -1,6 +1,7 @@
 import React, { Component }  from 'react';
 import Axios  from 'axios';
 import EditBtn from './EditBtn';
+import { AppContext } from './App';
 
 
 class Chats extends Component {
@@ -46,14 +47,16 @@ class Chats extends Component {
 						{this.unread(chat.messages_count, chat.id)}
 					</td>
 					<td>
-						< EditBtn url={'/chat/' + chat.id + '/edit'} />
+						<EditBtn url={'/chat/' + chat.id + '/edit'} />
 					</td>
 				</tr>   
-				);
+			);
 		});
 	}
 
 	render() {
+		console.log('Полученный контекст');
+		console.log(this.context);
 		return (
 			<div className="container">
 				<h1>All Chats</h1>
@@ -70,8 +73,10 @@ class Chats extends Component {
 					</tbody>
 				</table>
 			</div>
-			);
+		);
 	}
 }
+
+Chats.contextType = AppContext;
 
 export default Chats;

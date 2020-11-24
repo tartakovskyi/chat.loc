@@ -21,7 +21,6 @@ class Chat extends Component {
 		.then((response) => {
 			this.setState({ chat : response.data.chat });
 			this.setState({ messages : response.data.messages });
-			console.log(this.state);
 		})
 		.catch((error) => {
 			console.log(error);
