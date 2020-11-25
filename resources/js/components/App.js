@@ -1,8 +1,11 @@
-import React, { Component, createContext }  from 'react';
+import React, { Component }  from 'react';
 import Main from './Main';
 import Navigation from './Navigation';
 
-export const AppContext = React.createContext();
+const AppContext = React.createContext();
+const TestContext = 'test';
+console.log(AppContext, TestContext)
+export {AppContext, TestContext}
 
 class App extends Component {
 

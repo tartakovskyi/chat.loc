@@ -69,13 +69,6 @@ class Chats extends Component {
 					</thead>
 					<tbody>
 						{ this.renderChats() }
-						<AppContext.Consumer>
-							{(props) => {
-								console.log('Полученный контекст');
-								console.log(this.context);
-								this.renderChats()
-							}}
-						</AppContext.Consumer>
 					</tbody>
 				</table>
 			</div>

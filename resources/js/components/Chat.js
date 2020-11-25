@@ -1,7 +1,7 @@
 import React, { Component }  from 'react';
 import Axios  from 'axios';
 import EditBtn from './EditBtn';
-
+import { AppContext,TestContext } from './App';
 
 class Chat extends Component {
 
@@ -56,5 +56,10 @@ class Chat extends Component {
 			);
 	}
 }
+console.log('test')
+console.log(TestContext);
+
+Chat.contextType = AppContext;
 
 export default Chat;
+
