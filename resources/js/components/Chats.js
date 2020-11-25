@@ -55,8 +55,7 @@ class Chats extends Component {
 	}
 
 	render() {
-		console.log('Полученный контекст');
-		console.log(this.context);
+		
 		return (
 			<div className="container">
 				<h1>All Chats</h1>
@@ -70,6 +69,13 @@ class Chats extends Component {
 					</thead>
 					<tbody>
 						{ this.renderChats() }
+						<AppContext.Consumer>
+							{(props) => {
+								console.log('Полученный контекст');
+								console.log(this.context);
+								this.renderChats()
+							}}
+						</AppContext.Consumer>
 					</tbody>
 				</table>
 			</div>

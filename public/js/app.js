@@ -69885,7 +69885,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var AppContext = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"])();
+var AppContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createContext();
 
 var App = /*#__PURE__*/function (_Component) {
   _inherits(App, _Component);
@@ -69898,15 +69898,27 @@ var App = /*#__PURE__*/function (_Component) {
     _classCallCheck(this, App);
 
     _this = _super.call(this, props);
-    _this.state = {
-      loggedUser: null
-    };
+    _this.state = {};
     return _this;
   }
+  /*getCurrentUser() {
+  	axios.get('/api/current',{
+  		headers: {'Authorization' : 'Bearer ' + sessionStorage.getItem('token')}
+  	})
+  	.then((response) => {
+  		this.setState({loggedUser: response.data})
+  		console.log('Запрос')
+  		console.log(response.data);
+  	})
+  	.catch((error) => {
+  		console.log(error);
+  	})
+  }*/
+
 
   _createClass(App, [{
-    key: "getCurrentUser",
-    value: function getCurrentUser() {
+    key: "componentDidMount",
+    value: function componentDidMount() {
       var _this2 = this;
 
       axios.get('/api/current', {
@@ -69925,17 +69937,13 @@ var App = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {}
-  }, {
     key: "render",
     value: function render() {
-      if (!this.state.loggedUser) {
-        this.getCurrentUser();
-      }
-
+      var loggedUser = this.state.loggedUser ? this.state.loggedUser : 0;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AppContext.Provider, {
-        value: this.state
+        value: {
+          loggedUser: loggedUser
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navigation__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Main__WEBPACK_IMPORTED_MODULE_1__["default"], null)));
     }
   }]);
@@ -70169,15 +70177,20 @@ var Chats = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log('Полученный контекст');
-      console.log(this.context);
+      var _this4 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "All Chats"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "table table-striped table-borderless"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Chat"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         className: "text-center"
-      }, "New Messages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.renderChats())));
+      }, "New Messages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.renderChats(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_App__WEBPACK_IMPORTED_MODULE_3__["AppContext"].Consumer, null, function (props) {
+        console.log('Полученный контекст');
+        console.log(_this4.context);
+
+        _this4.renderChats();
+      }))));
     }
   }]);
 
