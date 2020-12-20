@@ -1,9 +1,9 @@
 import React, { Component }  from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-//import store from './store/store';
+import {createBrowserHistory} from 'history';
 import App from './App';
 
 class index extends Component {
@@ -23,15 +23,17 @@ class index extends Component {
 
 const store = configureStore();
 
+const browserHistory = createBrowserHistory();
+
 export default index;
 
 
 if (document.getElementById('app')) {
 	ReactDOM.render (( 
-		<BrowserRouter> 
+		<Router history={browserHistory}> 
 			<Provider store={store}>
 				<App />
 			</Provider> 
-		</BrowserRouter> 
+		</Router> 
 	), document.getElementById ('app'));
 }

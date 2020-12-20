@@ -50,8 +50,6 @@ class Chat extends Component {
 
 	render() {
 
-		console.log('chatRender');
-		console.log(this.props.auth);
 		return (
 			<div className="container">
 				<h1>{this.state.chat.title}</h1>
@@ -62,10 +60,10 @@ class Chat extends Component {
 }
 
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({auth,is_auth}) => {
 	return {
-		auth: state.auth,
-		is_auth: state.is_auth
+		auth: auth,
+		is_auth: is_auth
 	}
 }
 

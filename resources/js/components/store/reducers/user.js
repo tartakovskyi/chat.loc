@@ -19,16 +19,12 @@ export default function user(state = initialState, action) {
 		case GET_AUTH:
 		console.log('test')
 		console.log(action.payload)
-		/*return {
+		return {
+			...state,
 			auth: action.payload,
 			is_auth: true
-		}*/
-
-		return Object.assign({}, state, {
-        auth: action.payload,
-			is_auth: true
-      })
-
+		}
+		
 		default:
 		return state
 	}

@@ -28,6 +28,7 @@ class Login extends Component {
 		.then(function (response) {
 			sessionStorage.setItem('token', response.data.token);
 			sessionStorage.setItem('token_expires', response.data.expires_at);
+			props.history.push('/chats')
 		})
 		.catch(function (error) {
 			console.log(error);
