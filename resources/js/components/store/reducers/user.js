@@ -17,13 +17,8 @@ export default function user(state = initialState, action) {
 		return {}
 
 		case GET_AUTH:
-		console.log('test')
-		console.log(action.payload)
-		return {
-			...state,
-			auth: action.payload,
-			is_auth: true
-		}
+		state = {is_auth : true, auth: action.payload}
+		return state
 		
 		default:
 		return state

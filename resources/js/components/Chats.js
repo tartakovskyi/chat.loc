@@ -16,7 +16,6 @@ class Chats extends Component {
 	}
 
 	componentDidMount() {
-		
 		axios.get('/api/chat')
 		.then((response) => {
 			this.setState({ chats : response.data })
@@ -38,7 +37,8 @@ class Chats extends Component {
 	}
 
 	editBtn(chat) {
-		if (chat.user.id == this.props.auth.id) {
+		if (this.props.auth && chat.user_id == this.props.auth.id) {
+
 			return (
 				<EditBtn url={'/chat/' + chat.id + '/edit'} />
 			);
@@ -84,13 +84,13 @@ class Chats extends Component {
 	}
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function({user}) {
 	console.log('mapStateToProps')
-	console.log(state)
+	console.log(user)
 
 	return {
-		auth: state.user.auth,
-		is_auth: state.user.is_auth
+		auth: user.auth,
+		is_auth: user.is_auth
 	}
 }
 

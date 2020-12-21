@@ -11,9 +11,9 @@ class App extends Component {
 		super(props);
 	}
 
-	componentDidMount() {
+	componentDidMount(props) {
 
-		if (this.props.is_auth == false) {
+		if (this.props.is_auth !== true) {
 			if (this.checkToken()) {
 				axios.get('/api/current',{
 					headers: {'Authorization' : 'Bearer ' + sessionStorage.getItem('token')}
@@ -45,15 +45,17 @@ class App extends Component {
 }
 
 
-const mapStateToProps = function({is_auth}) {
+const mapStateToProps = function({user}) {
 	return {
-		is_auth: is_auth
+		is_auth: user.is_auth
 	}
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
-		onGetAuth: (auth) => dispatch({ type: 'GET_AUTH', payload: auth })
+		onGetAuth: (auth) => {
+			dispatch({ type: 'GET_AUTH', payload: auth })
+		}
 	}
 }
 

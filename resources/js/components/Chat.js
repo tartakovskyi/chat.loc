@@ -60,10 +60,11 @@ class Chat extends Component {
 }
 
 
-const mapStateToProps = ({auth,is_auth}) => {
+const mapStateToProps = (state) => {
+	debugger
 	return {
-		auth: auth,
-		is_auth: is_auth
+		auth: state.user.auth,
+		is_auth: state.user.is_auth
 	}
 }
 
