@@ -1,6 +1,9 @@
 import React, { Component }  from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import configureStore from './store/configureStore';
+import {createBrowserHistory} from 'history';
 import App from './App';
 
 class index extends Component {
@@ -11,22 +14,26 @@ class index extends Component {
 
 		this.state = {
 		}
+
 	}
 
-	componentDidMount() {
-	}
+	componentDidMount() {}
 
 }
 
+const store = configureStore();
+
+const browserHistory = createBrowserHistory();
+
 export default index;
 
-/* The if statement is required so as to Render the component on pages that have a div with an ID of "root";  
-*/
 
 if (document.getElementById('app')) {
 	ReactDOM.render (( 
-		<BrowserRouter> 
-		<App /> 
-		</BrowserRouter> 
-		), document.getElementById ('app'));
+		<Router history={browserHistory}> 
+			<Provider store={store}>
+				<App />
+			</Provider> 
+		</Router> 
+	), document.getElementById ('app'));
 }

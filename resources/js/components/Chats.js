@@ -1,20 +1,21 @@
 import React, { Component }  from 'react';
+import { connect } from 'react-redux';
 import Axios  from 'axios';
 import EditBtn from './EditBtn';
 
 
 class Chats extends Component {
 
-	constructor() {
+	constructor(props) {
 
-		super();
+		super(props);
 
 		this.state = {
 			chats: []
 		}
 	}
+
 	componentDidMount() {
-		
 		axios.get('/api/chat')
 		.then((response) => {
 			this.setState({ chats : response.data })
@@ -35,6 +36,15 @@ class Chats extends Component {
 
 	}
 
+	editBtn(chat) {
+		if (this.props.auth && chat.user_id == this.props.auth.id) {
+
+			return (
+				<EditBtn url={'/chat/' + chat.id + '/edit'} />
+			);
+		}
+	}
+
 	renderChats() {
 		return this.state.chats.map((chat, index) => {
 			return (
@@ -46,7 +56,7 @@ class Chats extends Component {
 						{this.unread(chat.messages_count, chat.id)}
 					</td>
 					<td>
-						< EditBtn url={'/chat/' + chat.id + '/edit'} />
+						{this.editBtn(chat)}
 					</td>
 				</tr>   
 				);
@@ -74,4 +84,14 @@ class Chats extends Component {
 	}
 }
 
-export default Chats;
+const mapStateToProps = function({user}) {
+	console.log('mapStateToProps')
+	console.log(user)
+
+	return {
+		auth: user.auth,
+		is_auth: user.is_auth
+	}
+}
+
+export default connect(mapStateToProps)(Chats);

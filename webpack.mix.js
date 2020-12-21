@@ -12,4 +12,5 @@ const mix = require('laravel-mix');
  */
 
 mix.react('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .extract(['axios','bootstrap','jquery','lodash',"popper.js",'react','react-dom','react-router']);

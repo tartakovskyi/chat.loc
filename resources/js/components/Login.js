@@ -23,11 +23,12 @@ class Login extends Component {
 		axios.post('/api/login', {
 			email: event.target.email.value,
 			password: event.target.password.value,
-			remember_me: 0
+			remember_me: 1
 		})
 		.then(function (response) {
 			sessionStorage.setItem('token', response.data.token);
 			sessionStorage.setItem('token_expires', response.data.expires_at);
+			props.history.push('/chats')
 		})
 		.catch(function (error) {
 			console.log(error);

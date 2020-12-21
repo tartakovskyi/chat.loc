@@ -1,4 +1,5 @@
 import React, { Component }  from 'react';
+import { connect } from 'react-redux';
 import Axios  from 'axios';
 import EditBtn from './EditBtn';
 
@@ -21,7 +22,6 @@ class Chat extends Component {
 		.then((response) => {
 			this.setState({ chat : response.data.chat });
 			this.setState({ messages : response.data.messages });
-			console.log(this.state);
 		})
 		.catch((error) => {
 			console.log(error);
@@ -44,11 +44,12 @@ class Chat extends Component {
 					</div>
 					<p>{message.text}</p>
 				</div>   
-				);
+			);
 		});
 	}
 
 	render() {
+
 		return (
 			<div className="container">
 				<h1>{this.state.chat.title}</h1>
@@ -58,4 +59,13 @@ class Chat extends Component {
 	}
 }
 
-export default Chat;
+
+const mapStateToProps = (state) => {
+	debugger
+	return {
+		auth: state.user.auth,
+		is_auth: state.user.is_auth
+	}
+}
+
+export default connect(mapStateToProps)(Chat);
