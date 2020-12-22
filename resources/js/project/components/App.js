@@ -1,47 +1,37 @@
-import React, { Component }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import { connect } from 'react-redux';
 import Main from './Main';
 import Navigation from './Navigation';
 
 
-class App extends Component {
+const App = ({is_auth, onGetAuth}) => {
 
-	constructor(props) {
-
-		super(props);
-	}
-
-	componentDidMount(props) {
-
-		if (this.props.is_auth !== true) {
-			if (this.checkToken()) {
+	useEffect(() => {
+        if (is_auth !== true) {
+			if (checkToken()) {
 				axios.get('/api/current',{
 					headers: {'Authorization' : 'Bearer ' + sessionStorage.getItem('token')}
 				})
 				.then((response) => {
-					this.props.onGetAuth(response.data);	
-					console.log(response.data)		
+					onGetAuth(response.data);		
 				})
 				.catch((error) => {
 					console.log(error);
 				})
 			}
 		}
-	}
+    }, [is_auth]);
 
-	checkToken() {
+	const checkToken =() => {
 		return sessionStorage.getItem('token') && Date.parse(sessionStorage.getItem('token_expires')) > Date.now();
 	}
 
-	render() {
-
-		return ( 
-			<div>
+	return ( 
+		<div>
 			<Navigation /> 
 			<Main /> 
-			</div> 
-			);
-	}
+		</div> 
+	);
 }
 
 

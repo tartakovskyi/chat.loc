@@ -33,7 +33,6 @@ const Login = (props) => {
 	const handleChange = e => {
 		
         const {name, value} = e.target
-        console.log(name)
 
         switch (name) {
         	case 'email': setEmail(value); break;
@@ -53,7 +52,7 @@ const Login = (props) => {
 					<h1 className="text-center">Sign In</h1>
 					<form onSubmit={handleSubmit}>
 						<div className="form-group">
-							<label for="email">E-mail:</label>
+							<label htmlFor="email">E-mail:</label>
 							<input 
 								type="text"
 								className="form-control"
@@ -64,9 +63,9 @@ const Login = (props) => {
 							/>
 						</div>
 						<div className="form-group">
-							<label for="password">Password:</label>
+							<label htmlFor="password">Password:</label>
 							<input
-								type="text"
+								type="password"
 								className="form-control"
 								id="password"
 								name="password"
@@ -84,7 +83,7 @@ const Login = (props) => {
 								onChange={handleChange}
 							/>
 							<label 
-								for="remember_me" 
+								htmlFor="remember_me" 
 								className="form-check-label">
 								Remember me
 							</label>
