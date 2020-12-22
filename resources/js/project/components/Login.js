@@ -38,7 +38,7 @@ const Login = (props) => {
         switch (name) {
         	case 'email': setEmail(value); break;
         	case 'password': setPassword(value); break;
-        	case 'remember_me': setRememberMe(value); break;
+        	case 'remember_me': setRememberMe(value);
         }
     }
 
@@ -48,36 +48,51 @@ const Login = (props) => {
 
 			{doRedirect && <Redirect to='/' />}
 
-			<form onSubmit={handleSubmit}>
-				<label>
-					<span>E-mail:</span>
-					<input 
-						type="text"
-						name="email"
-						value={email} 
-						onChange={handleChange}
-					/>
-				</label>
-				<label>
-					<span>Password:</span>
-					<input
-						type="text"
-						name="password"
-						value={password}
-						onChange={handleChange}
-					/>
-				</label>
-				<label>
-					<span>Remember me:</span>
-					<input
-						type="checkbox"
-						name="remember_me"
-						value={remember_me}
-						onChange={handleChange}
-						/>
-				</label>
-				<button type="submit">Submit</button>	
-			</form>
+			<div className="row justify-content-center">
+				<div className="col-md-9 col-lg-6 col-xl-5">
+					<h1 className="text-center">Sign In</h1>
+					<form onSubmit={handleSubmit}>
+						<div className="form-group">
+							<label for="email">E-mail:</label>
+							<input 
+								type="text"
+								className="form-control"
+								id="email"
+								name="email"
+								value={email} 
+								onChange={handleChange}
+							/>
+						</div>
+						<div className="form-group">
+							<label for="password">Password:</label>
+							<input
+								type="text"
+								className="form-control"
+								id="password"
+								name="password"
+								value={password}
+								onChange={handleChange}
+							/>
+						</div>
+						<div className="form-check mb-4">
+							<input
+								type="checkbox"
+								className="form-check-input"
+								id="remember_me"
+								name="remember_me"
+								value={remember_me}
+								onChange={handleChange}
+							/>
+							<label 
+								for="remember_me" 
+								className="form-check-label">
+								Remember me
+							</label>
+						</div>
+						<button type="submit" className="btn btn-block btn-primary">Submit</button>	
+					</form>
+			</div>
+			</div>
 		</div>
 	);
 }
