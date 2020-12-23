@@ -8,7 +8,7 @@ const Login = (props) => {
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
-	const [remember_me, setRememberMe] = useState(1)
+	const [remember_me, setRememberMe] = useState(false)
 	const [doRedirect, setDoRedirect] = useState(false)
 
 
@@ -18,7 +18,7 @@ const Login = (props) => {
 		axios.post('/api/login', {
 			email: email,
 			password: password,
-			remember_me: 1
+			remember_me: remember_me
 		})
 		.then(function (response) {
 			sessionStorage.setItem('token', response.data.token);
@@ -30,14 +30,13 @@ const Login = (props) => {
 		});
 	}
 
-	const handleChange = e => {
-		
+	const handleChange = e => {		
         const {name, value} = e.target
 
         switch (name) {
         	case 'email': setEmail(value); break;
         	case 'password': setPassword(value); break;
-        	case 'remember_me': setRememberMe(value);
+        	case 'remember_me': setRememberMe(!remember_me);
         }
     }
 

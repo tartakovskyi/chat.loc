@@ -7237,7 +7237,6 @@ var Chat = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var mapStateToProps = function mapStateToProps(state) {
-  debugger;
   return {
     auth: state.user.auth,
     is_auth: state.user.is_auth
@@ -7406,7 +7405,7 @@ var Login = function Login(props) {
       password = _useState4[0],
       setPassword = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState6 = _slicedToArray(_useState5, 2),
       remember_me = _useState6[0],
       setRememberMe = _useState6[1];
@@ -7421,7 +7420,7 @@ var Login = function Login(props) {
     axios.post('/api/login', {
       email: email,
       password: password,
-      remember_me: 1
+      remember_me: remember_me
     }).then(function (response) {
       sessionStorage.setItem('token', response.data.token);
       sessionStorage.setItem('token_expires', response.data.expires_at);
@@ -7446,7 +7445,7 @@ var Login = function Login(props) {
         break;
 
       case 'remember_me':
-        setRememberMe(value);
+        setRememberMe(!remember_me);
     }
   };
 
