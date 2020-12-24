@@ -23,6 +23,7 @@ const Login = (props) => {
 		.then(function (response) {
 			sessionStorage.setItem('token', response.data.token);
 			sessionStorage.setItem('token_expires', response.data.expires_at);
+			debugger
 			setDoRedirect(true);
 		})
 		.catch(function (error) {

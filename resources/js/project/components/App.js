@@ -1,7 +1,10 @@
 import React, { useState, useEffect }  from 'react';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Main from './Main';
 import Navigation from './Navigation';
+import Chat from './Chat';
+import Chats from './Chats';
+import Login from './Login';
 
 
 const App = ({is_auth, onGetAuth}) => {
@@ -29,7 +32,12 @@ const App = ({is_auth, onGetAuth}) => {
 	return ( 
 		<div>
 			<Navigation /> 
-			<Main /> 
+			<main>
+				<Route path='/login' component={Login}/>
+				{!sessionStorage.getItem('token') && <Redirect to='/login' />}
+				<Route exact path='/' component={Chats}/>
+				<Route path='/chat/:id' component={Chat}/>
+			</main> 
 		</div> 
 	);
 }
