@@ -10,10 +10,13 @@ const Login = (props) => {
 	const [password, setPassword] = useState('')
 	const [remember_me, setRememberMe] = useState(false)
 	const [doRedirect, setDoRedirect] = useState(false)
+	const [errors, setErrors] = useState({})
 
 
 	const handleSubmit = e => {
 		e.preventDefault();
+
+        setErrors(validate(email,password))
 
 		axios.post('/api/login', {
 			email: email,
@@ -23,13 +26,24 @@ const Login = (props) => {
 		.then(function (response) {
 			sessionStorage.setItem('token', response.data.token);
 			sessionStorage.setItem('token_expires', response.data.expires_at);
-			debugger
 			setDoRedirect(true);
 		})
 		.catch(function (error) {
+			if (error.response.status === 401) {
+				setErrors({credentials: 'Invalid login or password'})
+			}
 			console.log(error);
 		});
 	}
+
+	const validate = (email,password) => {
+        const errors = {}
+
+        if (!email) errors.email = 'Email cannot be blank'
+        if (!password) errors.password = 'Password cannot be blank'
+
+        return errors
+    }
 
 	const handleChange = e => {		
         const {name, value} = e.target
@@ -41,7 +55,20 @@ const Login = (props) => {
         }
     }
 
+    const ErrorBlock = ({errors}) => {
+    	
+		return (
+			<div class="alert alert-danger" role="alert">
+    			<ul>
+    				{errors.forEach(error => (<li key={error}>{error}</li>))}
+    			</ul>
+			</div>
+		)
+    }
+
+
 	return (
+
 
 		<div className="container">
 
@@ -50,6 +77,7 @@ const Login = (props) => {
 			<div className="row justify-content-center">
 				<div className="col-md-9 col-lg-6 col-xl-5">
 					<h1 className="text-center">Sign In</h1>
+					{errors.length && <ErrorBlock errors={errors} />}
 					<form onSubmit={handleSubmit}>
 						<div className="form-group">
 							<label htmlFor="email">E-mail:</label>

@@ -7433,8 +7433,14 @@ var Login = function Login(props) {
       doRedirect = _useState8[0],
       setDoRedirect = _useState8[1];
 
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState10 = _slicedToArray(_useState9, 2),
+      errors = _useState10[0],
+      setErrors = _useState10[1];
+
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
+    setErrors(validate(email, password));
     axios.post('/api/login', {
       email: email,
       password: password,
@@ -7442,11 +7448,23 @@ var Login = function Login(props) {
     }).then(function (response) {
       sessionStorage.setItem('token', response.data.token);
       sessionStorage.setItem('token_expires', response.data.expires_at);
-      debugger;
       setDoRedirect(true);
     })["catch"](function (error) {
+      if (error.response.status === 401) {
+        setErrors({
+          credentials: 'Invalid login or password'
+        });
+      }
+
       console.log(error);
     });
+  };
+
+  var validate = function validate(email, password) {
+    var errors = {};
+    if (!email) errors.email = 'Email cannot be blank';
+    if (!password) errors.password = 'Password cannot be blank';
+    return errors;
   };
 
   var handleChange = function handleChange(e) {
@@ -7468,6 +7486,18 @@ var Login = function Login(props) {
     }
   };
 
+  var ErrorBlock = function ErrorBlock(_ref) {
+    var errors = _ref.errors;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      "class": "alert alert-danger",
+      role: "alert"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, errors.forEach(function (error) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: error
+      }, error);
+    })));
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
   }, doRedirect && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
@@ -7478,7 +7508,9 @@ var Login = function Login(props) {
     className: "col-md-9 col-lg-6 col-xl-5"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
     className: "text-center"
-  }, "Sign In"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+  }, "Sign In"), errors.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ErrorBlock, {
+    errors: errors
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: handleSubmit
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
