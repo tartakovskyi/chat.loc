@@ -7277,9 +7277,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _EditBtn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EditBtn */ "./resources/js/project/components/EditBtn.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _EditBtn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EditBtn */ "./resources/js/project/components/EditBtn.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7297,7 +7299,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var Chats = function Chats(props) {
+
+var Chats = function Chats(_ref) {
+  var auth = _ref.auth,
+      is_auth = _ref.is_auth;
+
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
       _useState2 = _slicedToArray(_useState, 2),
       chats = _useState2[0],
@@ -7329,7 +7335,7 @@ var Chats = function Chats(props) {
         href: '/chat/' + chat.id
       }, chat.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
-      }, unread(chat.messages_count, chat.id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, props.auth && chat.user_id == props.auth.id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EditBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, unread(chat.messages_count, chat.id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, auth && chat.user_id == auth.id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EditBtn__WEBPACK_IMPORTED_MODULE_4__["default"], {
         url: '/chat/' + chat.id + '/edit'
       })));
     });
@@ -7344,8 +7350,8 @@ var Chats = function Chats(props) {
   }, "New Messages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, renderChats())));
 };
 
-var mapStateToProps = function mapStateToProps(_ref) {
-  var user = _ref.user;
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var user = _ref2.user;
   return {
     auth: user.auth,
     is_auth: user.is_auth
@@ -7382,6 +7388,35 @@ var EditBtn = function EditBtn(props) {
 
 /***/ }),
 
+/***/ "./resources/js/project/components/ErrorBlock.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/project/components/ErrorBlock.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var ErrorBlock = function ErrorBlock(_ref) {
+  var errors = _ref.errors;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "alert alert-danger",
+    role: "alert"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, Object.keys(errors).map(function (errorId) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: errorId
+    }, errors[errorId]);
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ErrorBlock);
+
+/***/ }),
+
 /***/ "./resources/js/project/components/Login.js":
 /*!**************************************************!*\
   !*** ./resources/js/project/components/Login.js ***!
@@ -7396,6 +7431,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _ErrorBlock__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ErrorBlock */ "./resources/js/project/components/ErrorBlock.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7407,6 +7443,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -7440,24 +7477,28 @@ var Login = function Login(props) {
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    setErrors(validate(email, password));
-    axios.post('/api/login', {
-      email: email,
-      password: password,
-      remember_me: remember_me
-    }).then(function (response) {
-      sessionStorage.setItem('token', response.data.token);
-      sessionStorage.setItem('token_expires', response.data.expires_at);
-      setDoRedirect(true);
-    })["catch"](function (error) {
-      if (error.response.status === 401) {
-        setErrors({
-          credentials: 'Invalid login or password'
-        });
-      }
+    var errors = validate(email, password);
+    setErrors(errors);
 
-      console.log(error);
-    });
+    if (Object.keys(errors).length === 0) {
+      axios.post('/api/login', {
+        email: email,
+        password: password,
+        remember_me: remember_me
+      }).then(function (response) {
+        sessionStorage.setItem('token', response.data.token);
+        sessionStorage.setItem('token_expires', response.data.expires_at);
+        setDoRedirect(true);
+      })["catch"](function (error) {
+        if (error.response.status === 401) {
+          setErrors({
+            credentials: 'Invalid login or password'
+          });
+        }
+
+        console.log(error);
+      });
+    }
   };
 
   var validate = function validate(email, password) {
@@ -7486,18 +7527,6 @@ var Login = function Login(props) {
     }
   };
 
-  var ErrorBlock = function ErrorBlock(_ref) {
-    var errors = _ref.errors;
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      "class": "alert alert-danger",
-      role: "alert"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, errors.forEach(function (error) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        key: error
-      }, error);
-    })));
-  };
-
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
   }, doRedirect && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
@@ -7508,7 +7537,7 @@ var Login = function Login(props) {
     className: "col-md-9 col-lg-6 col-xl-5"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
     className: "text-center"
-  }, "Sign In"), errors.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ErrorBlock, {
+  }, "Sign In"), Object.keys(errors).length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorBlock__WEBPACK_IMPORTED_MODULE_3__["default"], {
     errors: errors
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: handleSubmit

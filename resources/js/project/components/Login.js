@@ -1,6 +1,7 @@
-import React, { useState }  from 'react';
-import { Redirect } from 'react-router-dom';
-import Axios  from 'axios';
+import React, { useState }  from 'react'
+import { Redirect } from 'react-router-dom'
+import Axios  from 'axios'
+import ErrorBlock from './ErrorBlock'
 
 
 const Login = (props) => {
@@ -15,24 +16,27 @@ const Login = (props) => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-        setErrors(validate(email,password))
+		const errors = validate(email,password)
+        setErrors(errors)
 
-		axios.post('/api/login', {
-			email: email,
-			password: password,
-			remember_me: remember_me
-		})
-		.then(function (response) {
-			sessionStorage.setItem('token', response.data.token);
-			sessionStorage.setItem('token_expires', response.data.expires_at);
-			setDoRedirect(true);
-		})
-		.catch(function (error) {
-			if (error.response.status === 401) {
-				setErrors({credentials: 'Invalid login or password'})
-			}
-			console.log(error);
-		});
+        if (Object.keys(errors).length === 0) {
+        	axios.post('/api/login', {
+        		email: email,
+        		password: password,
+        		remember_me: remember_me
+        	})
+        	.then(function (response) {
+        		sessionStorage.setItem('token', response.data.token);
+        		sessionStorage.setItem('token_expires', response.data.expires_at);
+        		setDoRedirect(true);
+        	})
+        	.catch(function (error) {
+        		if (error.response.status === 401) {
+        			setErrors({credentials: 'Invalid login or password'})
+        		}
+        		console.log(error);
+        	})
+        }
 	}
 
 	const validate = (email,password) => {
@@ -54,21 +58,8 @@ const Login = (props) => {
         }
     }
 
-    const ErrorBlock = ({errors}) => {
-    	
-		return (
-			<div class="alert alert-danger" role="alert">
-    			<ul>
-    				{errors.forEach(error => (<li key={error}>{error}</li>))}
-    			</ul>
-			</div>
-		)
-    }
-
 
 	return (
-
-
 		<div className="container">
 
 			{doRedirect && <Redirect to='/' />}
@@ -76,7 +67,7 @@ const Login = (props) => {
 			<div className="row justify-content-center">
 				<div className="col-md-9 col-lg-6 col-xl-5">
 					<h1 className="text-center">Sign In</h1>
-					{errors.length && <ErrorBlock errors={errors} />}
+					{Object.keys(errors).length > 0 && <ErrorBlock errors={errors} />}
 					<form onSubmit={handleSubmit}>
 						<div className="form-group">
 							<label htmlFor="email">E-mail:</label>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect }  from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect }  from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import Axios  from 'axios';
-import EditBtn from './EditBtn';
+import Axios  from 'axios'
+import EditBtn from './EditBtn'
 
 
 const Chats = ({auth, is_auth}) => {
@@ -24,9 +24,9 @@ const Chats = ({auth, is_auth}) => {
 		if (count) {
 			return (
 				<a href={'/chat/' + id}>{count}</a>
-				);
+				)
 		} else {
-			return('0');
+			return('0')
 		}
 
 	}
@@ -45,8 +45,8 @@ const Chats = ({auth, is_auth}) => {
 						{auth && chat.user_id == auth.id && <EditBtn url={'/chat/' + chat.id + '/edit'} />}
 					</td>
 				</tr>   
-			);
-		});
+			)
+		})
 	}
 
 	return (
