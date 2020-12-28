@@ -1,10 +1,11 @@
 import React, { useState, useEffect }  from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
 import Axios  from 'axios';
 import EditBtn from './EditBtn';
 
 
-const Chats = (props) => {
+const Chats = ({auth, is_auth}) => {
 
 	const [chats, setChats] = useState([]);
 
@@ -41,7 +42,7 @@ const Chats = (props) => {
 						{unread(chat.messages_count, chat.id)}
 					</td>
 					<td>
-						{props.auth && chat.user_id == props.auth.id && <EditBtn url={'/chat/' + chat.id + '/edit'} />}
+						{auth && chat.user_id == auth.id && <EditBtn url={'/chat/' + chat.id + '/edit'} />}
 					</td>
 				</tr>   
 			);

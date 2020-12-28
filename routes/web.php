@@ -13,16 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Auth::routes();
-
-Route::group(['middleware' => 'auth'], function () {
-	Route::view('/', 'home');
-
-	Route::pattern('path', '[a-zA-Z0-9-/]+');
-	Route::get( '/{path?}', function( $page ){
-		return view('home');
-	})->name('home');
-});*/
 
 
 Route::view('/', 'home');
