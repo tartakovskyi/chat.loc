@@ -5,6 +5,7 @@ import Navigation from './common/Navigation'
 import Chat from './chat/Chat'
 import Chats from './chats/Chats'
 import Login from './auth/Login'
+import Register from './auth/Register'
 
 
 const App = ({is_auth, onGetAuth}) => {
@@ -33,7 +34,8 @@ const App = ({is_auth, onGetAuth}) => {
 		<div>
 			<Navigation /> 
 			<main>
-				<Route path='/login' component={Login}/>
+				<Route path='/login' render={(props) => <Login {...props}/>} />
+				<Route path='/register' component={Register}/>
 				{!sessionStorage.getItem('token') && <Redirect to='/login' />}
 				<Route exact path='/' component={Chats}/>
 				<Route path='/chat/:id' component={Chat}/>

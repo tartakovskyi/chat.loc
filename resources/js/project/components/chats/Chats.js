@@ -24,7 +24,7 @@ const Chats = ({auth, is_auth}) => {
 	const unread = (count, id) => {
 		if (count) {
 			return (
-				<NavLink to={'/chat/' + id}>{count}</NavLink>
+				<Link to={'/chat/' + id}>{count}</Link>
 			)
 		} else {
 			return('0')
@@ -37,7 +37,7 @@ const Chats = ({auth, is_auth}) => {
 			return (
 				<tr key={index}>
 					<td>
-						<NavLink to={'/chat/' + chat.id}>{chat.title}</NavLink>
+						<Link to={'/chat/' + chat.id}>{chat.title}</Link>
 					</td>
 					<td className="text-center">
 						{unread(chat.messages_count, chat.id)}

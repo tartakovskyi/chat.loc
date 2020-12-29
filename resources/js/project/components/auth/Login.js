@@ -1,10 +1,10 @@
 import React, { useState }  from 'react'
 import { Redirect } from 'react-router-dom'
 import Axios  from 'axios'
-import ErrorBlock from '../common/ErrorBlock'
+import InfoBlock from '../common/InfoBlock'
 
 
-const Login = (props) => {
+const Login = ({success}) => {
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -67,7 +67,8 @@ const Login = (props) => {
 			<div className="row justify-content-center">
 				<div className="col-md-9 col-lg-6 col-xl-5">
 					<h1 className="text-center">Sign In</h1>
-					{Object.keys(errors).length > 0 && <ErrorBlock errors={errors} />}
+					{Object.keys(errors).length > 0 && <InfoBlock errors={errors} />}
+					{Object.keys(errors).length > 0 && <InfoBlock success={errors} />}
 					<form onSubmit={handleSubmit}>
 						<div className="form-group">
 							<label htmlFor="email">E-mail:</label>
