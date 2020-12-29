@@ -1,7 +1,7 @@
 import React, { useState }  from 'react'
 import { Redirect } from 'react-router-dom'
 import Axios  from 'axios'
-import ErrorBlock from './ErrorBlock'
+import ErrorBlock from '../common/ErrorBlock'
 
 
 const Login = (props) => {

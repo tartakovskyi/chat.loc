@@ -1,8 +1,9 @@
 import React, { useState, useEffect }  from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Axios  from 'axios'
-import EditBtn from './EditBtn'
+import EditBtn from '../common/EditBtn'
 
 
 const Chats = ({auth, is_auth}) => {
@@ -23,8 +24,8 @@ const Chats = ({auth, is_auth}) => {
 	const unread = (count, id) => {
 		if (count) {
 			return (
-				<a href={'/chat/' + id}>{count}</a>
-				)
+				<NavLink to={'/chat/' + id}>{count}</NavLink>
+			)
 		} else {
 			return('0')
 		}
@@ -36,7 +37,7 @@ const Chats = ({auth, is_auth}) => {
 			return (
 				<tr key={index}>
 					<td>
-						<a href={'/chat/' + chat.id}>{chat.title}</a>
+						<NavLink to={'/chat/' + chat.id}>{chat.title}</NavLink>
 					</td>
 					<td className="text-center">
 						{unread(chat.messages_count, chat.id)}

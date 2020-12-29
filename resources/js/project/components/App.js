@@ -1,10 +1,10 @@
-import React, { useState, useEffect }  from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import Navigation from './Navigation';
-import Chat from './Chat';
-import Chats from './Chats';
-import Login from './Login';
+import React, { useState, useEffect }  from 'react'
+import { Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
+import Navigation from './common/Navigation'
+import Chat from './chat/Chat'
+import Chats from './chats/Chats'
+import Login from './auth/Login'
 
 
 const App = ({is_auth, onGetAuth}) => {
@@ -16,17 +16,17 @@ const App = ({is_auth, onGetAuth}) => {
 					headers: {'Authorization' : 'Bearer ' + sessionStorage.getItem('token')}
 				})
 				.then((response) => {
-					onGetAuth(response.data);		
+					onGetAuth(response.data)		
 				})
 				.catch((error) => {
-					console.log(error);
+					console.log(error)
 				})
 			}
 		}
-    }, [is_auth]);
+    }, [is_auth])
 
 	const checkToken =() => {
-		return sessionStorage.getItem('token') && Date.parse(sessionStorage.getItem('token_expires')) > Date.now();
+		return sessionStorage.getItem('token') && Date.parse(sessionStorage.getItem('token_expires')) > Date.now()
 	}
 
 	return ( 
@@ -39,7 +39,7 @@ const App = ({is_auth, onGetAuth}) => {
 				<Route path='/chat/:id' component={Chat}/>
 			</main> 
 		</div> 
-	);
+	)
 }
 
 
@@ -57,4 +57,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App)

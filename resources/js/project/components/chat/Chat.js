@@ -1,7 +1,7 @@
 import React, { Component }  from 'react';
 import { connect } from 'react-redux';
 import Axios  from 'axios';
-import EditBtn from './EditBtn';
+import EditBtn from '../common/EditBtn';
 
 
 class Chat extends Component {
