@@ -17,7 +17,7 @@ const InfoBlock = ({errors, success}) => {
 
 	if (success) {
 		return (
-			<div class="alert alert-success" role="alert">success</div>
+			<div className="alert alert-success" role="alert">{success}</div>
 		)
 	}
 }

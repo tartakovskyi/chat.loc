@@ -4,7 +4,7 @@ import Axios  from 'axios'
 import InfoBlock from '../common/InfoBlock'
 
 
-const Login = ({success}) => {
+const Login = (props) => {
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -68,7 +68,7 @@ const Login = ({success}) => {
 				<div className="col-md-9 col-lg-6 col-xl-5">
 					<h1 className="text-center">Sign In</h1>
 					{Object.keys(errors).length > 0 && <InfoBlock errors={errors} />}
-					{Object.keys(errors).length > 0 && <InfoBlock success={errors} />}
+					{props.location.state && props.location.state.success && <InfoBlock success={props.location.state.success} />}
 					<form onSubmit={handleSubmit}>
 						<div className="form-group">
 							<label htmlFor="email">E-mail:</label>

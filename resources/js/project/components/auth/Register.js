@@ -30,11 +30,8 @@ const Register = (props) => {
         	.then(function (response) {
         		setDoRedirect(true);
         	})
-        	.catch(function (error) {
-        		if (error.response.status === 401) {
-        			setErrors({credentials: 'Invalid login or password'})
-        		}
-        		console.log(error);
+        	.catch(function ({response}) {
+        		setErrors(response.data.errors)
         	})
         }
 	}
@@ -66,14 +63,14 @@ const Register = (props) => {
 
 			<div className="row justify-content-center">
 				<div className="col-md-9 col-lg-6 col-xl-5">
-					<h1 className="text-center">Sign In</h1>
+					<h1 className="text-center">Sign Up</h1>
 					{Object.keys(errors).length > 0 && <InfoBlock errors={errors} />}
 					<form onSubmit={handleSubmit}>
 						<div className="form-group">
 							<label htmlFor="name">Name:</label>
 							<input 
 								type="text"
-								className="form-control"
+								className={errors.name ? "form-control is-invalid" : "form-control"}
 								id="name"
 								name="name"
 								value={data.name} 
@@ -84,7 +81,7 @@ const Register = (props) => {
 							<label htmlFor="email">E-mail:</label>
 							<input 
 								type="text"
-								className="form-control"
+								className={errors.email ? "form-control is-invalid" : "form-control"}
 								id="email"
 								name="email"
 								value={data.email} 
@@ -95,7 +92,7 @@ const Register = (props) => {
 							<label htmlFor="password">Password:</label>
 							<input
 								type="password"
-								className="form-control"
+								className={errors.password ? "form-control is-invalid" : "form-control"}
 								id="password"
 								name="password"
 								value={data.password}
@@ -106,7 +103,7 @@ const Register = (props) => {
 							<label htmlFor="confirmPassword">Confirm Password:</label>
 							<input
 								type="password"
-								className="form-control"
+								className={errors.confirmPassword ? "form-control is-invalid" : "form-control"}
 								id="confirmPassword"
 								name="confirmPassword"
 								value={data.confirmPassword}
