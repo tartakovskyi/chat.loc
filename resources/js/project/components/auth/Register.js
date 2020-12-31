@@ -17,6 +17,7 @@ const Register = (props) => {
 	const [data, setData] = useState(initialData)
 	const [doRedirect, setDoRedirect] = useState(false)
 	const [errors, setErrors] = useState({})
+	const [successMessage, setSuccessMessage] = useState('')
 
 
 	const handleSubmit = e => {
@@ -28,6 +29,7 @@ const Register = (props) => {
         if (Object.keys(errors).length === 0) {
         	axios.post('/api/register', data)
         	.then(function (response) {
+        		setSuccessMessage(response.data.message)
         		setDoRedirect(true);
         	})
         	.catch(function ({response}) {
@@ -56,7 +58,7 @@ const Register = (props) => {
 				<Redirect
 	            to={{
 	            pathname: "/login",
-	            state: { success: "Test" }
+	            state: { success: successMessage }
 	        	}}
 	        	/>
 	   		}

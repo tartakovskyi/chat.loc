@@ -1,20 +1,11 @@
-import { LOGIN_REQUEST, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, GET_AUTH }  from './constants';
+import C from './constants';
 
-export function login(payload) {
-  // TODO
-  return {
-    type: LOGIN_REQUEST
-  }
-}
 
-export function logout() {
-  return {
-    type: LOGOUT_SUCCESS
-  }
-}
+export const getAuthAction = auth => ({
+     type: C.GET_AUTH,
+     payload: auth
+})
 
-export function getAuth(payload) {
-  return {
-    type: GET_AUTH
-  }
-}
+export const logoutAction = () => ({
+    type: C.LOGOUT_SUCCESS
+})

@@ -1,6 +1,7 @@
 import React, { useState, useEffect }  from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import {getAuthAction, logoutAction} from '../store/actions'
 import Navigation from './common/Navigation'
 import Chat from './chat/Chat'
 import Chats from './chats/Chats'
@@ -8,7 +9,7 @@ import Login from './auth/Login'
 import Register from './auth/Register'
 
 
-const App = ({is_auth, onGetAuth}) => {
+const App = ({is_auth, getAuthAction, logoutAction}) => {
 
 	useEffect(() => {
         if (is_auth !== true) {
@@ -17,7 +18,7 @@ const App = ({is_auth, onGetAuth}) => {
 					headers: {'Authorization' : 'Bearer ' + sessionStorage.getItem('token')}
 				})
 				.then((response) => {
-					onGetAuth(response.data)		
+					getAuthAction(response.data)		
 				})
 				.catch((error) => {
 					console.log(error)
@@ -30,9 +31,15 @@ const App = ({is_auth, onGetAuth}) => {
 		return sessionStorage.getItem('token') && Date.parse(sessionStorage.getItem('token_expires')) > Date.now()
 	}
 
+	const logout = () => {
+       sessionStorage.removeItem('token')
+       sessionStorage.removeItem('token_expires')
+       logoutAction()
+    }
+
 	return ( 
 		<div>
-			<Navigation /> 
+			<Navigation is_auth={is_auth} logout={logout} /> 
 			<main>
 				<Route path='/login' render={(props) => <Login {...props}/>} />
 				<Route path='/register' component={Register}/>
@@ -51,12 +58,5 @@ const mapStateToProps = function({user}) {
 	}
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
-		onGetAuth: (auth) => {
-			dispatch({ type: 'GET_AUTH', payload: auth })
-		}
-	}
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, {getAuthAction, logoutAction})(App)
