@@ -1,7 +1,8 @@
 import React  from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux'
 
-const Navigation = ({is_auth, logout}) => {
+const Navigation = ({isAuthData, logout}) => {
 
 
     return(  
@@ -14,7 +15,7 @@ const Navigation = ({is_auth, logout}) => {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
-                    {is_auth ?
+                    {isAuthData ?
                         <li className="nav-item">
                             <span onClick={logout} className="nav-link">Logout</span>
                         </li>
@@ -35,4 +36,11 @@ const Navigation = ({is_auth, logout}) => {
     )
 }
 
-export default Navigation;
+
+const mapStateToProps = function({user}) {
+    return {
+        isAuthData: user.isAuthData
+    }
+}
+
+export default connect(mapStateToProps)(Navigation)

@@ -7007,6 +7007,35 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/project/api.js":
+/*!*************************************!*\
+  !*** ./resources/js/project/api.js ***!
+  \*************************************/
+/*! exports provided: getAuthData, checkToken */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAuthData", function() { return getAuthData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkToken", function() { return checkToken; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+var getAuthData = function getAuthData() {
+  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/current', {
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+  })["catch"](function (error) {
+    console.log(error);
+  });
+};
+var checkToken = function checkToken() {
+  return localStorage.getItem('token') && Date.parse(localStorage.getItem('token_expires')) > Date.now();
+};
+
+/***/ }),
+
 /***/ "./resources/js/project/components/App.js":
 /*!************************************************!*\
   !*** ./resources/js/project/components/App.js ***!
@@ -7021,11 +7050,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/actions */ "./resources/js/project/store/actions.js");
-/* harmony import */ var _common_Navigation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./common/Navigation */ "./resources/js/project/components/common/Navigation.js");
-/* harmony import */ var _chat_Chat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./chat/Chat */ "./resources/js/project/components/chat/Chat.js");
-/* harmony import */ var _chats_Chats__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./chats/Chats */ "./resources/js/project/components/chats/Chats.js");
-/* harmony import */ var _auth_Login__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./auth/Login */ "./resources/js/project/components/auth/Login.js");
-/* harmony import */ var _auth_Register__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./auth/Register */ "./resources/js/project/components/auth/Register.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../api */ "./resources/js/project/api.js");
+/* harmony import */ var _common_Navigation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./common/Navigation */ "./resources/js/project/components/common/Navigation.js");
+/* harmony import */ var _chat_Chat__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./chat/Chat */ "./resources/js/project/components/chat/Chat.js");
+/* harmony import */ var _chats_Chats__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./chats/Chats */ "./resources/js/project/components/chats/Chats.js");
+/* harmony import */ var _auth_Login__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./auth/Login */ "./resources/js/project/components/auth/Login.js");
+/* harmony import */ var _auth_Register__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./auth/Register */ "./resources/js/project/components/auth/Register.js");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
@@ -7037,62 +7082,59 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App(_ref) {
-  var is_auth = _ref.is_auth,
+  var isAuthData = _ref.isAuthData,
       getAuthAction = _ref.getAuthAction,
       logoutAction = _ref.logoutAction;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(Boolean(Object(_api__WEBPACK_IMPORTED_MODULE_4__["checkToken"])())),
+      _useState2 = _slicedToArray(_useState, 2),
+      isLogged = _useState2[0],
+      setIsLogged = _useState2[1];
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (is_auth !== true) {
-      if (checkToken()) {
-        axios.get('/api/current', {
-          headers: {
-            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-          }
-        }).then(function (response) {
+    if (isAuthData !== true) {
+      if (Object(_api__WEBPACK_IMPORTED_MODULE_4__["checkToken"])()) {
+        Object(_api__WEBPACK_IMPORTED_MODULE_4__["getAuthData"])().then(function (response) {
           getAuthAction(response.data);
-        })["catch"](function (error) {
-          console.log(error);
         });
       }
     }
-  }, [is_auth]);
-
-  var checkToken = function checkToken() {
-    return sessionStorage.getItem('token') && Date.parse(sessionStorage.getItem('token_expires')) > Date.now();
-  };
+  }, [isAuthData, isLogged]);
 
   var logout = function logout() {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('token_expires');
+    localStorage.removeItem('token');
+    localStorage.removeItem('token_expires');
     logoutAction();
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_common_Navigation__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    is_auth: is_auth,
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_common_Navigation__WEBPACK_IMPORTED_MODULE_5__["default"], {
     logout: logout
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/login",
     render: function render(props) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_auth_Login__WEBPACK_IMPORTED_MODULE_7__["default"], props);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_auth_Login__WEBPACK_IMPORTED_MODULE_8__["default"], _extends({}, props, {
+        setIsLogged: setIsLogged
+      }));
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/register",
-    component: _auth_Register__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }), !sessionStorage.getItem('token') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
+    component: _auth_Register__WEBPACK_IMPORTED_MODULE_9__["default"]
+  }), !Object(_api__WEBPACK_IMPORTED_MODULE_4__["checkToken"])() && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
     to: "/login"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/",
-    component: _chats_Chats__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _chats_Chats__WEBPACK_IMPORTED_MODULE_7__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/chat/:id",
-    component: _chat_Chat__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _chat_Chat__WEBPACK_IMPORTED_MODULE_6__["default"]
   })));
 };
 
 var mapStateToProps = function mapStateToProps(_ref2) {
   var user = _ref2.user;
   return {
-    is_auth: user.is_auth
+    isAuthData: user.isAuthData
   };
 };
 
@@ -7118,6 +7160,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _common_InfoBlock__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../common/InfoBlock */ "./resources/js/project/components/common/InfoBlock.js");
+/* harmony import */ var _common_FormUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../common/FormUtils */ "./resources/js/project/components/common/FormUtils.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7135,46 +7178,36 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+var initialData = {
+  email: '',
+  password: '',
+  remember_me: false
+};
+
 var Login = function Login(props) {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialData),
       _useState2 = _slicedToArray(_useState, 2),
-      email = _useState2[0],
-      setEmail = _useState2[1];
+      data = _useState2[0],
+      setData = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
       _useState4 = _slicedToArray(_useState3, 2),
-      password = _useState4[0],
-      setPassword = _useState4[1];
+      errors = _useState4[0],
+      setErrors = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
-      _useState6 = _slicedToArray(_useState5, 2),
-      remember_me = _useState6[0],
-      setRememberMe = _useState6[1];
-
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
-      _useState8 = _slicedToArray(_useState7, 2),
-      doRedirect = _useState8[0],
-      setDoRedirect = _useState8[1];
-
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
-      _useState10 = _slicedToArray(_useState9, 2),
-      errors = _useState10[0],
-      setErrors = _useState10[1];
+  var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    var errors = validate(email, password);
+    var errors = validate(data);
     setErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      axios.post('/api/login', {
-        email: email,
-        password: password,
-        remember_me: remember_me
-      }).then(function (response) {
-        sessionStorage.setItem('token', response.data.token);
-        sessionStorage.setItem('token_expires', response.data.expires_at);
-        setDoRedirect(true);
+      axios.post('/api/login', data).then(function (response) {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('token_expires', response.data.expires_at);
+        props.setIsLogged(true);
+        history.push("/");
       })["catch"](function (error) {
         if (error.response.status === 401) {
           setErrors({
@@ -7187,37 +7220,16 @@ var Login = function Login(props) {
     }
   };
 
-  var validate = function validate(email, password) {
+  var validate = function validate(data) {
     var errors = {};
-    if (!email) errors.email = 'Email cannot be blank';
-    if (!password) errors.password = 'Password cannot be blank';
+    if (!data.email) errors.email = 'Email cannot be blank';
+    if (!data.password) errors.password = 'Password cannot be blank';
     return errors;
-  };
-
-  var handleChange = function handleChange(e) {
-    var _e$target = e.target,
-        name = _e$target.name,
-        value = _e$target.value;
-
-    switch (name) {
-      case 'email':
-        setEmail(value);
-        break;
-
-      case 'password':
-        setPassword(value);
-        break;
-
-      case 'remember_me':
-        setRememberMe(!remember_me);
-    }
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
-  }, doRedirect && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
-    to: "/"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row justify-content-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-9 col-lg-6 col-xl-5"
@@ -7238,8 +7250,8 @@ var Login = function Login(props) {
     className: "form-control",
     id: "email",
     name: "email",
-    value: email,
-    onChange: handleChange
+    value: data.email,
+    onChange: Object(_common_FormUtils__WEBPACK_IMPORTED_MODULE_4__["default"])(data, setData)
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -7249,8 +7261,8 @@ var Login = function Login(props) {
     className: "form-control",
     id: "password",
     name: "password",
-    value: password,
-    onChange: handleChange
+    value: data.password,
+    onChange: Object(_common_FormUtils__WEBPACK_IMPORTED_MODULE_4__["default"])(data, setData)
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-check mb-4"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -7258,8 +7270,8 @@ var Login = function Login(props) {
     className: "form-check-input",
     id: "remember_me",
     name: "remember_me",
-    value: remember_me,
-    onChange: handleChange
+    value: data.remember_me,
+    onChange: Object(_common_FormUtils__WEBPACK_IMPORTED_MODULE_4__["default"])(data, setData)
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "remember_me",
     className: "form-check-label"
@@ -7319,20 +7331,17 @@ var Register = function Register(props) {
       data = _useState2[0],
       setData = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
       _useState4 = _slicedToArray(_useState3, 2),
-      doRedirect = _useState4[0],
-      setDoRedirect = _useState4[1];
+      errors = _useState4[0],
+      setErrors = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
       _useState6 = _slicedToArray(_useState5, 2),
-      errors = _useState6[0],
-      setErrors = _useState6[1];
+      successMessage = _useState6[0],
+      setSuccessMessage = _useState6[1];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
-      _useState8 = _slicedToArray(_useState7, 2),
-      successMessage = _useState8[0],
-      setSuccessMessage = _useState8[1];
+  var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
@@ -7342,7 +7351,9 @@ var Register = function Register(props) {
     if (Object.keys(errors).length === 0) {
       axios.post('/api/register', data).then(function (response) {
         setSuccessMessage(response.data.message);
-        setDoRedirect(true);
+        history.push("/login", {
+          success: successMessage
+        });
       })["catch"](function (_ref) {
         var response = _ref.response;
         setErrors(response.data.errors);
@@ -7362,14 +7373,7 @@ var Register = function Register(props) {
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
-  }, doRedirect && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
-    to: {
-      pathname: "/login",
-      state: {
-        success: successMessage
-      }
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row justify-content-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-9 col-lg-6 col-xl-5"
@@ -7600,7 +7604,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var Chats = function Chats(_ref) {
   var auth = _ref.auth,
-      is_auth = _ref.is_auth;
+      isAuthData = _ref.isAuthData;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
       _useState2 = _slicedToArray(_useState, 2),
@@ -7652,7 +7656,7 @@ var mapStateToProps = function mapStateToProps(_ref2) {
   var user = _ref2.user;
   return {
     auth: user.auth,
-    is_auth: user.is_auth
+    isAuthData: user.isAuthData
   };
 };
 
@@ -7795,11 +7799,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
 
 
 
 var Navigation = function Navigation(_ref) {
-  var is_auth = _ref.is_auth,
+  var isAuthData = _ref.isAuthData,
       logout = _ref.logout;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
     className: "navbar navbar-expand-md navbar-light bg-white shadow-sm"
@@ -7823,7 +7829,7 @@ var Navigation = function Navigation(_ref) {
     id: "navbarSupportedContent"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "navbar-nav ml-auto"
-  }, is_auth ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+  }, isAuthData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     onClick: logout,
@@ -7841,7 +7847,14 @@ var Navigation = function Navigation(_ref) {
   }, "Sign Up")))))));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Navigation);
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var user = _ref2.user;
+  return {
+    isAuthData: user.isAuthData
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps)(Navigation));
 
 /***/ }),
 
@@ -7972,7 +7985,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./resources/js/project/store/constants.js");
 
 var initialState = {
-  is_auth: false,
+  isAuthData: false,
   auth: null
 };
 function user() {
@@ -7982,7 +7995,7 @@ function user() {
   switch (action.type) {
     case _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_AUTH:
       state = {
-        is_auth: true,
+        isAuthData: true,
         auth: action.payload
       };
       return state;

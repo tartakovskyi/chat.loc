@@ -1,7 +1,8 @@
 import React, { useState, useEffect }  from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import {getAuthAction, logoutAction} from '../store/actions'
+import { getAuthAction, logoutAction } from '../store/actions'
+import { getAuthData, checkToken } from '../api'
 import Navigation from './common/Navigation'
 import Chat from './chat/Chat'
 import Chats from './chats/Chats'
@@ -9,41 +10,33 @@ import Login from './auth/Login'
 import Register from './auth/Register'
 
 
-const App = ({is_auth, getAuthAction, logoutAction}) => {
+const App = ({isAuthData, getAuthAction, logoutAction}) => {
+
+	const [isLogged, setIsLogged] = useState(Boolean(checkToken()))
 
 	useEffect(() => {
-        if (is_auth !== true) {
+		if (isAuthData !== true) {
 			if (checkToken()) {
-				axios.get('/api/current',{
-					headers: {'Authorization' : 'Bearer ' + sessionStorage.getItem('token')}
-				})
-				.then((response) => {
-					getAuthAction(response.data)		
-				})
-				.catch((error) => {
-					console.log(error)
+				getAuthData().then((response) => {
+					getAuthAction(response.data)
 				})
 			}
 		}
-    }, [is_auth])
-
-	const checkToken =() => {
-		return sessionStorage.getItem('token') && Date.parse(sessionStorage.getItem('token_expires')) > Date.now()
-	}
+    }, [isAuthData, isLogged])
 
 	const logout = () => {
-       sessionStorage.removeItem('token')
-       sessionStorage.removeItem('token_expires')
+       localStorage.removeItem('token')
+       localStorage.removeItem('token_expires')
        logoutAction()
     }
 
 	return ( 
 		<div>
-			<Navigation is_auth={is_auth} logout={logout} /> 
+			<Navigation logout={logout} /> 
 			<main>
-				<Route path='/login' render={(props) => <Login {...props}/>} />
+				<Route path='/login' render={(props) => <Login {...props} setIsLogged={setIsLogged} />} />
 				<Route path='/register' component={Register}/>
-				{!sessionStorage.getItem('token') && <Redirect to='/login' />}
+				{!checkToken() && <Redirect to='/login' />}
 				<Route exact path='/' component={Chats}/>
 				<Route path='/chat/:id' component={Chat}/>
 			</main> 
@@ -53,8 +46,9 @@ const App = ({is_auth, getAuthAction, logoutAction}) => {
 
 
 const mapStateToProps = function({user}) {
+
 	return {
-		is_auth: user.is_auth
+		isAuthData: user.isAuthData
 	}
 }
 

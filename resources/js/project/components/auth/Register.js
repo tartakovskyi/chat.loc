@@ -1,5 +1,5 @@
 import React, { useState }  from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 import Axios  from 'axios'
 import InfoBlock from '../common/InfoBlock'
 import setFormObject from "../common/FormUtils"
@@ -15,9 +15,9 @@ const initialData = {
 const Register = (props) => {
 
 	const [data, setData] = useState(initialData)
-	const [doRedirect, setDoRedirect] = useState(false)
 	const [errors, setErrors] = useState({})
 	const [successMessage, setSuccessMessage] = useState('')
+	let history = useHistory()
 
 
 	const handleSubmit = e => {
@@ -30,7 +30,7 @@ const Register = (props) => {
         	axios.post('/api/register', data)
         	.then(function (response) {
         		setSuccessMessage(response.data.message)
-        		setDoRedirect(true);
+        		history.push("/login", { success: successMessage })
         	})
         	.catch(function ({response}) {
         		setErrors(response.data.errors)
@@ -53,16 +53,6 @@ const Register = (props) => {
 
 	return (
 		<div className="container">
-
-			{doRedirect && 
-				<Redirect
-	            to={{
-	            pathname: "/login",
-	            state: { success: successMessage }
-	        	}}
-	        	/>
-	   		}
-
 			<div className="row justify-content-center">
 				<div className="col-md-9 col-lg-6 col-xl-5">
 					<h1 className="text-center">Sign Up</h1>

@@ -1,34 +1,35 @@
 import React, { useState }  from 'react'
-import { Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Axios  from 'axios'
 import InfoBlock from '../common/InfoBlock'
+import setFormObject from "../common/FormUtils"
 
+
+const initialData = {
+    email: '',
+    password: '',
+    remember_me: false
+}
 
 const Login = (props) => {
 
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [remember_me, setRememberMe] = useState(false)
-	const [doRedirect, setDoRedirect] = useState(false)
+	const [data, setData] = useState(initialData)
 	const [errors, setErrors] = useState({})
-
+	let history = useHistory()
 
 	const handleSubmit = e => {
-		e.preventDefault();
+		e.preventDefault()
 
-		const errors = validate(email,password)
+		const errors = validate(data)
         setErrors(errors)
 
         if (Object.keys(errors).length === 0) {
-        	axios.post('/api/login', {
-        		email: email,
-        		password: password,
-        		remember_me: remember_me
-        	})
+        	axios.post('/api/login', data)
         	.then(function (response) {
-        		sessionStorage.setItem('token', response.data.token);
-        		sessionStorage.setItem('token_expires', response.data.expires_at);
-        		setDoRedirect(true);
+        		localStorage.setItem('token', response.data.token)
+        		localStorage.setItem('token_expires', response.data.expires_at)
+        		props.setIsLogged(true)
+        		history.push("/")
         	})
         	.catch(function (error) {
         		if (error.response.status === 401) {
@@ -39,31 +40,18 @@ const Login = (props) => {
         }
 	}
 
-	const validate = (email,password) => {
+	const validate = (data) => {
         const errors = {}
 
-        if (!email) errors.email = 'Email cannot be blank'
-        if (!password) errors.password = 'Password cannot be blank'
+        if (!data.email) errors.email = 'Email cannot be blank'
+        if (!data.password) errors.password = 'Password cannot be blank'
 
         return errors
-    }
-
-	const handleChange = e => {		
-        const {name, value} = e.target
-
-        switch (name) {
-        	case 'email': setEmail(value); break;
-        	case 'password': setPassword(value); break;
-        	case 'remember_me': setRememberMe(!remember_me);
-        }
     }
 
 
 	return (
 		<div className="container">
-
-			{doRedirect && <Redirect to='/' />}
-
 			<div className="row justify-content-center">
 				<div className="col-md-9 col-lg-6 col-xl-5">
 					<h1 className="text-center">Sign In</h1>
@@ -77,8 +65,8 @@ const Login = (props) => {
 								className="form-control"
 								id="email"
 								name="email"
-								value={email} 
-								onChange={handleChange}
+								value={data.email} 
+								onChange={setFormObject(data, setData)}
 							/>
 						</div>
 						<div className="form-group">
@@ -88,8 +76,8 @@ const Login = (props) => {
 								className="form-control"
 								id="password"
 								name="password"
-								value={password}
-								onChange={handleChange}
+								value={data.password}
+								onChange={setFormObject(data, setData)}
 							/>
 						</div>
 						<div className="form-check mb-4">
@@ -98,8 +86,8 @@ const Login = (props) => {
 								className="form-check-input"
 								id="remember_me"
 								name="remember_me"
-								value={remember_me}
-								onChange={handleChange}
+								value={data.remember_me}
+								onChange={setFormObject(data, setData)}
 							/>
 							<label 
 								htmlFor="remember_me" 

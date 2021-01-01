@@ -6,7 +6,7 @@ import Axios  from 'axios'
 import EditBtn from '../common/EditBtn'
 
 
-const Chats = ({auth, is_auth}) => {
+const Chats = ({auth, isAuthData}) => {
 
 	const [chats, setChats] = useState([]);
 
@@ -73,7 +73,7 @@ const mapStateToProps = function({user}) {
 
 	return {
 		auth: user.auth,
-		is_auth: user.is_auth
+		isAuthData: user.isAuthData
 	}
 }
 
