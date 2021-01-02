@@ -1,5 +1,6 @@
 import React, { useState }  from 'react'
 import { useHistory } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import Axios  from 'axios'
 import InfoBlock from '../common/InfoBlock'
 import setFormObject from "../common/FormUtils"

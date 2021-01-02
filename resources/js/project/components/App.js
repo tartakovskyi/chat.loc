@@ -1,6 +1,7 @@
 import React, { useState, useEffect }  from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { getAuthAction, logoutAction } from '../store/actions'
 import { getAuthData, checkToken } from '../api'
 import Navigation from './common/Navigation'
@@ -44,6 +45,10 @@ const App = ({isAuthData, getAuthAction, logoutAction}) => {
 	)
 }
 
+
+App.propTyupes  = {
+	isAuthData: PropTypes.boolean
+}
 
 const mapStateToProps = function({user}) {
 

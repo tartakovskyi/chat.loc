@@ -12,7 +12,7 @@ const initialData = {
     confirmPassword: '',
 }
 
-const Register = (props) => {
+const Register = () => {
 
 	const [data, setData] = useState(initialData)
 	const [errors, setErrors] = useState({})
