@@ -46,7 +46,7 @@ const App = ({isAuthData, getAuthAction, logoutAction}) => {
 }
 
 
-App.propTyupes  = {
+App.propTypes  = {
 	isAuthData: PropTypes.boolean
 }
 

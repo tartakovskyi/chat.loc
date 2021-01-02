@@ -1,70 +1,50 @@
-import React, { Component }  from 'react';
-import { connect } from 'react-redux';
-import Axios  from 'axios';
-import EditBtn from '../common/EditBtn';
+import React, { useState, useEffect }  from 'react'
+import { connect } from 'react-redux'
+import Axios  from 'axios'
+import Message from './Message'
 
 
-class Chat extends Component {
+const Chat = ({match}) => {
 
-	constructor(props) {
+	const id = match.params.id
+	const [chatData, setChatData] = useState({})
+	const [messages, setMessages] = useState([])
 
-		super();
-
-		this.state = {
-			id: props.match.params.id,
-			chat: {},
-			messages: []
-		}
-	}
-
-	componentDidMount() {
-		axios.get('/api/chat/' + this.state.id)
+	useEffect(() => {
+		axios.get('/api/chat/' + id)
 		.then((response) => {
-			this.setState({ chat : response.data.chat });
-			this.setState({ messages : response.data.messages });
+			setChatData(response.data.chat)
+			setMessages(response.data.messages)
 		})
 		.catch((error) => {
-			console.log(error);
+			console.log(error)
 		})
+    }, [])
+
+
+	const convertDate = (date) => {
+		const newDate = Date.parse(date)
+
+		return new Intl.DateTimeFormat("en-GB", { year: "numeric", month: "numeric", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit"}).format(newDate)
 	}
 
-	convertDate(date) {
-		const newDate = Date.parse(date);
 
-		return new Intl.DateTimeFormat("en-GB", { year: "numeric", month: "numeric", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit"}).format(newDate);
-	}
-
-	renderMessages() {
-		return this.state.messages.map((message) => {
-			return (
-				<div key={message.id} className="message rounded mb-4 p-4">
-					<div className="d-flex justify-content-between mb-3">
-						<b>{message.user.name}</b>
-						<b>{this.convertDate(message.created_at)}</b>
-					</div>
-					<p>{message.text}</p>
-				</div>   
-			);
-		});
-	}
-
-	render() {
-
-		return (
-			<div className="container">
-				<h1>{this.state.chat.title}</h1>
-				{this.renderMessages()}	
-			</div>
-			);
-	}
+	return (
+		<div className="container">
+			<h1>{chatData.title}</h1>
+			{messages.map(message => (
+				<Message  key={message.id} message={message} className="message rounded mb-4 p-4" /> 
+			))}
+		</div>
+	)
 }
 
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({user}) => {
 	return {
-		auth: state.user.auth,
-		is_auth: state.user.is_auth
+		auth: user.auth,
+		is_auth: user.is_auth
 	}
 }
 
-export default connect(mapStateToProps)(Chat);
+export default connect(mapStateToProps)(Chat)
