@@ -7182,7 +7182,7 @@ var App = function App(_ref) {
 };
 
 App.propTypes = {
-  isAuthData: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a["boolean"]
+  isAuthData: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.bool
 };
 
 var mapStateToProps = function mapStateToProps(_ref2) {
@@ -7595,7 +7595,8 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
@@ -7621,6 +7622,9 @@ var Message = function Message(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, message.user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, convertDate(message.created_at))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, message.text));
 };
 
+App.propTypes = {
+  message: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object
+};
 /* harmony default export */ __webpack_exports__["default"] = (Message);
 
 /***/ }),

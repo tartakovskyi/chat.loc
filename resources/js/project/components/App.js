@@ -47,7 +47,7 @@ const App = ({isAuthData, getAuthAction, logoutAction}) => {
 
 
 App.propTypes  = {
-	isAuthData: PropTypes.boolean
+	isAuthData: PropTypes.bool
 }
 
 const mapStateToProps = function({user}) {

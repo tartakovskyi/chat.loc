@@ -1,16 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 
 const Message = ({message}) => {
-
 
 	const convertDate = (date) => {
 		const newDate = Date.parse(date)
 
 		return new Intl.DateTimeFormat("en-GB", { year: "numeric", month: "numeric", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit"}).format(newDate)
 	}
-
 
 	return (
 		<div className="message rounded mb-4 p-4">
@@ -21,6 +19,11 @@ const Message = ({message}) => {
 			<p>{message.text}</p>
 		</div> 
 	)
+}
+
+
+App.propTypes  = {
+	message: PropTypes.object
 }
 
 
