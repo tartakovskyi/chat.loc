@@ -1,6 +1,8 @@
 import React, { useState }  from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Axios  from 'axios'
+import { getMessages } from '../../store/actions'
 import InfoBlock from '../common/InfoBlock'
 import setFormObject from "../common/FormUtils"
 
@@ -9,7 +11,7 @@ const initialData = {
     text: ''
 }
 
-const MessageForm = ({user_id,chat_id}) => {
+const MessageForm = ({user_id, chat_id, getMessages}) => {
 
 	const [data, setData] = useState(initialData)
 	const [errors, setErrors] = useState({})
@@ -27,7 +29,10 @@ const MessageForm = ({user_id,chat_id}) => {
         		text: data.text
         	})
         	.then(function (response) {
-        		
+        		if (response.status == 200) {
+        			setData(initialData)
+        			getMessages(chat_id)
+        		}
         	})
         	.catch(function (error) {
         		console.log(error);
@@ -61,4 +66,10 @@ const MessageForm = ({user_id,chat_id}) => {
 }
 
 
-export default MessageForm
+MessageForm.propTypes = {
+	user_id: PropTypes.number.isRequired,
+	chat_id: PropTypes.number.isRequired
+}
+
+
+export default connect(null, {getMessages})(MessageForm)
