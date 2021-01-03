@@ -2,9 +2,10 @@ import React, { useState, useEffect }  from 'react'
 import { connect } from 'react-redux'
 import Axios  from 'axios'
 import Message from './Message'
+import MessageForm from './MessageForm'
 
 
-const Chat = ({match}) => {
+const Chat = ({match, auth, isAuthData}) => {
 
 	const id = match.params.id
 	const [chatData, setChatData] = useState({})
@@ -31,10 +32,15 @@ const Chat = ({match}) => {
 
 	return (
 		<div className="container">
-			<h1>{chatData.title}</h1>
-			{messages.map(message => (
-				<Message  key={message.id} message={message} className="message rounded mb-4 p-4" /> 
-			))}
+			<div className="row justify-content-center">
+				<div className="col-lg-8">
+					<h1>{chatData.title}</h1>
+					{messages.map(message => (
+						<Message  key={message.id} message={message} className="message rounded mb-4 p-4" /> 
+					))}
+					{isAuthData && <MessageForm chat_id={id} user_id={auth.id} />}
+				</div>
+			</div>
 		</div>
 	)
 }
@@ -43,7 +49,7 @@ const Chat = ({match}) => {
 const mapStateToProps = ({user}) => {
 	return {
 		auth: user.auth,
-		is_auth: user.is_auth
+		isAuthData: user.isAuthData
 	}
 }
 

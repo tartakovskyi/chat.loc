@@ -7509,6 +7509,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message */ "./resources/js/project/components/chat/Message.js");
+/* harmony import */ var _MessageForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MessageForm */ "./resources/js/project/components/chat/MessageForm.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7526,8 +7527,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var Chat = function Chat(_ref) {
-  var match = _ref.match;
+  var match = _ref.match,
+      auth = _ref.auth,
+      isAuthData = _ref.isAuthData;
   var id = match.params.id;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
@@ -7563,20 +7567,27 @@ var Chat = function Chat(_ref) {
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row justify-content-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-lg-8"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, chatData.title), messages.map(function (message) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_3__["default"], {
       key: message.id,
       message: message,
       className: "message rounded mb-4 p-4"
     });
-  }));
+  }), isAuthData && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    chat_id: id,
+    user_id: auth.id
+  }))));
 };
 
 var mapStateToProps = function mapStateToProps(_ref2) {
   var user = _ref2.user;
   return {
     auth: user.auth,
-    is_auth: user.is_auth
+    isAuthData: user.isAuthData
   };
 };
 
@@ -7622,10 +7633,109 @@ var Message = function Message(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, message.user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, convertDate(message.created_at))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, message.text));
 };
 
-App.propTypes = {
+Message.propTypes = {
   message: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object
 };
 /* harmony default export */ __webpack_exports__["default"] = (Message);
+
+/***/ }),
+
+/***/ "./resources/js/project/components/chat/MessageForm.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/project/components/chat/MessageForm.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _common_InfoBlock__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../common/InfoBlock */ "./resources/js/project/components/common/InfoBlock.js");
+/* harmony import */ var _common_FormUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../common/FormUtils */ "./resources/js/project/components/common/FormUtils.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+var initialData = {
+  text: ''
+};
+
+var MessageForm = function MessageForm(_ref) {
+  var user_id = _ref.user_id,
+      chat_id = _ref.chat_id;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialData),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      errors = _useState4[0],
+      setErrors = _useState4[1];
+
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    var errors = validate(data);
+    setErrors(errors);
+
+    if (Object.keys(errors).length === 0) {
+      axios.post('/api/message', {
+        user_id: user_id,
+        chat_id: chat_id,
+        text: data.text
+      }).then(function (response) {})["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  };
+
+  var validate = function validate(data) {
+    var errors = {};
+    if (!data.text) errors.text = 'Message cannot be blank';
+    return errors;
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit,
+    className: "messageForm mt-4"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Add a Message"), Object.keys(errors).length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_common_InfoBlock__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    errors: errors
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+    id: "text",
+    rows: "8",
+    className: "form-control",
+    name: "text",
+    placeholder: "Your message...",
+    value: data.text,
+    onChange: Object(_common_FormUtils__WEBPACK_IMPORTED_MODULE_4__["default"])(data, setData)
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit",
+    className: "btn btn-block btn-primary"
+  }, "Submit"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (MessageForm);
 
 /***/ }),
 

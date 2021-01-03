@@ -22,7 +22,7 @@ const Message = ({message}) => {
 }
 
 
-App.propTypes  = {
+Message.propTypes  = {
 	message: PropTypes.object
 }
 

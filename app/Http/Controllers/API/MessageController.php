@@ -36,7 +36,13 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        
+        $newMessage = Message::create($request->all());
+
+        if ($newMessage) {
+            return response()->json(['info' => 'Message successfully created!'], 200);
+        }
     }
 
     /**

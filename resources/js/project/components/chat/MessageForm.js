@@ -6,10 +6,10 @@ import setFormObject from "../common/FormUtils"
 
 
 const initialData = {
-    message: ''
+    text: ''
 }
 
-const MessageForm = (props) => {
+const MessageForm = ({user_id,chat_id}) => {
 
 	const [data, setData] = useState(initialData)
 	const [errors, setErrors] = useState({})
@@ -20,40 +20,45 @@ const MessageForm = (props) => {
 		const errors = validate(data)
         setErrors(errors)
 
+        if (Object.keys(errors).length === 0) {
+        	axios.post('/api/message', {
+        		user_id : user_id,
+        		chat_id : chat_id,
+        		text: data.text
+        	})
+        	.then(function (response) {
+        		
+        	})
+        	.catch(function (error) {
+        		console.log(error);
+        	})
+        }
     }
 
 	const validate = (data) => {
         const errors = {}
 
-        if (!data.message) errors.message = 'Message cannot be blank'
+        if (!data.text) errors.text = 'Message cannot be blank'
 
         return errors
     }
 
 	return (
-		<div class="row justify-content-center">
-			<div class="col-lg-8">
-				<form onsubmit={handleSubmit} className="messageForm mt-4">
-					<h2>Add a Message</h2>
-					{Object.keys(errors).length > 0 && <InfoBlock errors={errors} />}
-					<div class="form-group">
-						<textarea id="message" rows="10" className="form-control"
-						name="message"
-						placeholder="Your message..."
-						onChange={setFormObject(data, setData)}
-						>
-							{data.message}
-						</textarea>
-					</div>
-					<button type="submit" className="btn btn-block btn-primary">Submit</button>
-				</form>
+		<form onSubmit={handleSubmit} className="messageForm mt-4">
+			<h2>Add a Message</h2>
+			{Object.keys(errors).length > 0 && <InfoBlock errors={errors} />}
+			<div className="form-group">
+				<textarea id="text" rows="8" className="form-control"
+				name="text"
+				placeholder="Your message..."
+				value={data.text}
+				onChange={setFormObject(data, setData)}
+				></textarea>
 			</div>
-		</div>
+			<button type="submit" className="btn btn-block btn-primary">Submit</button>
+		</form>
 	)
 }
-
-
-
 
 
 export default MessageForm
