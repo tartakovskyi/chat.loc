@@ -32,7 +32,8 @@ Route::group(['namespace' => 'Api'], function () {
 
 	Route::resources([
 		'chat' => ChatController::class,
-		'message' => MessageController::class,
+		'chat.message' => MessageController::class,
+		//'message' => MessageController::class,
 		'user' => UserController::class,
 	]);
 });

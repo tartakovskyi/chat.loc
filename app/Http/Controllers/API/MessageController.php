@@ -13,9 +13,12 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($chat_id)
     {
-        //
+        
+        $messages = Message::with('user')->where('chat_id', $chat_id)->get();
+
+        return response()->json(['messages' => $messages], 200);
     }
 
     /**

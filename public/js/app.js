@@ -8179,17 +8179,30 @@ if (document.getElementById('app')) {
 /*!**********************************************************!*\
   !*** ./resources/js/project/store/actions/chatAction.js ***!
   \**********************************************************/
-/*! exports provided: getMessages */
+/*! exports provided: getChatInfo, getMessages */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChatInfo", function() { return getChatInfo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMessages", function() { return getMessages; });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./resources/js/project/store/constants.js");
 
-var getMessages = function getMessages(chat_id) {
+var getChatInfo = function getChatInfo(chat_id) {
   return function (dispatch) {
     return axios.get('/api/chat/' + chat_id).then(function (response) {
+      dispatch({
+        type: _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_CHAT_INFO,
+        messages: response.data.chat
+      });
+    })["catch"](function (err) {
+      throw err;
+    });
+  };
+};
+var getMessages = function getMessages(chat_id) {
+  return function (dispatch) {
+    return axios.get('/api/chat/' + chat_id + '/message').then(function (response) {
       dispatch({
         type: _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_MESSAGES,
         messages: response.data.messages
@@ -8214,7 +8227,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutAction", function() { return logoutAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAuthAction", function() { return getAuthAction; });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./resources/js/project/store/constants.js");
-!(function webpackMissingModule() { var e = new Error("Cannot find module '../api'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api */ "./resources/js/project/api.js");
 
 
 var logoutAction = function logoutAction() {
@@ -8224,7 +8237,7 @@ var logoutAction = function logoutAction() {
 };
 var getAuthAction = function getAuthAction() {
   return function (dispatch) {
-    return !(function webpackMissingModule() { var e = new Error("Cannot find module '../api'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())().then(function (response) {
+    return Object(_api__WEBPACK_IMPORTED_MODULE_1__["getAuthData"])().then(function (response) {
       dispatch({
         type: _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_AUTH,
         auth: response.data

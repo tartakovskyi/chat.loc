@@ -1,5 +1,5 @@
 import C from '../constants'
-import { getAuthData } from '../api'
+import { getAuthData } from '../../api'
 
 
 export const logoutAction = () => ({

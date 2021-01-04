@@ -40,9 +40,8 @@ class ChatController extends Controller
     {
         
         $chat = Chat::find($chat)[0];
-        $messages = Message::with('user')->where('chat_id', $chat->id)->get();
 
-        return response()->json(['chat' => $chat, 'messages' => $messages], 200);
+        return response()->json(['chat' => $chat], 200);
     }
 
     /**
