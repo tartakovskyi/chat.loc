@@ -2,7 +2,7 @@ import React, { useState, useEffect }  from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { getAuthAction, logoutAction } from '../store/actions'
+import { getAuthAction, logoutAction } from '../store/actions/userAction'
 import { getAuthData, checkToken } from '../api'
 import Navigation from './common/Navigation'
 import Chat from './chat/Chat'
@@ -18,9 +18,7 @@ const App = ({isAuthData, getAuthAction, logoutAction}) => {
 	useEffect(() => {
 		if (isAuthData !== true) {
 			if (checkToken()) {
-				getAuthData().then((response) => {
-					getAuthAction(response.data)
-				})
+				getAuthAction()
 			}
 		}
     }, [isAuthData, isLogged])

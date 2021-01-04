@@ -7,11 +7,11 @@ import Message from './Message'
 const MessageList = ({messages}) => {
 
 	return (
-		<>
-		{messages && messages.map(message => (
-			<Message  key={message.id} message={message} className="message rounded mb-4 p-4" /> 
-		))}
-		</>
+		<div className="mb-5">
+			{messages && messages.map(message => (
+				<Message  key={message.id} message={message} className="message rounded mb-4 p-4" /> 
+			))}
+		</div>
 	)
 }
 

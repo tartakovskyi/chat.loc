@@ -2,7 +2,7 @@ import React, { useState }  from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Axios  from 'axios'
-import { getMessages } from '../../store/actions'
+import { getMessages } from '../../store/actions/chatAction'
 import InfoBlock from '../common/InfoBlock'
 import setFormObject from "../common/FormUtils"
 
@@ -49,8 +49,8 @@ const MessageForm = ({user_id, chat_id, getMessages}) => {
     }
 
 	return (
-		<form onSubmit={handleSubmit} className="messageForm mt-4">
-			<h2>Add a Message</h2>
+		<form onSubmit={handleSubmit} className="messageForm">
+			<h2 className="mb-4">Add a Message</h2>
 			{Object.keys(errors).length > 0 && <InfoBlock errors={errors} />}
 			<div className="form-group">
 				<textarea id="text" rows="8" className="form-control"

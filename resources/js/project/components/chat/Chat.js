@@ -1,13 +1,13 @@
 import React, { useState, useEffect }  from 'react'
 import { connect } from 'react-redux'
-import { getMessages } from '../../store/actions'
+import { getMessages } from '../../store/actions/chatAction'
 import MessageList from './MessageList'
 import MessageForm from './MessageForm'
 
 
 const Chat = ({match, auth, isAuthData, getMessages}) => {
 
-	const id = match.params.id
+	const id = Number(match.params.id)
 	/*const [chatData, setChatData] = useState({})*/
 
 	useEffect(() => {
@@ -37,10 +37,7 @@ const Chat = ({match, auth, isAuthData, getMessages}) => {
 
 
 const mapStateToProps = ({user}) => {
-	return {
-		auth: user.auth,
-		isAuthData: user.isAuthData
-	}
+	return {...user}
 }
 
 export default connect(mapStateToProps, {getMessages})(Chat)
