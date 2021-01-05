@@ -21,10 +21,10 @@ MessageList.propTypes = {
 }
 
 
-const mapStateToProps = ({message}) => {
+const mapStateToProps = ({messages}) => {
 
 	return {
-		messages: message.list
+		messages: messages.list
 	}
 }
 

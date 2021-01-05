@@ -1,7 +1,7 @@
 import C from '../constants'
 
 
-export const getChatInfo = (chat_id) => {
+export const getChatInfoAction = (chat_id) => {
 
 	return function(dispatch) {
 
@@ -18,7 +18,7 @@ export const getChatInfo = (chat_id) => {
 	}
 }
 
-export const getMessages = (chat_id) => {
+export const getMessagesAction = (chat_id) => {
 
 	return function(dispatch) {
 

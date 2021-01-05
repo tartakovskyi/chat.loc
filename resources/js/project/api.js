@@ -1,12 +1,12 @@
 import axios from "axios"
 
 
+const token = 'Bearer ' + localStorage.getItem('token')
+
+
 export const getAuthData = () => {
     return axios.get('/api/current',{
-        headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}
-    })
-    .catch((error) => {
-        console.log(error)
+        headers: {'Authorization' : token}
     })
 }
 
