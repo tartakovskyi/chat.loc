@@ -1,14 +1,11 @@
 import React, { useState, useEffect }  from 'react'
-import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import Axios  from 'axios'
-import EditBtn from '../common/EditBtn'
+import ChatList  from './ChatList'
 
 
-const Chats = ({auth, isAuthData}) => {
+const Chats = () => {
 
-	const [chats, setChats] = useState([]);
+	const [chats, setChats] = useState([])
 
 	useEffect(() => {
         axios.get('/api/chat')
@@ -16,39 +13,10 @@ const Chats = ({auth, isAuthData}) => {
 			setChats(response.data)
 		})
 		.catch( (error) => {
-			console.log(error);
+			console.log(error)
 		})
-    }, []);
+    }, [])
 
-
-	const unread = (count, id) => {
-		if (count) {
-			return (
-				<Link to={'/chat/' + id}>{count}</Link>
-			)
-		} else {
-			return('0')
-		}
-
-	}
-
-	const renderChats = () => {
-		return chats.map((chat, index) => {
-			return (
-				<tr key={index}>
-					<td>
-						<Link to={'/chat/' + chat.id}>{chat.title}</Link>
-					</td>
-					<td className="text-center">
-						{unread(chat.messages_count, chat.id)}
-					</td>
-					<td>
-						{auth && chat.user_id == auth.id && <EditBtn url={'/chat/' + chat.id + '/edit'} />}
-					</td>
-				</tr>   
-			)
-		})
-	}
 
 	return (
 		<div className="container">
@@ -61,20 +29,11 @@ const Chats = ({auth, isAuthData}) => {
 						<th></th>
 					</tr>
 				</thead>
-				<tbody>
-					{ renderChats() }
-				</tbody>
+				<ChatList chats={chats} />
 			</table>
 		</div>
-	);
+	)
 }
 
-const mapStateToProps = function({user}) {
 
-	return {
-		auth: user.auth,
-		isAuthData: user.isAuthData
-	}
-}
-
-export default connect(mapStateToProps)(Chats);
+export default Chats

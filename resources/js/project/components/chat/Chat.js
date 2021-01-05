@@ -15,6 +15,10 @@ const Chat = ({match, auth, isAuthData, chatInfo, getMessagesAction, getChatInfo
 		getMessagesAction(id)
     }, [])
 
+    useEffect(() => {
+    	setInterval(() => getMessagesAction(id), 2000)		
+    }, [])
+
 	return (
 		<div className="container">
 			<div className="row justify-content-center">
