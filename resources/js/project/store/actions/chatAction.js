@@ -18,11 +18,15 @@ export const getChatInfoAction = (chat_id) => {
 	}
 }
 
-export const getMessagesAction = (chat_id) => {
+export const getMessagesAction = (chat_id, last_message = null) => {
 
 	return function(dispatch) {
 
-		return axios.get('/api/chat/' + chat_id + '/message')
+		return axios.get('/api/chat/' + chat_id + '/message', {
+			params: {
+				last_message: last_message
+			}
+		})
 		.then(response => {
 			dispatch({
 				type: C.GET_MESSAGES,

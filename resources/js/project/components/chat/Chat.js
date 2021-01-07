@@ -13,18 +13,16 @@ const Chat = ({match, auth, isAuthData, chatInfo, getMessagesAction, getChatInfo
 	useEffect(() => {
 		getChatInfoAction(id)
 		getMessagesAction(id)
+		setInterval(() => getMessagesAction(id), 2500)
     }, [])
 
-    useEffect(() => {
-    	setInterval(() => getMessagesAction(id), 2000)		
-    }, [])
 
 	return (
 		<div className="container">
 			<div className="row justify-content-center">
 				<div className="col-lg-8">
 					<h1>{chatInfo && chatInfo.title}</h1>
-					<MessageList />
+					<MessageList chat_id={id} />
 					{isAuthData && <MessageForm chat_id={id} user_id={auth.id} />}
 				</div>
 			</div>

@@ -13,10 +13,14 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($chat_id)
+    public function index($chat_id, Request $request)
     {
         
-        $messages = Message::with('user')->where('chat_id', $chat_id)->get();
+        $query = Message::with('user')->where('chat_id', $chat_id);
+
+        if ($last_message = $request->input('last_message')) $query = $query->where('id', '>', $last_message);
+
+        $messages = $query->get();
 
         return response()->json(['messages' => $messages], 200);
     }
