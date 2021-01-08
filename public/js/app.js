@@ -7609,10 +7609,10 @@ var Chat = function Chat(_ref) {
       getChatInfoAction = _ref.getChatInfoAction;
   var id = Number(match.params.id);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    getChatInfoAction(id);
     getMessagesAction(id);
+    getChatInfoAction(id);
     setInterval(function () {
-      return getMessagesAction(id);
+      return getMessagesAction(id, sessionStorage.getItem('lastMessage'));
     }, 2500);
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -7621,9 +7621,7 @@ var Chat = function Chat(_ref) {
     className: "row justify-content-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-lg-8"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, chatInfo && chatInfo.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageList__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    chat_id: id
-  }), isAuthData && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, chatInfo && chatInfo.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageList__WEBPACK_IMPORTED_MODULE_4__["default"], null), isAuthData && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
     chat_id: id,
     user_id: auth.id
   }))));
@@ -7824,20 +7822,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/actions/chatAction */ "./resources/js/project/store/actions/chatAction.js");
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Message */ "./resources/js/project/components/chat/Message.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message */ "./resources/js/project/components/chat/Message.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -7845,20 +7835,24 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var MessageList = function MessageList(_ref) {
-  var chat_id = _ref.chat_id,
-      messages = _ref.messages,
-      getMessagesAction = _ref.getMessagesAction;
+  var messages = _ref.messages,
+      isAuthData = _ref.isAuthData,
+      auth = _ref.auth;
+  var lastMessage = sessionStorage.getItem('lastMessage');
+  var snd = new Audio("/storage/sounds/new.mp3");
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (lastMessage && messages.length && isAuthData) newMesAlert();
+    if (messages.length) sessionStorage.setItem('lastMessage', messages[messages.length - 1].id);
+  }, [messages]);
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
-      _useState2 = _slicedToArray(_useState, 2),
-      lastMessage = _useState2[0],
-      setLastMessage = _useState2[1];
+  var newMesAlert = function newMesAlert() {
+    if (messages[messages.length - 1].id > lastMessage && messages[messages.length - 1].user.id != auth.id) snd.play();
+  };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "mb-5"
-  }, messages.map(function (message, index) {
-    if (index = messages.length - 1) setLastMessage(message.id);
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, messages.map(function (message) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_3__["default"], {
       key: message.id,
       message: message,
       className: "message rounded mb-4 p-4"
@@ -7867,15 +7861,15 @@ var MessageList = function MessageList(_ref) {
 };
 
 MessageList.propTypes = {
-  chat_id: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.number,
   messages: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.array
 };
 
 var mapStateToProps = function mapStateToProps(_ref2) {
-  var messages = _ref2.messages;
-  return {
+  var messages = _ref2.messages,
+      user = _ref2.user;
+  return _objectSpread({
     messages: messages.list
-  };
+  }, user);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(MessageList));
@@ -8234,13 +8228,14 @@ if (document.getElementById('app')) {
 /*!**********************************************************!*\
   !*** ./resources/js/project/store/actions/chatAction.js ***!
   \**********************************************************/
-/*! exports provided: getChatInfoAction, getMessagesAction */
+/*! exports provided: getChatInfoAction, getMessagesAction, lastMessageAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChatInfoAction", function() { return getChatInfoAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMessagesAction", function() { return getMessagesAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lastMessageAction", function() { return lastMessageAction; });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./resources/js/project/store/constants.js");
 
 var getChatInfoAction = function getChatInfoAction(chat_id) {
@@ -8270,6 +8265,12 @@ var getMessagesAction = function getMessagesAction(chat_id) {
     })["catch"](function (err) {
       throw err;
     });
+  };
+};
+var lastMessageAction = function lastMessageAction(lastMessage) {
+  return {
+    type: _constants__WEBPACK_IMPORTED_MODULE_0__["default"].LOGOUT_SUCCESS,
+    lastMessage: lastMessage
   };
 };
 
@@ -8443,7 +8444,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 var initialState = {
-  list: []
+  list: [],
+  lastMessage: null,
+  newMessages: false
 };
 function messages() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -8452,8 +8455,10 @@ function messages() {
   switch (action.type) {
     case _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_MESSAGES:
       var list = [].concat(_toConsumableArray(state.list), _toConsumableArray(action.messages));
+      var newMessages = Object.keys(action.messages).length ? true : false;
       return _objectSpread(_objectSpread({}, state), {}, {
-        list: list
+        list: list,
+        newMessages: newMessages
       });
 
     default:

@@ -38,3 +38,8 @@ export const getMessagesAction = (chat_id, last_message = null) => {
 		})
 	}
 }
+
+export const lastMessageAction = lastMessage => ({
+    type: C.LOGOUT_SUCCESS,
+    lastMessage: lastMessage
+})
