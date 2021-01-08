@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState, useEffect, useRef }  from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getMessagesAction, getChatInfoAction } from '../../store/actions/chatAction'
@@ -13,7 +13,7 @@ const Chat = ({match, auth, isAuthData, chatInfo, getMessagesAction, getChatInfo
 	useEffect(() => {
 		getMessagesAction(id)
 		getChatInfoAction(id)
-		setInterval(() => getMessagesAction(id, sessionStorage.getItem('lastMessage')), 2500)
+		setInterval(() => getMessagesAction(id, sessionStorage.getItem('lastMessage')), 2000)
     }, [])
 
 

@@ -7613,7 +7613,7 @@ var Chat = function Chat(_ref) {
     getChatInfoAction(id);
     setInterval(function () {
       return getMessagesAction(id, sessionStorage.getItem('lastMessage'));
-    }, 2500);
+    }, 2000);
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
@@ -7761,7 +7761,6 @@ var MessageForm = function MessageForm(_ref) {
       }).then(function (response) {
         if (response.status == 200) {
           setData(initialData);
-          getMessagesAction(chat_id);
         }
       })["catch"](function (error) {
         console.log(error);
@@ -7777,7 +7776,8 @@ var MessageForm = function MessageForm(_ref) {
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: handleSubmit,
-    className: "messageForm"
+    className: "messageForm",
+    id: "messageForm"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
     className: "mb-4"
   }, "Add a Message"), Object.keys(errors).length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_common_InfoBlock__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -8228,14 +8228,13 @@ if (document.getElementById('app')) {
 /*!**********************************************************!*\
   !*** ./resources/js/project/store/actions/chatAction.js ***!
   \**********************************************************/
-/*! exports provided: getChatInfoAction, getMessagesAction, lastMessageAction */
+/*! exports provided: getChatInfoAction, getMessagesAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChatInfoAction", function() { return getChatInfoAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMessagesAction", function() { return getMessagesAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lastMessageAction", function() { return lastMessageAction; });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./resources/js/project/store/constants.js");
 
 var getChatInfoAction = function getChatInfoAction(chat_id) {
@@ -8265,12 +8264,6 @@ var getMessagesAction = function getMessagesAction(chat_id) {
     })["catch"](function (err) {
       throw err;
     });
-  };
-};
-var lastMessageAction = function lastMessageAction(lastMessage) {
-  return {
-    type: _constants__WEBPACK_IMPORTED_MODULE_0__["default"].LOGOUT_SUCCESS,
-    lastMessage: lastMessage
   };
 };
 
@@ -8445,8 +8438,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 var initialState = {
   list: [],
-  lastMessage: null,
-  newMessages: false
+  lastMessage: null
 };
 function messages() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -8455,10 +8447,8 @@ function messages() {
   switch (action.type) {
     case _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_MESSAGES:
       var list = [].concat(_toConsumableArray(state.list), _toConsumableArray(action.messages));
-      var newMessages = Object.keys(action.messages).length ? true : false;
       return _objectSpread(_objectSpread({}, state), {}, {
-        list: list,
-        newMessages: newMessages
+        list: list
       });
 
     default:

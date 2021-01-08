@@ -31,7 +31,6 @@ const MessageForm = ({user_id, chat_id, getMessagesAction}) => {
         	.then(function (response) {
         		if (response.status == 200) {
         			setData(initialData)
-        			getMessagesAction(chat_id)
         		}
         	})
         	.catch(function (error) {
@@ -49,7 +48,7 @@ const MessageForm = ({user_id, chat_id, getMessagesAction}) => {
     }
 
 	return (
-		<form onSubmit={handleSubmit} className="messageForm">
+		<form onSubmit={handleSubmit} className="messageForm" id="messageForm">
 			<h2 className="mb-4">Add a Message</h2>
 			{Object.keys(errors).length > 0 && <InfoBlock errors={errors} />}
 			<div className="form-group">
