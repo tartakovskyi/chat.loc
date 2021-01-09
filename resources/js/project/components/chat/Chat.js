@@ -9,11 +9,14 @@ import MessageForm from './MessageForm'
 const Chat = ({match, auth, isAuthData, chatInfo, getMessagesAction, getChatInfoAction}) => {
 
 	const id = Number(match.params.id)
+	const refScrollTarget = useRef(null)
+	const executeScroll = () => refScrollTarget.current.scrollIntoView({behavior: "smooth"})
 
 	useEffect(() => {
 		getMessagesAction(id)
 		getChatInfoAction(id)
 		setInterval(() => getMessagesAction(id, sessionStorage.getItem('lastMessage')), 2000)
+		setTimeout(executeScroll, 700)
     }, [])
 
 
@@ -23,6 +26,7 @@ const Chat = ({match, auth, isAuthData, chatInfo, getMessagesAction, getChatInfo
 				<div className="col-lg-8">
 					<h1>{chatInfo && chatInfo.title}</h1>
 					<MessageList />
+					<div ref={refScrollTarget}></div> 
 					{isAuthData && <MessageForm chat_id={id} user_id={auth.id} />}
 				</div>
 			</div>

@@ -7608,12 +7608,21 @@ var Chat = function Chat(_ref) {
       getMessagesAction = _ref.getMessagesAction,
       getChatInfoAction = _ref.getChatInfoAction;
   var id = Number(match.params.id);
+  var refScrollTarget = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+
+  var executeScroll = function executeScroll() {
+    return refScrollTarget.current.scrollIntoView({
+      behavior: "smooth"
+    });
+  };
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     getMessagesAction(id);
     getChatInfoAction(id);
     setInterval(function () {
       return getMessagesAction(id, sessionStorage.getItem('lastMessage'));
     }, 2000);
+    setTimeout(executeScroll, 700);
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
@@ -7621,7 +7630,9 @@ var Chat = function Chat(_ref) {
     className: "row justify-content-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-lg-8"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, chatInfo && chatInfo.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageList__WEBPACK_IMPORTED_MODULE_4__["default"], null), isAuthData && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, chatInfo && chatInfo.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageList__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    ref: refScrollTarget
+  }), isAuthData && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
     chat_id: id,
     user_id: auth.id
   }))));
