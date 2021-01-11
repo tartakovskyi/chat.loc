@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import setFormObject from "../common/FormUtils"
 
@@ -8,18 +8,18 @@ const initialData = {
 }
 
 
-const EditChatPage = () => {
+const EditChatPage = ({match}) => {
 
 	const [data, setData] = useState(initialData)
 	const [errors, setErrors] = useState({})
 
 	useEffect(() => {
-        if (props.film._id && data._id !== props.film._id) {
-            setData(props.film)
+        if (match) {
+            //setData(props.film)
         } else {
             setData(initialData)
         }
-    }, [props.film])
+    }, [])
 
 	const handleSubmit = e => {
 		e.preventDefault()

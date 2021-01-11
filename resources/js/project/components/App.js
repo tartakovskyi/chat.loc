@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getAuthAction, logoutAction } from '../store/actions/userAction'
@@ -38,8 +38,10 @@ const App = ({isAuthData, getAuthAction, logoutAction}) => {
 				<Route path='/register' component={Register}/>
 				{!checkToken() && <Redirect to='/login' />}
 				<Route exact path='/' component={Chats}/>
-				<Route path='/chat/add' component={EditChatPage}/>
-				<Route exact path='/chat/:id' component={Chat}/>
+				<Switch>
+					<Route path='/chat/add' component={EditChatPage}/>
+					<Route exact path='/chat/:id' component={Chat}/>
+				</Switch>
 				<Route path='/chat/:id/edit' component={EditChatPage}/>
 			</main> 
 		</div> 
