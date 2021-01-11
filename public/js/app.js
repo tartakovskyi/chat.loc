@@ -7181,8 +7181,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_Navigation__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./common/Navigation */ "./resources/js/project/components/common/Navigation.js");
 /* harmony import */ var _chat_Chat__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./chat/Chat */ "./resources/js/project/components/chat/Chat.js");
 /* harmony import */ var _chats_Chats__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./chats/Chats */ "./resources/js/project/components/chats/Chats.js");
-/* harmony import */ var _auth_Login__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./auth/Login */ "./resources/js/project/components/auth/Login.js");
-/* harmony import */ var _auth_Register__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./auth/Register */ "./resources/js/project/components/auth/Register.js");
+/* harmony import */ var _edit_EditChatPage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./edit/EditChatPage */ "./resources/js/project/components/edit/EditChatPage.js");
+/* harmony import */ var _auth_Login__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./auth/Login */ "./resources/js/project/components/auth/Login.js");
+/* harmony import */ var _auth_Register__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./auth/Register */ "./resources/js/project/components/auth/Register.js");
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -7196,6 +7197,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -7238,13 +7240,13 @@ var App = function App(_ref) {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/login",
     render: function render(props) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_auth_Login__WEBPACK_IMPORTED_MODULE_9__["default"], _extends({}, props, {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_auth_Login__WEBPACK_IMPORTED_MODULE_10__["default"], _extends({}, props, {
         setIsLogged: setIsLogged
       }));
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/register",
-    component: _auth_Register__WEBPACK_IMPORTED_MODULE_10__["default"]
+    component: _auth_Register__WEBPACK_IMPORTED_MODULE_11__["default"]
   }), !Object(_api__WEBPACK_IMPORTED_MODULE_5__["checkToken"])() && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
     to: "/login"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
@@ -7252,8 +7254,15 @@ var App = function App(_ref) {
     path: "/",
     component: _chats_Chats__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/chat/add",
+    component: _edit_EditChatPage__WEBPACK_IMPORTED_MODULE_9__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
     path: "/chat/:id",
     component: _chat_Chat__WEBPACK_IMPORTED_MODULE_7__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/chat/:id/edit",
+    component: _edit_EditChatPage__WEBPACK_IMPORTED_MODULE_9__["default"]
   })));
 };
 
@@ -8200,6 +8209,117 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps)(Navigation));
+
+/***/ }),
+
+/***/ "./resources/js/project/components/edit/EditChatPage.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/project/components/edit/EditChatPage.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _common_FormUtils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common/FormUtils */ "./resources/js/project/components/common/FormUtils.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+var initialData = {
+  title: ''
+};
+
+var EditChatPage = function EditChatPage() {
+  var _useState = useState(initialData),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var _useState3 = useState({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      errors = _useState4[0],
+      setErrors = _useState4[1];
+
+  useEffect(function () {
+    if (props.film._id && data._id !== props.film._id) {
+      setData(props.film);
+    } else {
+      setData(initialData);
+    }
+  }, [props.film]);
+
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    var errors = validate(data);
+    setErrors(errors);
+
+    if (Object.keys(errors).length === 0) {
+      /*axios.post('/api/login', data)
+      .then(function (response) {
+      	localStorage.setItem('token', response.data.token)
+      	localStorage.setItem('token_expires', response.data.expires_at)
+      	props.setIsLogged(true)
+      	history.push("/")
+      })
+      .catch(function (error) {
+      	if (error.response.status === 401) {
+      		setErrors({credentials: 'Invalid login or password'})
+      	}
+      	console.log(error);
+      })*/
+    }
+  };
+
+  var validate = function validate(data) {
+    var errors = {};
+    if (!data.title) errors.title = 'Title cannot be blank';
+    return errors;
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row justify-content-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-9 col-lg-6 col-xl-5"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+    className: "text-center"
+  }, "Add New Chat"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "title"
+  }, "Title:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    id: "title",
+    name: "title",
+    value: data.title,
+    onChange: Object(_common_FormUtils__WEBPACK_IMPORTED_MODULE_2__["default"])(data, setData)
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit",
+    className: "btn btn-block btn-primary"
+  }, "Submit")))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (EditChatPage);
 
 /***/ }),
 

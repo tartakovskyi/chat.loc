@@ -7,6 +7,7 @@ import { getAuthData, checkToken } from '../api'
 import Navigation from './common/Navigation'
 import Chat from './chat/Chat'
 import Chats from './chats/Chats'
+import EditChatPage from './edit/EditChatPage'
 import Login from './auth/Login'
 import Register from './auth/Register'
 
@@ -37,7 +38,9 @@ const App = ({isAuthData, getAuthAction, logoutAction}) => {
 				<Route path='/register' component={Register}/>
 				{!checkToken() && <Redirect to='/login' />}
 				<Route exact path='/' component={Chats}/>
-				<Route path='/chat/:id' component={Chat}/>
+				<Route path='/chat/add' component={EditChatPage}/>
+				<Route exact path='/chat/:id' component={Chat}/>
+				<Route path='/chat/:id/edit' component={EditChatPage}/>
 			</main> 
 		</div> 
 	)
