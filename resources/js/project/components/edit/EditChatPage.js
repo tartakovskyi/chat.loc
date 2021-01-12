@@ -13,13 +13,11 @@ const EditChatPage = ({match}) => {
 	const [data, setData] = useState(initialData)
 	const [errors, setErrors] = useState({})
 
-	useEffect(() => {
+	/*useEffect(() => {
         if (match) {
-            //setData(props.film)
-        } else {
-            setData(initialData)
+            if (match.params) {}
         }
-    }, [])
+    }, [])*/
 
 	const handleSubmit = e => {
 		e.preventDefault()
