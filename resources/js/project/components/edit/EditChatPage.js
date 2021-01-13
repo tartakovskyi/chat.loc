@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
-import { getChatInfoAction } from '../../store/actions/chatAction'
-import PropTypes from 'prop-types'
-import setFormObject from "../common/FormUtils"
+// import { connect } from 'react-redux'
+// import { getChatInfoAction } from '../../store/actions/chatAction'
+//import PropTypes from 'prop-types'
+//import setFormObject from "../common/FormUtils"
 import ChatForm from "./ChatForm"
 
 
@@ -10,9 +10,9 @@ const EditChatPage = ({match}) => {
 
 	const id = match ? match.params.id : null
 
-	useEffect(() => {
-        if (id) getChatInfoAction(id)
-    }, [id])
+	// useEffect(() => {
+ //        if (id) getChatInfoAction(id)
+ //    }, [id])
 
 
 	return (
@@ -28,4 +28,5 @@ const EditChatPage = ({match}) => {
 }
 
 
-export default connect(null, {getChatInfoAction})(EditChatPage)
+//export default connect(null, {getChatInfoAction})(EditChatPage)
+export default EditChatPage

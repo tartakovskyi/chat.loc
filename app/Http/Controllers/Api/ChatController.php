@@ -27,7 +27,11 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newChat = Chat::create($request->all());
+
+        if ($newChat) {
+            return response()->json(['info' => 'Chat successfully created!', 'id' => $newChat->id], 200);
+        }
     }
 
     /**
