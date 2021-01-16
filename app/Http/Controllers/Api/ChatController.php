@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\Message;
+use App\Models\ChatUser;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
@@ -45,7 +46,9 @@ class ChatController extends Controller
         
         $chat = Chat::find($chat)[0];
 
-        return response()->json(['chat' => $chat], 200);
+        $participants = $chat->participants()->with('user')->get();
+
+        return response()->json(['chat' => $chat, 'participants' => $participants], 200);
     }
 
     /**

@@ -8376,7 +8376,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var EditChatPage = function EditChatPage(_ref) {
   var match = _ref.match;
-  var id = match ? match.params.id : null; // useEffect(() => {
+  var id = match.params.id !== "undefined" ? match.params.id : null; // useEffect(() => {
   //        if (id) getChatInfoAction(id)
   //    }, [id])
 
@@ -8448,7 +8448,8 @@ var getChatInfoAction = function getChatInfoAction(chat_id) {
     return axios.get('/api/chat/' + chat_id).then(function (response) {
       dispatch({
         type: _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_CHAT_INFO,
-        messages: response.data.chat
+        chatInfo: response.data.chat,
+        participants: response.data.participants
       });
     })["catch"](function (err) {
       throw err;
@@ -8566,7 +8567,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./resources/js/project/store/constants.js");
 
 var initialState = {
-  chat: {}
+  chatInfo: null,
+  participants: null
 };
 function chat() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -8575,7 +8577,8 @@ function chat() {
   switch (action.type) {
     case _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_CHAT_INFO:
       state = {
-        chatInfo: action.messages
+        chatInfo: action.chatInfo,
+        participants: action.participants
       };
       return state;
 

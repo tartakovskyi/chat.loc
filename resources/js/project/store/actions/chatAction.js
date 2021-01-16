@@ -9,7 +9,8 @@ export const getChatInfoAction = (chat_id) => {
 		.then(response => {
 			dispatch({
 				type: C.GET_CHAT_INFO,
-				messages: response.data.chat
+				chatInfo: response.data.chat,
+				participants: response.data.participants
 			})
 		})
 		.catch(err => {

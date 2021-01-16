@@ -18,4 +18,9 @@ class ChatUser extends Model
         'user_id',
         'chat_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

@@ -24,4 +24,11 @@ class Chat extends Model
 
         return $this->hasMany('App\Models\Message');
     }
+
+    public function participants()
+    {
+
+        return $this->hasMany('App\Models\ChatUser');
+    }
+
 }

@@ -8,7 +8,7 @@ import ChatForm from "./ChatForm"
 
 const EditChatPage = ({match}) => {
 
-	const id = match ? match.params.id : null
+	const id = match.params.id !== "undefined" ? match.params.id : null
 
 	// useEffect(() => {
  //        if (id) getChatInfoAction(id)
