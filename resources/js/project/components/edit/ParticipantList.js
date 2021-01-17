@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react'
 import ChatForm from "./ChatForm"
 
 
-const EditChatPage = ({match}) => {
+const ParticipantList = ({match}) => {
 
 	const id = match.params.id !== "undefined" ? match.params.id : null
 
@@ -16,6 +16,8 @@ const EditChatPage = ({match}) => {
 				<div className="col-md-9 col-lg-6 col-xl-5">
 					<h1 className="text-center">{id ? 'Edit Chat' : 'Add New Chat'}</h1>
 					<ChatForm id={id} />
+					<h2>Add/Delete Participants</h2>
+					
 				</div>
 			</div>
 		</div>
@@ -23,4 +25,4 @@ const EditChatPage = ({match}) => {
 }
 
 
-export default EditChatPage
+export default ParticipantList
