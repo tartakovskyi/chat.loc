@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react'
-// import { connect } from 'react-redux'
-// import { getChatInfoAction } from '../../store/actions/chatAction'
-//import PropTypes from 'prop-types'
-//import setFormObject from "../common/FormUtils"
+import React from 'react'
 import ChatForm from "./ChatForm"
+import ParticipantList from "./ParticipantList"
 
 
 const EditChatPage = ({match}) => {
@@ -14,8 +11,9 @@ const EditChatPage = ({match}) => {
 		<div className="container">
 			<div className="row justify-content-center">
 				<div className="col-md-9 col-lg-6 col-xl-5">
-					<h1 className="text-center">{id ? 'Edit Chat' : 'Add New Chat'}</h1>
+					<h1 className="text-center">{ id ? 'Edit Chat' : 'Add New Chat' }</h1>
 					<ChatForm id={id} />
+					{ id && <ParticipantList id={id} /> }
 				</div>
 			</div>
 		</div>
