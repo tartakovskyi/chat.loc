@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Axios  from 'axios'
-import { getChatInfoAction } from '../../store/actions/chatAction'
 import setFormObject from "../common/FormUtils"
 
 
@@ -13,17 +12,11 @@ const initialData = {
 }
 
 
-const ChatForm = ({chatInfo, auth, id, getChatInfoAction}) => {
+const ChatForm = ({ chatInfo, auth, id }) => {
 
 	const [data, setData] = useState(initialData)
 	const [errors, setErrors] = useState({})
 	let history = useHistory()
-
-	useEffect(() => {
-        if (id) {
-        	getChatInfoAction(id)
-        }
-    }, [id])
 
     useEffect(() => {
         if (chatInfo) {
@@ -32,9 +25,6 @@ const ChatForm = ({chatInfo, auth, id, getChatInfoAction}) => {
         	setData({...data, user_id: auth.id})
         }
     }, [chatInfo,auth])
-
-
-    
 
 	const handleSubmit = e => {
 		e.preventDefault()
@@ -89,8 +79,8 @@ ChatForm.propTypes = {
 	chatInfo: PropTypes.object
 }
 
-const mapStateToProps = ({chat, user}) => {
-	return {...chat, ...user}
+const mapStateToProps = ({user}) => {
+	return {...user}
 }
 
-export default connect(mapStateToProps, { getChatInfoAction })(ChatForm)
+export default connect(mapStateToProps)(ChatForm)

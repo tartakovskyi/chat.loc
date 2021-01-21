@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import ParticipantList from "./ParticipantList"
+import Participant from "./Participant"
 
 
 const ParticipantList = ({participants, id}) => {
 
 	return (
 		<div className="participants">
-			<ul>
-				{ participants.map(participant => <Participant name={participant.name} key={participant.id} / > }	
-			</ul>
+			{ participants && participants.length ? 
+			participants.map(participant => (<Participant name={participant.name} key={participant.id} / >)) : 
+			(<p>There are no participants in this chat...</p>) }
 		</div>
 	)
 }
 
 
 ParticipantList.propTypes = {
-	participants: PropTypes.array
+	participants: PropTypes.array,
+	id: PropTypes.number
 }
 
 const mapStateToProps = ({chat}) => {

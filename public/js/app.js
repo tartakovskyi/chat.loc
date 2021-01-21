@@ -7182,7 +7182,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _chat_Chat__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./chat/Chat */ "./resources/js/project/components/chat/Chat.js");
 /* harmony import */ var _chats_Chats__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./chats/Chats */ "./resources/js/project/components/chats/Chats.js");
 /* harmony import */ var _edit_EditChatPage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./edit/EditChatPage */ "./resources/js/project/components/edit/EditChatPage.js");
-/* harmony import */ var _edit_EditChatPage__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_edit_EditChatPage__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _auth_Login__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./auth/Login */ "./resources/js/project/components/auth/Login.js");
 /* harmony import */ var _auth_Register__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./auth/Register */ "./resources/js/project/components/auth/Register.js");
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -7256,14 +7255,14 @@ var App = function App(_ref) {
     component: _chats_Chats__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/chat/add",
-    component: _edit_EditChatPage__WEBPACK_IMPORTED_MODULE_9___default.a
+    component: _edit_EditChatPage__WEBPACK_IMPORTED_MODULE_9__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/chat/:id",
     component: _chat_Chat__WEBPACK_IMPORTED_MODULE_7__["default"]
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/chat/:id/edit",
-    component: _edit_EditChatPage__WEBPACK_IMPORTED_MODULE_9___default.a
+    component: _edit_EditChatPage__WEBPACK_IMPORTED_MODULE_9__["default"]
   })));
 };
 
@@ -8213,14 +8212,259 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 
 /***/ }),
 
+/***/ "./resources/js/project/components/edit/ChatForm.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/project/components/edit/ChatForm.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _common_FormUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../common/FormUtils */ "./resources/js/project/components/common/FormUtils.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+var initialData = {
+  user_id: '',
+  title: ''
+};
+
+var ChatForm = function ChatForm(_ref) {
+  var chatInfo = _ref.chatInfo,
+      auth = _ref.auth,
+      id = _ref.id;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialData),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      errors = _useState4[0],
+      setErrors = _useState4[1];
+
+  var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (chatInfo) {
+      setData({
+        user_id: chatInfo.user_id,
+        title: chatInfo.title
+      });
+    } else if (auth) {
+      setData(_objectSpread(_objectSpread({}, data), {}, {
+        user_id: auth.id
+      }));
+    }
+  }, [chatInfo, auth]);
+
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    var errors = validate(data);
+    setErrors(errors);
+
+    if (Object.keys(errors).length === 0) {
+      axios.post('/api/chat/', data).then(function (response) {
+        history.push('/chat/' + response.data.id + '/edit/');
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  };
+
+  var validate = function validate(data) {
+    var errors = {};
+    if (!data.title) errors.title = 'Title cannot be blank';
+    return errors;
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "title"
+  }, "Title:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    id: "title",
+    name: "title",
+    value: data.title,
+    onChange: Object(_common_FormUtils__WEBPACK_IMPORTED_MODULE_5__["default"])(data, setData)
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "hidden",
+    name: "user_id",
+    value: data.user_id
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit",
+    className: "btn btn-block btn-primary"
+  }, "Submit"));
+};
+
+ChatForm.propTypes = {
+  chatInfo: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.object
+};
+
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var user = _ref2.user;
+  return _objectSpread({}, user);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps)(ChatForm));
+
+/***/ }),
+
 /***/ "./resources/js/project/components/edit/EditChatPage.js":
 /*!**************************************************************!*\
   !*** ./resources/js/project/components/edit/EditChatPage.js ***!
   \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/actions/chatAction */ "./resources/js/project/store/actions/chatAction.js");
+/* harmony import */ var _ChatForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ChatForm */ "./resources/js/project/components/edit/ChatForm.js");
+/* harmony import */ var _ParticipantList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ParticipantList */ "./resources/js/project/components/edit/ParticipantList.js");
+
+
+
+
+
+
+
+var EditChatPage = function EditChatPage(_ref) {
+  var match = _ref.match,
+      chatInfo = _ref.chatInfo,
+      getChatInfoAction = _ref.getChatInfoAction;
+  var id = match.params.id !== "undefined" ? Number(match.params.id) : null;
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (id) {
+      getChatInfoAction(id);
+    }
+  }, [id]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row justify-content-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-9 col-lg-6 col-xl-5"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+    className: "text-center"
+  }, id ? 'Edit Chat' : 'Add New Chat'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChatForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    id: id,
+    chatInfo: chatInfo
+  }), id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ParticipantList__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    id: id
+  }))));
+};
+
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var chat = _ref2.chat;
+  return {
+    participants: chat.participants
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, {
+  getChatInfoAction: _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_3__["getChatInfoAction"]
+})(EditChatPage));
+
+/***/ }),
+
+/***/ "./resources/js/project/components/edit/Participant.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/project/components/edit/Participant.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: D:\\HOMESTEAD\\code\\chat.loc\\resources\\js\\project\\components\\edit\\EditChatPage.js: Identifier 'ChatForm' has already been declared (3:7)\n\n  1 | import React, { useState, useEffect } from 'react'\n  2 | import ChatForm from \"./ChatForm\"\n> 3 | import ChatForm from \"./ParticipantList\"\n    |        ^\n  4 | \n  5 | \n  6 | const EditChatPage = ({match}) => {\n    at Object._raise (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:748:17)\n    at Object.raiseWithData (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:741:17)\n    at Object.raise (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:735:17)\n    at ScopeHandler.checkRedeclarationInScope (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:4919:12)\n    at ScopeHandler.declareName (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:4885:12)\n    at Object.checkLVal (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:9590:24)\n    at Object.parseImportSpecifierLocal (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:13133:10)\n    at Object.maybeParseDefaultImportSpecifier (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:13235:12)\n    at Object.parseImport (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:13098:31)\n    at Object.parseStatementContent (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:11776:27)\n    at Object.parseStatement (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:11676:17)\n    at Object.parseBlockOrModuleBlockBody (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:12258:25)\n    at Object.parseBlockBody (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:12249:10)\n    at Object.parseTopLevel (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:11607:10)\n    at Object.parse (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:13415:10)\n    at parse (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\parser\\lib\\index.js:13468:38)\n    at parser (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\core\\lib\\parser\\index.js:54:34)\n    at parser.next (<anonymous>)\n    at normalizeFile (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\core\\lib\\transformation\\normalize-file.js:99:38)\n    at normalizeFile.next (<anonymous>)\n    at run (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\core\\lib\\transformation\\index.js:31:50)\n    at run.next (<anonymous>)\n    at Function.transform (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\core\\lib\\transform.js:27:41)\n    at transform.next (<anonymous>)\n    at step (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\gensync\\index.js:261:32)\n    at D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\gensync\\index.js:273:13\n    at async.call.result.err.err (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\gensync\\index.js:223:11)\n    at D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\gensync\\index.js:189:28\n    at D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\@babel\\core\\lib\\gensync-utils\\async.js:72:7\n    at D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\gensync\\index.js:113:33\n    at step (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\gensync\\index.js:287:14)\n    at D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\gensync\\index.js:273:13\n    at async.call.result.err.err (D:\\HOMESTEAD\\code\\chat.loc\\node_modules\\gensync\\index.js:223:11)");
+
+
+/***/ }),
+
+/***/ "./resources/js/project/components/edit/ParticipantList.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/project/components/edit/ParticipantList.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Participant__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Participant */ "./resources/js/project/components/edit/Participant.js");
+/* harmony import */ var _Participant__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Participant__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+var ParticipantList = function ParticipantList(_ref) {
+  var participants = _ref.participants,
+      id = _ref.id;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "participants"
+  }, participants && participants.length ? participants.map(function (participant) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Participant__WEBPACK_IMPORTED_MODULE_3___default.a, {
+      name: participant.name,
+      key: participant.id
+    });
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no participants in this chat..."));
+};
+
+ParticipantList.propTypes = {
+  participants: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.array,
+  id: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.number
+};
+
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var chat = _ref2.chat;
+  return {
+    participants: chat.participants
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(ParticipantList));
 
 /***/ }),
 
