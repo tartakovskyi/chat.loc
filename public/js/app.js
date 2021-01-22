@@ -8309,7 +8309,8 @@ var ChatForm = function ChatForm(_ref) {
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    onSubmit: handleSubmit
+    onSubmit: handleSubmit,
+    className: "mb-5"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -8361,6 +8362,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/actions/chatAction */ "./resources/js/project/store/actions/chatAction.js");
 /* harmony import */ var _ChatForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ChatForm */ "./resources/js/project/components/edit/ChatForm.js");
 /* harmony import */ var _ParticipantList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ParticipantList */ "./resources/js/project/components/edit/ParticipantList.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -8373,9 +8386,16 @@ var EditChatPage = function EditChatPage(_ref) {
       chatInfo = _ref.chatInfo,
       getChatInfoAction = _ref.getChatInfoAction;
   var id = match.params.id !== "undefined" ? Number(match.params.id) : null;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      showParticipants = _useState2[0],
+      toggleShowParticipants = _useState2[1];
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (id) {
       getChatInfoAction(id);
+      toggleShowParticipants(true);
     }
   }, [id]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -8389,7 +8409,7 @@ var EditChatPage = function EditChatPage(_ref) {
   }, id ? 'Edit Chat' : 'Add New Chat'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChatForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
     id: id,
     chatInfo: chatInfo
-  }), id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ParticipantList__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }), id && showParticipants && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ParticipantList__WEBPACK_IMPORTED_MODULE_5__["default"], {
     id: id
   }))));
 };
@@ -8411,10 +8431,44 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 /*!*************************************************************!*\
   !*** ./resources/js/project/components/edit/Participant.js ***!
   \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 
 
+
+
+var Participant = function Participant(_ref) {
+  var name = _ref.name;
+
+  var handleClick = function handleClick() {};
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "participant btn btn-primary btn-sm",
+    onClick: handleClick
+  }, name);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Participant);
+/*ParticipantList.propTypes = {
+	participants: PropTypes.array,
+	id: PropTypes.number
+}
+
+const mapStateToProps = ({chat}) => {
+	return {
+		participants : chat.participants
+	}
+}
+
+export default connect(mapStateToProps)(ParticipantList)*/
 
 /***/ }),
 
@@ -8433,7 +8487,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Participant__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Participant */ "./resources/js/project/components/edit/Participant.js");
-/* harmony import */ var _Participant__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Participant__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
@@ -8444,12 +8497,16 @@ var ParticipantList = function ParticipantList(_ref) {
       id = _ref.id;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "participants"
-  }, participants && participants.length ? participants.map(function (participant) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Participant__WEBPACK_IMPORTED_MODULE_3___default.a, {
-      name: participant.name,
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    className: "mb-3"
+  }, "Participants"), participants && participants.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "d-flex flex-wrap"
+  }, participants.map(function (participant) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Participant__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      name: participant.user.name,
       key: participant.id
     });
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no participants in this chat..."));
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no participants in this chat..."));
 };
 
 ParticipantList.propTypes = {

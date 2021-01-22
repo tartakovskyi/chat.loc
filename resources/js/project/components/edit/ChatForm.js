@@ -52,7 +52,7 @@ const ChatForm = ({ chatInfo, auth, id }) => {
     }
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} className="mb-5">
 			<div className="form-group">
 				<label htmlFor="title">Title:</label>
 				<input 

@@ -8,8 +8,13 @@ const ParticipantList = ({participants, id}) => {
 
 	return (
 		<div className="participants">
-			{ participants && participants.length ? 
-			participants.map(participant => (<Participant name={participant.name} key={participant.id} / >)) : 
+			<h2 className="mb-3">Participants</h2>
+			{ participants && participants.length
+			? 
+			(<div className="d-flex flex-wrap">
+				{ participants.map(participant => (<Participant name={participant.user.name} key={participant.id} / >)) }	
+			</div>)
+			: 
 			(<p>There are no participants in this chat...</p>) }
 		</div>
 	)
