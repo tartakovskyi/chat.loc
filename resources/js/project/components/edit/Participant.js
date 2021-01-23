@@ -1,28 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 
-const Participant = ({name}) => {
+const Participant = ({name, id, deleteParticipant}) => {
 
-	const handleClick = () => {}
 
 	return (
-		<button className="participant btn btn-primary btn-sm" onClick={handleClick}>{name}</button>
+		<button className="participant btn btn-primary btn-sm" onClick={() => deleteParticipant(id)} id={id} >
+			{name}
+			<svg><use xlinkHref="/storage/img/icons.svg#close"></use></svg>
+		</button>
 	)
 }
 
 export default Participant
-
-/*ParticipantList.propTypes = {
-	participants: PropTypes.array,
-	id: PropTypes.number
-}
-
-const mapStateToProps = ({chat}) => {
-	return {
-		participants : chat.participants
-	}
-}
-
-export default connect(mapStateToProps)(ParticipantList)*/

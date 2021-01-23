@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\ChatUser;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\ChatUser;
+use App\Models\Chat;
 
 class ChatUserController extends Controller
 {
@@ -41,10 +43,10 @@ class ChatUserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ChatUsers  $chatUsers
+     * @param  \App\Models\ChatUser  $chatUser
      * @return \Illuminate\Http\Response
      */
-    public function show(ChatUsers $chatUsers)
+    public function show(ChatUser $chatUser)
     {
         //
     }
@@ -52,10 +54,10 @@ class ChatUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ChatUsers  $chatUsers
+     * @param  \App\Models\ChatUser  $chatUser
      * @return \Illuminate\Http\Response
      */
-    public function edit(ChatUsers $chatUsers)
+    public function edit(ChatUser $chatUser)
     {
         //
     }
@@ -64,10 +66,10 @@ class ChatUserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ChatUsers  $chatUsers
+     * @param  \App\Models\ChatUser  $chatUser
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ChatUsers $chatUsers)
+    public function update(Request $request, ChatUser $chatUser)
     {
         //
     }
@@ -75,11 +77,18 @@ class ChatUserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ChatUsers  $chatUsers
+     * @param  \App\Models\ChatUser  $chatUser
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ChatUsers $chatUsers)
+    public function destroy(ChatUser $chat_user)
     {
-        //
+
+        $deleteChatUser = $chat_user->delete();
+
+        if ($deleteChatUser) {
+            return response()->json(['status' => 'ok', 'info' => 'Participant is successfully removed from the chat!'], 200);
+        } else {
+            return response()->json(['status' => 'error', 'info' => 'No such participant'], 200);
+        }
     }
 }

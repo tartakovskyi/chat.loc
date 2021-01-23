@@ -30,12 +30,13 @@ Route::group(['namespace' => 'Api'], function () {
 		});
 	});
 
-	Route::resources([
+	Route::apiResources([
 		'chat' => ChatController::class,
 		'chat.message' => MessageController::class,
-		'chat.chat-user' => ChatUserController::class,
 		'user' => UserController::class,
 	]);
+
+	Route::resource('chat.chat_user', ChatUserController::class)->shallow();
 });
 
 

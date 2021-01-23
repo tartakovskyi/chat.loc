@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { deleteFromChat } from '../../store/actions/chatAction'
 import Participant from "./Participant"
 
 
-const ParticipantList = ({participants, id}) => {
+const ParticipantList = ({participants, id, deleteFromChat }) => {
+
+	const deleteParticipant = participantId => {
+		deleteFromChat(participantId, id)
+	}
 
 	return (
 		<div className="participants">
@@ -12,7 +17,7 @@ const ParticipantList = ({participants, id}) => {
 			{ participants && participants.length
 			? 
 			(<div className="d-flex flex-wrap">
-				{ participants.map(participant => (<Participant name={participant.user.name} key={participant.id} / >)) }	
+				{ participants.map(participant => (<Participant name={participant.user.name} key={participant.id} id={participant.id} deleteParticipant={deleteParticipant} / >)) }	
 			</div>)
 			: 
 			(<p>There are no participants in this chat...</p>) }
@@ -32,4 +37,4 @@ const mapStateToProps = ({chat}) => {
 	}
 }
 
-export default connect(mapStateToProps)(ParticipantList)
+export default connect(mapStateToProps, { deleteFromChat })(ParticipantList)

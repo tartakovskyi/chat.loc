@@ -28,6 +28,7 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
+        
         $newChat = Chat::create($request->all());
 
         if ($newChat) {
@@ -43,8 +44,6 @@ class ChatController extends Controller
      */
     public function show(Chat $chat)
     {
-        
-        $chat = Chat::find($chat)[0];
 
         $participants = $chat->participants()->with('user')->get();
 

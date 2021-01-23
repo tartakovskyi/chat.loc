@@ -8362,6 +8362,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/actions/chatAction */ "./resources/js/project/store/actions/chatAction.js");
 /* harmony import */ var _ChatForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ChatForm */ "./resources/js/project/components/edit/ChatForm.js");
 /* harmony import */ var _ParticipantList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ParticipantList */ "./resources/js/project/components/edit/ParticipantList.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -8416,9 +8422,7 @@ var EditChatPage = function EditChatPage(_ref) {
 
 var mapStateToProps = function mapStateToProps(_ref2) {
   var chat = _ref2.chat;
-  return {
-    participants: chat.participants
-  };
+  return _objectSpread({}, chat);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, {
@@ -8446,29 +8450,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Participant = function Participant(_ref) {
-  var name = _ref.name;
-
-  var handleClick = function handleClick() {};
-
+  var name = _ref.name,
+      id = _ref.id,
+      deleteParticipant = _ref.deleteParticipant;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "participant btn btn-primary btn-sm",
-    onClick: handleClick
-  }, name);
+    onClick: function onClick() {
+      return deleteParticipant(id);
+    },
+    id: id
+  }, name, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("use", {
+    xlinkHref: "/storage/img/icons.svg#close"
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Participant);
-/*ParticipantList.propTypes = {
-	participants: PropTypes.array,
-	id: PropTypes.number
-}
-
-const mapStateToProps = ({chat}) => {
-	return {
-		participants : chat.participants
-	}
-}
-
-export default connect(mapStateToProps)(ParticipantList)*/
 
 /***/ }),
 
@@ -8486,7 +8482,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Participant__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Participant */ "./resources/js/project/components/edit/Participant.js");
+/* harmony import */ var _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/actions/chatAction */ "./resources/js/project/store/actions/chatAction.js");
+/* harmony import */ var _Participant__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Participant */ "./resources/js/project/components/edit/Participant.js");
+
 
 
 
@@ -8494,7 +8492,13 @@ __webpack_require__.r(__webpack_exports__);
 
 var ParticipantList = function ParticipantList(_ref) {
   var participants = _ref.participants,
-      id = _ref.id;
+      id = _ref.id,
+      deleteFromChat = _ref.deleteFromChat;
+
+  var deleteParticipant = function deleteParticipant(participantId) {
+    deleteFromChat(participantId, id);
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "participants"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
@@ -8502,9 +8506,11 @@ var ParticipantList = function ParticipantList(_ref) {
   }, "Participants"), participants && participants.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "d-flex flex-wrap"
   }, participants.map(function (participant) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Participant__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Participant__WEBPACK_IMPORTED_MODULE_4__["default"], {
       name: participant.user.name,
-      key: participant.id
+      key: participant.id,
+      id: participant.id,
+      deleteParticipant: deleteParticipant
     });
   })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no participants in this chat..."));
 };
@@ -8521,7 +8527,9 @@ var mapStateToProps = function mapStateToProps(_ref2) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(ParticipantList));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, {
+  deleteFromChat: _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_3__["deleteFromChat"]
+})(ParticipantList));
 
 /***/ }),
 
@@ -8561,15 +8569,29 @@ if (document.getElementById('app')) {
 /*!**********************************************************!*\
   !*** ./resources/js/project/store/actions/chatAction.js ***!
   \**********************************************************/
-/*! exports provided: getChatInfoAction, getMessagesAction */
+/*! exports provided: deleteFromChat, getChatInfoAction, getMessagesAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteFromChat", function() { return deleteFromChat; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChatInfoAction", function() { return getChatInfoAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMessagesAction", function() { return getMessagesAction; });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./resources/js/project/store/constants.js");
 
+var deleteFromChat = function deleteFromChat(participant_id, chat_id, dispatch) {
+  return function (dispatch) {
+    return axios["delete"]("/api/chat_user/" + participant_id).then(function (response) {
+      if (response.data.status === 'ok') {
+        dispatch({
+          type: _constants__WEBPACK_IMPORTED_MODULE_0__["default"].DELETE_FROM_CHAT
+        });
+      }
+    })["catch"](function (err) {
+      throw err;
+    });
+  };
+};
 var getChatInfoAction = function getChatInfoAction(chat_id) {
   return function (dispatch) {
     return axios.get('/api/chat/' + chat_id).then(function (response) {
@@ -8649,7 +8671,8 @@ __webpack_require__.r(__webpack_exports__);
   GET_AUTH: 'GET_AUTH',
   LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
   GET_MESSAGES: 'GET_MESSAGES',
-  GET_CHAT_INFO: 'GET_CHAT_INFO'
+  GET_CHAT_INFO: 'GET_CHAT_INFO',
+  DELETE_FROM_CHAT: 'DELETE_FROM_CHAT'
 });
 
 /***/ }),

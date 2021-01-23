@@ -1,7 +1,25 @@
 import C from '../constants'
 
 
-export const getChatInfoAction = (chat_id) => {
+export const deleteFromChat = (participant_id, chat_id, dispatch) => {
+
+	return function(dispatch) {
+
+		return axios.delete(`/api/chat_user/` + participant_id)
+		.then(response => {
+			if (response.data.status === 'ok') {
+				dispatch({
+					type: C.DELETE_FROM_CHAT
+				})
+			}
+		})
+		.catch(err => {
+			throw err
+		})
+	}
+}
+
+export const getChatInfoAction = chat_id => {
 
 	return function(dispatch) {
 

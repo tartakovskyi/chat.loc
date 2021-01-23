@@ -32,9 +32,7 @@ const EditChatPage = ({ match, chatInfo, getChatInfoAction }) => {
 }
 
 const mapStateToProps = ({chat}) => {
-	return {
-		participants : chat.participants
-	}
+	return { ...chat }
 }
 
 export default  connect(mapStateToProps, { getChatInfoAction })(EditChatPage)
