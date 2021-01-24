@@ -3,11 +3,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\ChatUser;
+use App\Models\Participant;
 use App\Models\Chat;
 use App\Models\User;
 
-class ChatUserSeeder extends Seeder
+class ParticipantSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,7 +22,7 @@ class ChatUserSeeder extends Seeder
     	foreach (Chat::all() as $chat) {
 
     		for ($i=0; $i < 3 ; $i++) { 
-    			ChatUser::create([
+    			Participant::create([
     				'chat_id' => $chat->id,
     				'user_id' => $users->random()->id
     			]);

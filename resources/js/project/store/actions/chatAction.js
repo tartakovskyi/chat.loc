@@ -1,16 +1,14 @@
 import C from '../constants'
 
 
-export const deleteFromChat = (participant_id, chat_id, dispatch) => {
+export const deleteFromChatAction = (participant_id, chat_id) => {
 
 	return function(dispatch) {
 
-		return axios.delete(`/api/chat_user/` + participant_id)
+		return axios.delete(`/api/participant/` + participant_id)
 		.then(response => {
 			if (response.data.status === 'ok') {
-				dispatch({
-					type: C.DELETE_FROM_CHAT
-				})
+				getParticipantsAction(participant_id)
 			}
 		})
 		.catch(err => {
@@ -50,6 +48,23 @@ export const getMessagesAction = (chat_id, last_message = null) => {
 			dispatch({
 				type: C.GET_MESSAGES,
 				messages: response.data.messages
+			})
+		})
+		.catch(err => {
+			throw err
+		})
+	}
+}
+
+export const getParticipantsAction = chat_id => {
+
+	return function(dispatch) {
+
+		return axios.get(`/api/participant/${chat_id}/participant`)
+		.then(response => {
+			dispatch({
+				type: C.GET_PARTICIPANTS,
+				participants: response.data.participants
 			})
 		})
 		.catch(err => {

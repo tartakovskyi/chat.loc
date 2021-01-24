@@ -36,7 +36,7 @@ Route::group(['namespace' => 'Api'], function () {
 		'user' => UserController::class,
 	]);
 
-	Route::resource('chat.chat_user', ChatUserController::class)->shallow();
+	Route::resource('chat.participant', ParticipantController::class)->shallow();
 });
 
 

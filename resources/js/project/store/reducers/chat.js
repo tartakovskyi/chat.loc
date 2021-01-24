@@ -9,11 +9,17 @@ export default function chat (state = initialState, action) {
 	switch (action.type) {
 
 		case C.GET_CHAT_INFO:
-		state = {
+		newState = {
 			chatInfo: action.chatInfo,
 			participants: action.participants
 		}
-		return state
+		return newState
+
+		case C.GET_PARTICIPANTS:
+		return {
+			...state,
+			participants: action.participants
+		}
 		
 		default:
 		return state

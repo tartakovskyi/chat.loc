@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Chat extends Model
+class Participant extends Model
 {
     use HasFactory;
 
@@ -16,19 +16,11 @@ class Chat extends Model
      */
     protected $fillable = [
         'user_id',
-        'title'
+        'chat_id'
     ];
 
-    public function messages()
+    public function user()
     {
-
-        return $this->hasMany('App\Models\Message');
+        return $this->belongsTo('App\Models\User');
     }
-
-    public function participants()
-    {
-
-        return $this->hasMany('App\Models\Participant');
-    }
-
 }

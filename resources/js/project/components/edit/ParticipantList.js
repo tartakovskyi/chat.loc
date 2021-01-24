@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { deleteFromChat } from '../../store/actions/chatAction'
+import { deleteFromChatAction } from '../../store/actions/chatAction'
 import Participant from "./Participant"
 
 
-const ParticipantList = ({participants, id, deleteFromChat }) => {
+const ParticipantList = ({participants, id, deleteFromChatAction }) => {
 
 	const deleteParticipant = participantId => {
-		deleteFromChat(participantId, id)
+		deleteFromChatAction(participantId, id)
 	}
 
 	return (
@@ -37,4 +37,4 @@ const mapStateToProps = ({chat}) => {
 	}
 }
 
-export default connect(mapStateToProps, { deleteFromChat })(ParticipantList)
+export default connect(mapStateToProps, { deleteFromChatAction })(ParticipantList)
