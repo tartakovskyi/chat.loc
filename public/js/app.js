@@ -7137,17 +7137,29 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!*************************************!*\
   !*** ./resources/js/project/api.js ***!
   \*************************************/
-/*! exports provided: getAuthData, checkToken */
+/*! exports provided: checkToken, deleteFromChat, getAuthData, searchUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAuthData", function() { return getAuthData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkToken", function() { return checkToken; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteFromChat", function() { return deleteFromChat; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAuthData", function() { return getAuthData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchUser", function() { return searchUser; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var token = 'Bearer ' + localStorage.getItem('token');
+var checkToken = function checkToken() {
+  return localStorage.getItem('token') && Date.parse(localStorage.getItem('token_expires')) > Date.now();
+};
+var deleteFromChat = function deleteFromChat(participant_id) {
+  return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/api/participant/' + participant_id, {
+    headers: {
+      'Authorization': token
+    }
+  });
+};
 var getAuthData = function getAuthData() {
   return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/current', {
     headers: {
@@ -7155,8 +7167,12 @@ var getAuthData = function getAuthData() {
     }
   });
 };
-var checkToken = function checkToken() {
-  return localStorage.getItem('token') && Date.parse(localStorage.getItem('token_expires')) > Date.now();
+var searchUser = function searchUser(searchTerm) {
+  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/search/' + searchTerm, {
+    headers: {
+      'Authorization': token
+    }
+  });
 };
 
 /***/ }),
@@ -8361,7 +8377,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/actions/chatAction */ "./resources/js/project/store/actions/chatAction.js");
 /* harmony import */ var _ChatForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ChatForm */ "./resources/js/project/components/edit/ChatForm.js");
-/* harmony import */ var _ParticipantList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ParticipantList */ "./resources/js/project/components/edit/ParticipantList.js");
+/* harmony import */ var _InviteForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./InviteForm */ "./resources/js/project/components/edit/InviteForm.js");
+/* harmony import */ var _ParticipantList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ParticipantList */ "./resources/js/project/components/edit/ParticipantList.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -8379,6 +8396,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -8415,8 +8433,10 @@ var EditChatPage = function EditChatPage(_ref) {
   }, id ? 'Edit Chat' : 'Add New Chat'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChatForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
     id: id,
     chatInfo: chatInfo
-  }), id && showParticipants && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ParticipantList__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }), id && showParticipants && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ParticipantList__WEBPACK_IMPORTED_MODULE_6__["default"], {
     id: id
+  }), id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InviteForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    chatId: id
   }))));
 };
 
@@ -8428,6 +8448,120 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, {
   getChatInfoAction: _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_3__["getChatInfoAction"]
 })(EditChatPage));
+
+/***/ }),
+
+/***/ "./resources/js/project/components/edit/InviteForm.js":
+/*!************************************************************!*\
+  !*** ./resources/js/project/components/edit/InviteForm.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../api */ "./resources/js/project/api.js");
+/* harmony import */ var _common_FormUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../common/FormUtils */ "./resources/js/project/components/common/FormUtils.js");
+/* harmony import */ var _SearchResult__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SearchResult */ "./resources/js/project/components/edit/SearchResult.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+var initialData = {
+  user_id: '',
+  searchTerm: ''
+};
+
+var InviteForm = function InviteForm(_ref) {
+  var chatId = _ref.chatId;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialData),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      errors = _useState4[0],
+      setErrors = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      userChosen = _useState6[0],
+      setUserChosen = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState8 = _slicedToArray(_useState7, 2),
+      searchResult = _useState8[0],
+      setSearchResult = _useState8[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (data.searchTerm) {
+      Object(_api__WEBPACK_IMPORTED_MODULE_2__["searchUser"])(data.searchTerm).then(function (response) {
+        if (response.data.status === 'ok') {
+          setSearchResult(response.data.users);
+        }
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    } else {
+      setSearchResult([]);
+    }
+  }, [data.searchTerm]);
+
+  var addParticipant = function addParticipant(e) {};
+
+  var validate = function validate(data) {
+    var errors = {};
+    if (!data.user_id) errors.user_id = "User isn't chosen";
+    return errors;
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "invite-form"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    className: "mb-3"
+  }, "Add New Participants"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: addParticipant
+  }, !userChosen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group position-relative"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    autocomplete: "off",
+    name: "searchTerm",
+    value: data.searchTerm,
+    onChange: Object(_common_FormUtils__WEBPACK_IMPORTED_MODULE_3__["default"])(data, setData)
+  }), searchResult.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SearchResult__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    users: searchResult
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "hidden",
+    name: "user_id",
+    value: data.user_id
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit",
+    className: "btn btn-block btn-primary"
+  }, "Add user to the participants")));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (InviteForm);
 
 /***/ }),
 
@@ -8483,7 +8617,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/actions/chatAction */ "./resources/js/project/store/actions/chatAction.js");
-/* harmony import */ var _Participant__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Participant */ "./resources/js/project/components/edit/Participant.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../api */ "./resources/js/project/api.js");
+/* harmony import */ var _Participant__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Participant */ "./resources/js/project/components/edit/Participant.js");
+
 
 
 
@@ -8493,10 +8629,16 @@ __webpack_require__.r(__webpack_exports__);
 var ParticipantList = function ParticipantList(_ref) {
   var participants = _ref.participants,
       id = _ref.id,
-      deleteFromChat = _ref.deleteFromChat;
+      getParticipantsAction = _ref.getParticipantsAction;
 
   var deleteParticipant = function deleteParticipant(participantId) {
-    deleteFromChat(participantId, id);
+    Object(_api__WEBPACK_IMPORTED_MODULE_4__["deleteFromChat"])(participantId).then(function (response) {
+      if (response.data.status === 'ok') {
+        getParticipantsAction(id);
+      }
+    })["catch"](function (err) {
+      console.log(err);
+    });
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -8506,7 +8648,7 @@ var ParticipantList = function ParticipantList(_ref) {
   }, "Participants"), participants && participants.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "d-flex flex-wrap"
   }, participants.map(function (participant) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Participant__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Participant__WEBPACK_IMPORTED_MODULE_5__["default"], {
       name: participant.user.name,
       key: participant.id,
       id: participant.id,
@@ -8528,8 +8670,37 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, {
-  deleteFromChat: _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_3__["deleteFromChat"]
+  getParticipantsAction: _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_3__["getParticipantsAction"]
 })(ParticipantList));
+
+/***/ }),
+
+/***/ "./resources/js/project/components/edit/SearchResult.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/project/components/edit/SearchResult.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var SearchResult = function SearchResult(_ref) {
+  var users = _ref.users;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "search-result position-absolute d-flex flex-column"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, users.map(function (user) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: user.id,
+      onClick: function onClick() {}
+    }, user.name);
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (SearchResult);
 
 /***/ }),
 
@@ -8569,29 +8740,16 @@ if (document.getElementById('app')) {
 /*!**********************************************************!*\
   !*** ./resources/js/project/store/actions/chatAction.js ***!
   \**********************************************************/
-/*! exports provided: deleteFromChat, getChatInfoAction, getMessagesAction */
+/*! exports provided: getChatInfoAction, getMessagesAction, getParticipantsAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteFromChat", function() { return deleteFromChat; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChatInfoAction", function() { return getChatInfoAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMessagesAction", function() { return getMessagesAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getParticipantsAction", function() { return getParticipantsAction; });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./resources/js/project/store/constants.js");
 
-var deleteFromChat = function deleteFromChat(participant_id, chat_id, dispatch) {
-  return function (dispatch) {
-    return axios["delete"]("/api/chat_user/" + participant_id).then(function (response) {
-      if (response.data.status === 'ok') {
-        dispatch({
-          type: _constants__WEBPACK_IMPORTED_MODULE_0__["default"].DELETE_FROM_CHAT
-        });
-      }
-    })["catch"](function (err) {
-      throw err;
-    });
-  };
-};
 var getChatInfoAction = function getChatInfoAction(chat_id) {
   return function (dispatch) {
     return axios.get('/api/chat/' + chat_id).then(function (response) {
@@ -8616,6 +8774,18 @@ var getMessagesAction = function getMessagesAction(chat_id) {
       dispatch({
         type: _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_MESSAGES,
         messages: response.data.messages
+      });
+    })["catch"](function (err) {
+      throw err;
+    });
+  };
+};
+var getParticipantsAction = function getParticipantsAction(chat_id) {
+  return function (dispatch) {
+    return axios.get("/api/chat/".concat(chat_id, "/participant")).then(function (response) {
+      dispatch({
+        type: _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_PARTICIPANTS,
+        participants: response.data.participants
       });
     })["catch"](function (err) {
       throw err;
@@ -8672,7 +8842,7 @@ __webpack_require__.r(__webpack_exports__);
   LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
   GET_MESSAGES: 'GET_MESSAGES',
   GET_CHAT_INFO: 'GET_CHAT_INFO',
-  DELETE_FROM_CHAT: 'DELETE_FROM_CHAT'
+  GET_PARTICIPANTS: 'GET_PARTICIPANTS'
 });
 
 /***/ }),
@@ -8715,6 +8885,12 @@ window.store = store;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return chat; });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./resources/js/project/store/constants.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 var initialState = {
   chatInfo: null,
@@ -8726,11 +8902,15 @@ function chat() {
 
   switch (action.type) {
     case _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_CHAT_INFO:
-      state = {
+      return {
         chatInfo: action.chatInfo,
         participants: action.participants
       };
-      return state;
+
+    case _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_PARTICIPANTS:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        participants: action.participants
+      });
 
     default:
       return state;

@@ -14,19 +14,12 @@ class ParticipantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Chat $chat)
     {
-        //
-    }
+        
+        $participants = Participant::where('chat_id', $chat->id)->with('user')->get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(['participants' => $participants], 200);
     }
 
     /**
@@ -47,17 +40,6 @@ class ParticipantController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Participant $participant)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Participant  $participant
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Participant $participant)
     {
         //
     }

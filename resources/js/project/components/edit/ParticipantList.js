@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { deleteFromChatAction } from '../../store/actions/chatAction'
+import { getParticipantsAction } from '../../store/actions/chatAction'
+import { deleteFromChat } from '../../api'
 import Participant from "./Participant"
 
 
-const ParticipantList = ({participants, id, deleteFromChatAction }) => {
+const ParticipantList = ({participants, id, getParticipantsAction }) => {
 
 	const deleteParticipant = participantId => {
-		deleteFromChatAction(participantId, id)
+		deleteFromChat(participantId)
+		.then(response => {
+			if (response.data.status === 'ok') {
+				getParticipantsAction(id)
+			}
+		}).catch(err => {
+			console.log(err)
+		})
 	}
 
 	return (
@@ -37,4 +45,4 @@ const mapStateToProps = ({chat}) => {
 	}
 }
 
-export default connect(mapStateToProps, { deleteFromChatAction })(ParticipantList)
+export default connect(mapStateToProps, { getParticipantsAction })(ParticipantList)

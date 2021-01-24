@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Axios  from 'axios'
 import { getChatInfoAction } from '../../store/actions/chatAction'
 import ChatForm from "./ChatForm"
+import InviteForm from "./InviteForm"
 import ParticipantList from "./ParticipantList"
 
 
@@ -25,6 +26,7 @@ const EditChatPage = ({ match, chatInfo, getChatInfoAction }) => {
 					<h1 className="text-center">{ id ? 'Edit Chat' : 'Add New Chat' }</h1>
 					<ChatForm id={id} chatInfo={chatInfo} />
 					{ id && showParticipants && <ParticipantList id={id} /> }
+					{ id && <InviteForm chatId={id} /> }
 				</div>
 			</div>
 		</div>

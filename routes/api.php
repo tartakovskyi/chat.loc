@@ -36,6 +36,8 @@ Route::group(['namespace' => 'Api'], function () {
 		'user' => UserController::class,
 	]);
 
+	Route::get('/user/search/{searchTerm}', 'UserController@search');
+
 	Route::resource('chat.participant', ParticipantController::class)->shallow();
 });
 

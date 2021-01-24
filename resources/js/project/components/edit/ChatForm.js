@@ -69,7 +69,7 @@ const ChatForm = ({ chatInfo, auth, id }) => {
 			name="user_id"
 			value={data.user_id}
 			/>
-		<button type="submit" className="btn btn-block btn-primary">Submit</button>	
+			<button type="submit" className="btn btn-block btn-primary">Submit</button>	
 		</form>
 	)
 }
