@@ -10964,3 +10964,13 @@ h1 {
   background-color: #4392e6;
 }
 
+.chosen-user__close {
+  display: block;
+  font-size: 0;
+}
+
+.chosen-user__close svg {
+  width: 12px;
+  height: 12px;
+}
+

@@ -8361,6 +8361,45 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 
 /***/ }),
 
+/***/ "./resources/js/project/components/edit/ChosenUser.js":
+/*!************************************************************!*\
+  !*** ./resources/js/project/components/edit/ChosenUser.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var ChosenUser = function ChosenUser(_ref) {
+  var user = _ref.user;
+  var name = user.name,
+      userpic = user.userpic;
+  var src = userpic ? '/storage/img/userpics/' + userpic : '/storage/img/user.svg';
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "chosen-user d-flex justify-content-between align-items-center alert alert-success"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "chosen-user__info d-flex align-items-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "chosen-user__img"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: src,
+    alt: ""
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "#",
+    className: "chosen-user__close"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("use", {
+    xlinkHref: "/storage/img/icons.svg#close"
+  }))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ChosenUser);
+
+/***/ }),
+
 /***/ "./resources/js/project/components/edit/EditChatPage.js":
 /*!**************************************************************!*\
   !*** ./resources/js/project/components/edit/EditChatPage.js ***!
@@ -8467,6 +8506,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../api */ "./resources/js/project/api.js");
 /* harmony import */ var _common_FormUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../common/FormUtils */ "./resources/js/project/components/common/FormUtils.js");
 /* harmony import */ var _SearchResult__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SearchResult */ "./resources/js/project/components/edit/SearchResult.js");
+/* harmony import */ var _ChosenUser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ChosenUser */ "./resources/js/project/components/edit/ChosenUser.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -8478,6 +8518,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -8502,15 +8543,20 @@ var InviteForm = function InviteForm(_ref) {
       errors = _useState4[0],
       setErrors = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
       _useState6 = _slicedToArray(_useState5, 2),
-      userChosen = _useState6[0],
-      setUserChosen = _useState6[1];
+      chosenUser = _useState6[0],
+      setChosenUser = _useState6[1];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState8 = _slicedToArray(_useState7, 2),
-      searchResult = _useState8[0],
-      setSearchResult = _useState8[1];
+      userIsChosen = _useState8[0],
+      setUserIsChosen = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState10 = _slicedToArray(_useState9, 2),
+      searchResult = _useState10[0],
+      setSearchResult = _useState10[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (data.searchTerm) {
@@ -8525,8 +8571,24 @@ var InviteForm = function InviteForm(_ref) {
       setSearchResult([]);
     }
   }, [data.searchTerm]);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (Object.keys(chosenUser).length !== 0) setUserIsChosen(true);
+  }, [chosenUser]);
 
-  var addParticipant = function addParticipant(e) {};
+  var addParticipant = function addParticipant(e) {
+    e.preventDefault();
+    /*const errors = validate(data)
+          setErrors(errors)
+            if (Object.keys(errors).length === 0) {
+          	axios.post('/api/chat/', data)
+          	.then(function (response) {
+    		history.push('/chat/' + response.data.id + '/edit/')
+          	})
+          	.catch(function (error) {
+          		console.log(error);
+          	})
+          }*/
+  };
 
   var validate = function validate(data) {
     var errors = {};
@@ -8540,21 +8602,24 @@ var InviteForm = function InviteForm(_ref) {
     className: "mb-3"
   }, "Add New Participants"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: addParticipant
-  }, !userChosen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, !userIsChosen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group position-relative"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "text",
     className: "form-control",
-    autocomplete: "off",
+    autoComplete: "off",
     name: "searchTerm",
     value: data.searchTerm,
     onChange: Object(_common_FormUtils__WEBPACK_IMPORTED_MODULE_3__["default"])(data, setData)
   }), searchResult.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SearchResult__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    users: searchResult
+    users: searchResult,
+    setChosenUser: setChosenUser
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "hidden",
     name: "user_id",
     value: data.user_id
+  }), userIsChosen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenUser__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    user: chosenUser
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "submit",
     className: "btn btn-block btn-primary"
@@ -8689,13 +8754,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var SearchResult = function SearchResult(_ref) {
-  var users = _ref.users;
+  var users = _ref.users,
+      setChosenUser = _ref.setChosenUser;
+
+  var onUserClick = function onUserClick(user) {
+    setChosenUser(user);
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "search-result position-absolute d-flex flex-column"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, users.map(function (user) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: user.id,
-      onClick: function onClick() {}
+      onClick: function onClick() {
+        return onUserClick(user);
+      }
     }, user.name);
   })));
 };

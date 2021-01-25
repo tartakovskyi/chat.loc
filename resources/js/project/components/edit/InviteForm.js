@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { searchUser } from '../../api'
 import setFormObject from "../common/FormUtils"
 import SearchResult from "./SearchResult"
+import ChosenUser from "./ChosenUser"
 
 
 const initialData = {
@@ -15,7 +16,8 @@ const InviteForm = ({ chatId }) => {
 
 	const [data, setData] = useState(initialData)
 	const [errors, setErrors] = useState({})
-	const [userChosen, setUserChosen] = useState(false)
+	const [chosenUser, setChosenUser] = useState({})
+	const [userIsChosen, setUserIsChosen] = useState(false)
 	const [searchResult, setSearchResult] = useState([])
 
 	useEffect(() => {
@@ -32,7 +34,26 @@ const InviteForm = ({ chatId }) => {
 		}
 	}, [data.searchTerm])
 
-	const addParticipant = e => {}
+	useEffect(() => {
+		if(Object.keys(chosenUser).length !== 0) setUserIsChosen(true)
+	}, [chosenUser])
+
+	const addParticipant = e => {
+		e.preventDefault()
+
+		/*const errors = validate(data)
+        setErrors(errors)
+
+        if (Object.keys(errors).length === 0) {
+        	axios.post('/api/chat/', data)
+        	.then(function (response) {
+				history.push('/chat/' + response.data.id + '/edit/')
+        	})
+        	.catch(function (error) {
+        		console.log(error);
+        	})
+        }*/
+	}
 
 	const validate = (data) => {
         const errors = {}
@@ -46,17 +67,17 @@ const InviteForm = ({ chatId }) => {
 		<div className="invite-form">
 			<h2 className="mb-3">Add New Participants</h2>
 			<form onSubmit={addParticipant}>
-				{!userChosen && (
+				{!userIsChosen && (
 					<div className="form-group position-relative">
 						<input 
 						type="text"
 						className="form-control"
-						autocomplete="off"
+						autoComplete="off"
 						name="searchTerm"
 						value={data.searchTerm} 
 						onChange={setFormObject(data, setData)}
 						/>
-						{searchResult.length > 0 && <SearchResult users={searchResult} />}
+						{searchResult.length > 0 && <SearchResult users={searchResult} setChosenUser={setChosenUser} />}
 					</div>
 				)}
 				<input 
@@ -64,6 +85,7 @@ const InviteForm = ({ chatId }) => {
 				name="user_id"
 				value={data.user_id}
 				/>
+				{userIsChosen && <ChosenUser user={chosenUser} />}				
 				<button type="submit" className="btn btn-block btn-primary" >Add user to the participants</button>				
 			</form>			
 		</div>
