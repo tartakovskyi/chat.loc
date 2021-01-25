@@ -8501,12 +8501,14 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../api */ "./resources/js/project/api.js");
-/* harmony import */ var _common_FormUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../common/FormUtils */ "./resources/js/project/components/common/FormUtils.js");
-/* harmony import */ var _SearchResult__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SearchResult */ "./resources/js/project/components/edit/SearchResult.js");
-/* harmony import */ var _ChosenUser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ChosenUser */ "./resources/js/project/components/edit/ChosenUser.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../api */ "./resources/js/project/api.js");
+/* harmony import */ var _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../store/actions/chatAction */ "./resources/js/project/store/actions/chatAction.js");
+/* harmony import */ var _common_FormUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../common/FormUtils */ "./resources/js/project/components/common/FormUtils.js");
+/* harmony import */ var _SearchResult__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchResult */ "./resources/js/project/components/edit/SearchResult.js");
+/* harmony import */ var _ChosenUser__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ChosenUser */ "./resources/js/project/components/edit/ChosenUser.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -8525,13 +8527,16 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
 var initialData = {
   user_id: '',
   searchTerm: ''
 };
 
 var InviteForm = function InviteForm(_ref) {
-  var chatId = _ref.chatId;
+  var chatId = _ref.chatId,
+      addParticipantAction = _ref.addParticipantAction;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialData),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8560,7 +8565,7 @@ var InviteForm = function InviteForm(_ref) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (data.searchTerm) {
-      Object(_api__WEBPACK_IMPORTED_MODULE_2__["searchUser"])(data.searchTerm).then(function (response) {
+      Object(_api__WEBPACK_IMPORTED_MODULE_3__["searchUser"])(data.searchTerm).then(function (response) {
         if (response.data.status === 'ok') {
           setSearchResult(response.data.users);
         }
@@ -8577,17 +8582,14 @@ var InviteForm = function InviteForm(_ref) {
 
   var addParticipant = function addParticipant(e) {
     e.preventDefault();
-    /*const errors = validate(data)
-          setErrors(errors)
-            if (Object.keys(errors).length === 0) {
-          	axios.post('/api/chat/', data)
-          	.then(function (response) {
-    		history.push('/chat/' + response.data.id + '/edit/')
-          	})
-          	.catch(function (error) {
-          		console.log(error);
-          	})
-          }*/
+    var errors = validate(data);
+    setErrors(errors);
+    console.log(errors);
+
+    if (Object.keys(errors).length === 0) {
+      console.log('test2');
+      addParticipantAction(chatId, data.user_id);
+    }
   };
 
   var validate = function validate(data) {
@@ -8610,15 +8612,15 @@ var InviteForm = function InviteForm(_ref) {
     autoComplete: "off",
     name: "searchTerm",
     value: data.searchTerm,
-    onChange: Object(_common_FormUtils__WEBPACK_IMPORTED_MODULE_3__["default"])(data, setData)
-  }), searchResult.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SearchResult__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onChange: Object(_common_FormUtils__WEBPACK_IMPORTED_MODULE_5__["default"])(data, setData)
+  }), searchResult.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SearchResult__WEBPACK_IMPORTED_MODULE_6__["default"], {
     users: searchResult,
     setChosenUser: setChosenUser
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "hidden",
     name: "user_id",
     value: data.user_id
-  }), userIsChosen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenUser__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }), userIsChosen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenUser__WEBPACK_IMPORTED_MODULE_7__["default"], {
     user: chosenUser
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "submit",
@@ -8626,7 +8628,9 @@ var InviteForm = function InviteForm(_ref) {
   }, "Add user to the participants")));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (InviteForm);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, {
+  addParticipantAction: _store_actions_chatAction__WEBPACK_IMPORTED_MODULE_4__["addParticipantAction"]
+})(InviteForm));
 
 /***/ }),
 
@@ -8855,6 +8859,7 @@ var getMessagesAction = function getMessagesAction(chat_id) {
   };
 };
 var addParticipantAction = function addParticipantAction(chat_id, user_id) {
+  console.log('test');
   return function (dispatch) {
     return axios.post("/api/chat/".concat(chat_id, "/participant"), {
       user_id: user_id

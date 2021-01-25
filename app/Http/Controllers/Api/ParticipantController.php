@@ -36,6 +36,12 @@ class ParticipantController extends Controller
             'user_id' => $request->all()->user_id;
         ]);
 
+        if ($newParticipant) {
+
+            $participants = Participant::where('chat_id', $chat->id)->with('user')->get();
+
+            return response()->json(['status' => 'ok', 'participants' => $participants], 200);
+        }
         
     }
 

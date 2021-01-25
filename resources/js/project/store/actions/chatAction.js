@@ -41,7 +41,7 @@ export const getMessagesAction = (chat_id, last_message = null) => {
 }
 
 export const addParticipantAction = (chat_id, user_id) => {
-	
+console.log('test')	
 	return function(dispatch) {
 
 		return axios.post(`/api/chat/${chat_id}/participant`, {

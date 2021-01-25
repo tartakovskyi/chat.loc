@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { searchUser } from '../../api'
+import { addParticipantAction } from '../../store/actions/chatAction'
 import setFormObject from "../common/FormUtils"
 import SearchResult from "./SearchResult"
 import ChosenUser from "./ChosenUser"
@@ -12,7 +14,7 @@ const initialData = {
 }
 
 
-const InviteForm = ({ chatId }) => {
+const InviteForm = ({ chatId, addParticipantAction }) => {
 
 	const [data, setData] = useState(initialData)
 	const [errors, setErrors] = useState({})
@@ -41,18 +43,13 @@ const InviteForm = ({ chatId }) => {
 	const addParticipant = e => {
 		e.preventDefault()
 
-		/*const errors = validate(data)
+		const errors = validate(data)
         setErrors(errors)
-
+console.log(errors)
         if (Object.keys(errors).length === 0) {
-        	axios.post('/api/chat/', data)
-        	.then(function (response) {
-				history.push('/chat/' + response.data.id + '/edit/')
-        	})
-        	.catch(function (error) {
-        		console.log(error);
-        	})
-        }*/
+        	console.log('test2')
+        	addParticipantAction(chatId, data.user_id)
+        }
 	}
 
 	const validate = (data) => {
@@ -93,5 +90,4 @@ const InviteForm = ({ chatId }) => {
 }
 
 
-
-export default InviteForm
+export default  connect(null, { addParticipantAction })(InviteForm)
