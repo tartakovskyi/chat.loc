@@ -28,9 +28,15 @@ class ParticipantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Chat $chat)
     {
-        //
+        
+        $newParticipant = Participant::create([
+            'chat_id' => $chat->id,
+            'user_id' => $request->all()->user_id;
+        ]);
+
+        
     }
 
     /**

@@ -40,6 +40,25 @@ export const getMessagesAction = (chat_id, last_message = null) => {
 	}
 }
 
+export const addParticipantAction = (chat_id, user_id) => {
+	
+	return function(dispatch) {
+
+		return axios.post(`/api/chat/${chat_id}/participant`, {
+			user_id: user_id
+		})
+		.then(response => {
+			dispatch({
+				type: C.GET_PARTICIPANTS,
+				participants: response.data.participants
+			})
+		})
+		.catch(err => {
+			throw err
+		})
+	}
+}
+
 export const getParticipantsAction = chat_id => {
 
 	return function(dispatch) {

@@ -8813,13 +8813,14 @@ if (document.getElementById('app')) {
 /*!**********************************************************!*\
   !*** ./resources/js/project/store/actions/chatAction.js ***!
   \**********************************************************/
-/*! exports provided: getChatInfoAction, getMessagesAction, getParticipantsAction */
+/*! exports provided: getChatInfoAction, getMessagesAction, addParticipantAction, getParticipantsAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChatInfoAction", function() { return getChatInfoAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMessagesAction", function() { return getMessagesAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addParticipantAction", function() { return addParticipantAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getParticipantsAction", function() { return getParticipantsAction; });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./resources/js/project/store/constants.js");
 
@@ -8847,6 +8848,20 @@ var getMessagesAction = function getMessagesAction(chat_id) {
       dispatch({
         type: _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_MESSAGES,
         messages: response.data.messages
+      });
+    })["catch"](function (err) {
+      throw err;
+    });
+  };
+};
+var addParticipantAction = function addParticipantAction(chat_id, user_id) {
+  return function (dispatch) {
+    return axios.post("/api/chat/".concat(chat_id, "/participant"), {
+      user_id: user_id
+    }).then(function (response) {
+      dispatch({
+        type: _constants__WEBPACK_IMPORTED_MODULE_0__["default"].GET_PARTICIPANTS,
+        participants: response.data.participants
       });
     })["catch"](function (err) {
       throw err;
