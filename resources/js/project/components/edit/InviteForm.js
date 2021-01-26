@@ -8,23 +8,18 @@ import SearchResult from "./SearchResult"
 import ChosenUser from "./ChosenUser"
 
 
-const initialData = {
-	user_id: '',
-    searchTerm: ''
-}
 
 
 const InviteForm = ({ chatId, addParticipantAction }) => {
 
-	const [data, setData] = useState(initialData)
-	const [errors, setErrors] = useState({})
+	const [searchTerm, setSearchTerm] = useState('')
 	const [chosenUser, setChosenUser] = useState({})
 	const [userIsChosen, setUserIsChosen] = useState(false)
 	const [searchResult, setSearchResult] = useState([])
 
 	useEffect(() => {
-		if(data.searchTerm) {
-			searchUser(data.searchTerm)
+		if(searchTerm) {
+			searchUser(searchTerm)
 			.then(response => {
 				if (response.data.status === 'ok') {
 					setSearchResult(response.data.users)
@@ -34,31 +29,34 @@ const InviteForm = ({ chatId, addParticipantAction }) => {
 		} else {
 			setSearchResult([])
 		}
-	}, [data.searchTerm])
+	}, [searchTerm])
 
 	useEffect(() => {
-		if(Object.keys(chosenUser).length !== 0) setUserIsChosen(true)
+		if(Object.keys(chosenUser).length !== 0) {
+			setUserIsChosen(true)
+		} else {
+			setUserIsChosen(false)
+		}
 	}, [chosenUser])
+
+	const disabled = userIsChosen ? '' : 'disabled'
 
 	const addParticipant = e => {
 		e.preventDefault()
 
-		const errors = validate(data)
-        setErrors(errors)
-console.log(errors)
-        if (Object.keys(errors).length === 0) {
-        	console.log('test2')
-        	addParticipantAction(chatId, data.user_id)
+        if (Object.keys(chosenUser).length !== 0) {
+        	addParticipantAction(chatId, chosenUser.id)
+        	setChosenUser({})
         }
 	}
 
-	const validate = (data) => {
-        const errors = {}
+	const chooseUser = (user) => {
+		setSearchTerm('')
+		setChosenUser(user)
+	}
 
-        if (!data.user_id) errors.user_id = "User isn't chosen"
+	const onSearchChange = e => setSearchTerm(e.target.value) 
 
-        return errors
-    }
 
 	return (
 		<div className="invite-form">
@@ -71,19 +69,20 @@ console.log(errors)
 						className="form-control"
 						autoComplete="off"
 						name="searchTerm"
-						value={data.searchTerm} 
-						onChange={setFormObject(data, setData)}
+						value={searchTerm} 
+						onChange={onSearchChange}
 						/>
-						{searchResult.length > 0 && <SearchResult users={searchResult} setChosenUser={setChosenUser} />}
+						{searchResult.length > 0 && <SearchResult users={searchResult} chooseUser={chooseUser} />}
 					</div>
 				)}
-				<input 
-				type="hidden"
-				name="user_id"
-				value={data.user_id}
-				/>
 				{userIsChosen && <ChosenUser user={chosenUser} />}				
-				<button type="submit" className="btn btn-block btn-primary" >Add user to the participants</button>				
+				<button 
+					type="submit"
+					className="btn btn-block btn-primary"
+					disabled={disabled}
+				>
+					Add user to the participants
+				</button>				
 			</form>			
 		</div>
 	)

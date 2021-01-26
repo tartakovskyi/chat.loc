@@ -8379,16 +8379,17 @@ var ChosenUser = function ChosenUser(_ref) {
   var name = user.name,
       userpic = user.userpic;
   var src = userpic ? '/storage/img/userpics/' + userpic : '/storage/img/user.svg';
+  var backgroundImage = "background-image: url(".concat(src, ")");
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "chosen-user d-flex justify-content-between align-items-center alert alert-success"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "chosen-user__info d-flex align-items-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "chosen-user__img"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: src,
-    alt: ""
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "chosen-user__img",
+    style: {
+      backgroundImage: 'url(' + src + ')'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "#",
     className: "chosen-user__close"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("use", {
@@ -8529,43 +8530,34 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var initialData = {
-  user_id: '',
-  searchTerm: ''
-};
 
 var InviteForm = function InviteForm(_ref) {
   var chatId = _ref.chatId,
       addParticipantAction = _ref.addParticipantAction;
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialData),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
       _useState2 = _slicedToArray(_useState, 2),
-      data = _useState2[0],
-      setData = _useState2[1];
+      searchTerm = _useState2[0],
+      setSearchTerm = _useState2[1];
 
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
       _useState4 = _slicedToArray(_useState3, 2),
-      errors = _useState4[0],
-      setErrors = _useState4[1];
+      chosenUser = _useState4[0],
+      setChosenUser = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState6 = _slicedToArray(_useState5, 2),
-      chosenUser = _useState6[0],
-      setChosenUser = _useState6[1];
+      userIsChosen = _useState6[0],
+      setUserIsChosen = _useState6[1];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
       _useState8 = _slicedToArray(_useState7, 2),
-      userIsChosen = _useState8[0],
-      setUserIsChosen = _useState8[1];
-
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
-      _useState10 = _slicedToArray(_useState9, 2),
-      searchResult = _useState10[0],
-      setSearchResult = _useState10[1];
+      searchResult = _useState8[0],
+      setSearchResult = _useState8[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (data.searchTerm) {
-      Object(_api__WEBPACK_IMPORTED_MODULE_3__["searchUser"])(data.searchTerm).then(function (response) {
+    if (searchTerm) {
+      Object(_api__WEBPACK_IMPORTED_MODULE_3__["searchUser"])(searchTerm).then(function (response) {
         if (response.data.status === 'ok') {
           setSearchResult(response.data.users);
         }
@@ -8575,27 +8567,32 @@ var InviteForm = function InviteForm(_ref) {
     } else {
       setSearchResult([]);
     }
-  }, [data.searchTerm]);
+  }, [searchTerm]);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (Object.keys(chosenUser).length !== 0) setUserIsChosen(true);
+    if (Object.keys(chosenUser).length !== 0) {
+      setUserIsChosen(true);
+    } else {
+      setUserIsChosen(false);
+    }
   }, [chosenUser]);
+  var disabled = userIsChosen ? '' : 'disabled';
 
   var addParticipant = function addParticipant(e) {
     e.preventDefault();
-    var errors = validate(data);
-    setErrors(errors);
-    console.log(errors);
 
-    if (Object.keys(errors).length === 0) {
-      console.log('test2');
-      addParticipantAction(chatId, data.user_id);
+    if (Object.keys(chosenUser).length !== 0) {
+      addParticipantAction(chatId, chosenUser.id);
+      setChosenUser({});
     }
   };
 
-  var validate = function validate(data) {
-    var errors = {};
-    if (!data.user_id) errors.user_id = "User isn't chosen";
-    return errors;
+  var chooseUser = function chooseUser(user) {
+    setSearchTerm('');
+    setChosenUser(user);
+  };
+
+  var onSearchChange = function onSearchChange(e) {
+    return setSearchTerm(e.target.value);
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -8611,20 +8608,17 @@ var InviteForm = function InviteForm(_ref) {
     className: "form-control",
     autoComplete: "off",
     name: "searchTerm",
-    value: data.searchTerm,
-    onChange: Object(_common_FormUtils__WEBPACK_IMPORTED_MODULE_5__["default"])(data, setData)
+    value: searchTerm,
+    onChange: onSearchChange
   }), searchResult.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SearchResult__WEBPACK_IMPORTED_MODULE_6__["default"], {
     users: searchResult,
-    setChosenUser: setChosenUser
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "hidden",
-    name: "user_id",
-    value: data.user_id
-  }), userIsChosen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenUser__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    chooseUser: chooseUser
+  })), userIsChosen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenUser__WEBPACK_IMPORTED_MODULE_7__["default"], {
     user: chosenUser
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "submit",
-    className: "btn btn-block btn-primary"
+    className: "btn btn-block btn-primary",
+    disabled: disabled
   }, "Add user to the participants")));
 };
 
@@ -8711,7 +8705,7 @@ var ParticipantList = function ParticipantList(_ref) {
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "participants"
+    className: "participants mb-5"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
     className: "mb-3"
   }, "Participants"), participants && participants.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -8755,19 +8749,27 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
 
 
 var SearchResult = function SearchResult(_ref) {
   var users = _ref.users,
-      setChosenUser = _ref.setChosenUser;
+      chooseUser = _ref.chooseUser,
+      participants = _ref.participants;
+  var filteredUsers = users.filter(function (user) {
+    participants.findIndex(function (participant) {
+      participant.user_id == user.id;
+    }) == -1;
+  });
 
   var onUserClick = function onUserClick(user) {
-    setChosenUser(user);
+    chooseUser(user);
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "search-result position-absolute d-flex flex-column"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, users.map(function (user) {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, filteredUsers.map(function (user) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: user.id,
       onClick: function onClick() {
@@ -8777,7 +8779,14 @@ var SearchResult = function SearchResult(_ref) {
   })));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (SearchResult);
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var chat = _ref2.chat;
+  return {
+    participants: chat.participants
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(SearchResult));
 
 /***/ }),
 

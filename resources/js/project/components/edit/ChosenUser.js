@@ -5,14 +5,13 @@ const ChosenUser = ({ user }) => {
 
 	const { name, userpic } = user
 
-	const src = userpic ? '/storage/img/userpics/' + userpic : '/storage/img/user.svg'		
+	const src = userpic ? ('/storage/img/userpics/' + userpic) : '/storage/img/user.svg'
+	const backgroundImage = `background-image: url(${src})`		
 
 	return (
 		<div className="chosen-user d-flex justify-content-between align-items-center alert alert-success">
 			<div className="chosen-user__info d-flex align-items-center">
-				<div className="chosen-user__img">
-					<img src={src} alt="" />	
-				</div>
+				<div className="chosen-user__img" style={{backgroundImage: 'url(' + src + ')'}}></div>
 				<span>{name}</span>
 			</div>
 			<a href="#"  className="chosen-user__close">

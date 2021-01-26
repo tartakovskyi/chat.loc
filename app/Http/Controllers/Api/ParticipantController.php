@@ -31,9 +31,9 @@ class ParticipantController extends Controller
     public function store(Request $request, Chat $chat)
     {
         
-        $newParticipant = Participant::create([
+        $newParticipant = Participant::firstOrCreate([
             'chat_id' => $chat->id,
-            'user_id' => $request->all()->user_id;
+            'user_id' => $request->all()['user_id']
         ]);
 
         if ($newParticipant) {

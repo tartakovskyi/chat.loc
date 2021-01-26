@@ -20,7 +20,7 @@ const ParticipantList = ({participants, id, getParticipantsAction }) => {
 	}
 
 	return (
-		<div className="participants">
+		<div className="participants mb-5">
 			<h2 className="mb-3">Participants</h2>
 			{ participants && participants.length
 			? 

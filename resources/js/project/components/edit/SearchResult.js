@@ -1,16 +1,25 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 
-const SearchResult = ({ users, setChosenUser }) => {
+const SearchResult = ({ users, chooseUser, participants }) => {
+
+	const filteredUsers = users.filter(user => {
+		participants.findIndex(
+			participant => {
+				participant.user_id == user.id
+			}
+		) == -1
+	})
 
 	const onUserClick = user => {
-		setChosenUser(user)
+		chooseUser(user)
 	}
 		
 	return (
 		<div className="search-result position-absolute d-flex flex-column">
 			<ul>
-				{users.map(user => 
+				{filteredUsers.map(user => 
 					(<li key={user.id} onClick={() => onUserClick(user)}>{user.name}</li>)
 				)}
 			</ul>
@@ -19,4 +28,10 @@ const SearchResult = ({ users, setChosenUser }) => {
 }
 
 
-export default  SearchResult
+const mapStateToProps = ({chat}) => {
+	return {
+		participants : chat.participants
+	}
+}
+
+export default connect(mapStateToProps)(SearchResult)
