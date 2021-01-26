@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import Axios  from 'axios'
+import PropTypes from 'prop-types'
 import { getChatInfoAction } from '../../store/actions/chatAction'
 import ChatForm from "./ChatForm"
 import InviteForm from "./InviteForm"
@@ -33,8 +34,16 @@ const EditChatPage = ({ match, chatInfo, getChatInfoAction }) => {
 	)
 }
 
+
+EditChatPage.propTypes = {
+	chatInfo: PropTypes.object,
+	getChatInfoAction: PropTypes.func.isRequired
+}
+
+
 const mapStateToProps = ({chat}) => {
 	return { ...chat }
 }
+
 
 export default  connect(mapStateToProps, { getChatInfoAction })(EditChatPage)

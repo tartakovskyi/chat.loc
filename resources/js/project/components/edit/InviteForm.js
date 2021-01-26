@@ -3,11 +3,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { searchUser } from '../../api'
 import { addParticipantAction } from '../../store/actions/chatAction'
-import setFormObject from "../common/FormUtils"
 import SearchResult from "./SearchResult"
 import ChosenUser from "./ChosenUser"
-
-
 
 
 const InviteForm = ({ chatId, addParticipantAction }) => {
@@ -86,6 +83,12 @@ const InviteForm = ({ chatId, addParticipantAction }) => {
 			</form>			
 		</div>
 	)
+}
+
+
+InviteForm.propTypes = {
+	chatId: PropTypes.number.isRequired,
+	addParticipantAction: PropTypes.func.isRequired
 }
 
 

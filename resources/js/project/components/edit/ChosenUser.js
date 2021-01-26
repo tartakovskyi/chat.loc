@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 
 const ChosenUser = ({ user }) => {
@@ -19,6 +20,11 @@ const ChosenUser = ({ user }) => {
 			</a>
 		</div>
 	)
+}
+
+
+ChosenUser.propTypes = {
+	user: PropTypes.object.isRequired
 }
 
 

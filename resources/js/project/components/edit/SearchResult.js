@@ -1,14 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 
 const SearchResult = ({ users, chooseUser, participants }) => {
 
 	const filteredUsers = users.filter(user => {
-		participants.findIndex(
-			participant => {
-				participant.user_id == user.id
-			}
+		return participants.findIndex(
+			participant => participant.user_id == user.id
 		) == -1
 	})
 
@@ -25,6 +24,13 @@ const SearchResult = ({ users, chooseUser, participants }) => {
 			</ul>
 		</div>
 	)
+}
+
+
+SearchResult.propTypes = {
+	users: PropTypes.array.isRequired,
+	participants: PropTypes.array.isRequired,
+	chooseUser: PropTypes.func.isRequired
 }
 
 

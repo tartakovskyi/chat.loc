@@ -33,7 +33,8 @@ const ChatForm = ({ chatInfo, auth, id }) => {
         setErrors(errors)
 
         if (Object.keys(errors).length === 0) {
-        	axios.post('/api/chat/', data)
+        	const axiosReq = id ? axios.put('/api/chat/' + id, data) : axios.post('/api/chat/', data)
+        	axiosReq
         	.then(function (response) {
 				history.push('/chat/' + response.data.id + '/edit/')
         	})
@@ -76,7 +77,8 @@ const ChatForm = ({ chatInfo, auth, id }) => {
 
 
 ChatForm.propTypes = {
-	chatInfo: PropTypes.object
+	chatInfo: PropTypes.object,
+	auth: PropTypes.object
 }
 
 const mapStateToProps = ({user}) => {

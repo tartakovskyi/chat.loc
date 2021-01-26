@@ -36,7 +36,8 @@ const ParticipantList = ({participants, id, getParticipantsAction }) => {
 
 ParticipantList.propTypes = {
 	participants: PropTypes.array,
-	id: PropTypes.number
+	id: PropTypes.number,
+	getParticipantsAction: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ({chat}) => {

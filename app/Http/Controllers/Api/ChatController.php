@@ -60,7 +60,12 @@ class ChatController extends Controller
      */
     public function update(Request $request, Chat $chat)
     {
-        //
+        
+        $update = $chat->update($request->all());
+
+        if ($update) {
+            return response()->json(['info' => 'Chat successfully updated!', 'id' => $chat->id], 200);
+        }
     }
 
     /**
