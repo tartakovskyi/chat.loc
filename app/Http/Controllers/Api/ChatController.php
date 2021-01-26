@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\Message;
-use App\Models\ChatUser;
+use App\Models\participant;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
@@ -28,6 +28,7 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
+        
         $newChat = Chat::create($request->all());
 
         if ($newChat) {
@@ -43,10 +44,9 @@ class ChatController extends Controller
      */
     public function show(Chat $chat)
     {
-        
-        $chat = Chat::find($chat)[0];
 
-        $participants = $chat->participants()->with('user')->get();
+        //$participants = $chat->participants()->with('user')->get();
+        $participants = Participant::where('chat_id', $chat->id)->with('user')->get();
 
         return response()->json(['chat' => $chat, 'participants' => $participants], 200);
     }
@@ -60,7 +60,12 @@ class ChatController extends Controller
      */
     public function update(Request $request, Chat $chat)
     {
-        //
+        
+        $update = $chat->update($request->all());
+
+        if ($update) {
+            return response()->json(['info' => 'Chat successfully updated!', 'id' => $chat->id], 200);
+        }
     }
 
     /**
