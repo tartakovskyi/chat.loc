@@ -29,7 +29,7 @@ const SearchResult = ({ users, chooseUser, participants }) => {
 
 SearchResult.propTypes = {
 	users: PropTypes.array.isRequired,
-	participants: PropTypes.array.isRequired,
+	participants: PropTypes.array,
 	chooseUser: PropTypes.func.isRequired
 }
 

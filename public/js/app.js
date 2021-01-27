@@ -8084,7 +8084,7 @@ var setValue = {
     parsedValue = isNaN(parsedValue) || parsedValue === 0 ? '' : Math.abs(parsedValue);
     return parsedValue;
   },
-  checkBox: function checkBox(value) {
+  checkbox: function checkbox(value) {
     return value;
   },
   email: function email(value) {
@@ -8808,7 +8808,7 @@ var SearchResult = function SearchResult(_ref) {
 
 SearchResult.propTypes = {
   users: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.array.isRequired,
-  participants: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.array.isRequired,
+  participants: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.array,
   chooseUser: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired
 };
 

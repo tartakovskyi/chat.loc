@@ -6,7 +6,7 @@ const setValue = {
 
         return parsedValue
     },
-    checkBox: value => value,
+    checkbox: value => value,
     email: value => value,
     textarea: value => value,
     password: value => value,

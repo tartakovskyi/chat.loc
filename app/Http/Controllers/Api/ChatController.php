@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\Message;
-use App\Models\participant;
+use App\Models\Participant;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
