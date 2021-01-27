@@ -10,7 +10,7 @@ import ParticipantList from "./ParticipantList"
 
 const EditChatPage = ({ match, chatInfo, getChatInfoAction }) => {
 
-	const id = match.params.id !== "undefined" ? Number(match.params.id) : null
+	const id = match.params && match.params.hasOwnProperty('id') ? Number(match.params.id) : null
 	const [showParticipants, toggleShowParticipants] = useState(false)
 
 	useEffect(() => {

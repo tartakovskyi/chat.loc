@@ -1,4 +1,5 @@
 import React, { useState, useEffect }  from 'react'
+import { Link } from 'react-router-dom'
 import Axios  from 'axios'
 import ChatList  from './ChatList'
 
@@ -21,6 +22,9 @@ const Chats = () => {
 	return (
 		<div className="container">
 			<h1>All Chats</h1>
+			<div className="d-flex justify-content-end">
+				<Link to={'/chat/add'} className="btn btn-primary">Add New Chat</Link>
+			</div>
 			<table className="table table-striped table-borderless">
 				<thead>
 					<tr>

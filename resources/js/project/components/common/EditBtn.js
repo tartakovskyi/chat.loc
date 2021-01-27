@@ -1,13 +1,14 @@
-import React, { Component }  from 'react';
+import React, { Component }  from 'react'
+import { Link } from 'react-router-dom'
 
 
-const EditBtn = (props) => {
+const EditBtn = ({ url }) => {
 
-  return(
-    <a href={props.url} className="btn btn-primary">
+  return (
+    <Link to={url} className="btn btn-primary">
         <svg><use xlinkHref="/storage/img/icons.svg#pen"></use></svg>
-    </a>       
-    );
+    </Link>       
+    )
 }
 
-export default EditBtn;
+export default EditBtn
